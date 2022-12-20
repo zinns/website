@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children, fullScreen, title, bubbles = 
       <main className='w-full relative overflow-hidden'>
         {/* <Navbar /> */}
         <div
-          className='w-full max-w-screen-xl mx-auto pt-12 layout__safe-container'
+          className='w-full max-w-screen-xl mx-auto layout__safe-container'
           ref={safeContainerRef}
         >
           {/* {bubbles && <Bubbles />} */}

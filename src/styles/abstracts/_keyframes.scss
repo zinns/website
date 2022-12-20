@@ -1,0 +1,48 @@
+@mixin animate($animation, $duration, $cubic: ease-out, $delay: 0s, $before: forwards) {
+  animation: $animation $duration $cubic $delay $before;
+}
+
+@mixin moveTo($name, $toX: 0, $toY: 0, $opacity: 0) {
+  @keyframes #{$name} {
+    to {
+      transform: translate($toX, $toY);
+      @if $opacity == 0 {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@mixin moveFromTo($name, $fromX, $fromY, $toX, $toY, $opacity: 0) {
+  @keyframes #{$name} {
+    from {
+      transform: translate($fromX, $fromY);
+      @if $opacity == 0 {
+        opacity: $opacity;
+      }
+    }
+    to {
+      transform: translate($toX, $toY);
+      @if $opacity == 0 {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@keyframes showUp {
+  to {
+    opacity: 1;
+  }
+}
+
+@mixin scale($name, $initScale, $endScale) {
+  @keyframes #{$name} {
+    from {
+      transform: scale($initScale);
+    }
+    to {
+      transform: scale($endScale);
+    }
+  }
+}
