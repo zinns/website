@@ -1,0 +1,8 @@
+.next/
+node_modules/
+coverage/
+__snapshots__/
+yarn.lock
+.eslintrc.js
+next.config.js
+public/
