@@ -12,6 +12,8 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
+      "apollo": ["./apollo"],
+      "db": ["./db"],
       "components": ["./components"],
       "hooks": ["./hooks"],
       "styles": ["./styles"],
@@ -23,6 +25,12 @@
     "strict": true,
     "target": "ES6"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "utils/global.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/config/db/deployment/index.js"
+  ],
   "exclude": ["node_modules"]
 }

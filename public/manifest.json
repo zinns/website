@@ -1,0 +1,46 @@
+{
+  "name": "zinns.io",
+  "short_name": "zinns.io",
+  "icons": [
+    {
+      "src": "icons/36x36-app.png",
+      "sizes": "36x36",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/48x48-app.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/72x72-app.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/96x96-app.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/144x144-app.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/250x250-app.png",
+      "sizes": "250x250",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/512x512-app.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#262424",
+  "background_color": "#000000",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
