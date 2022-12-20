@@ -25,7 +25,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
         <meta
           name='description'
-          content='Centro Spa, Nails, Lashes, Hair, Microblading, Lash Lifting, Eyebrow Laminate'
+          content='Mexican company dedicated to help small business to create their ideas, websites, mobile applications. zinns.io is a company committed with the new era of technology offering courses for those one who want to learn everything about this area. As a good mexican company we love everything we do and we need some free spaces that&gt;s the reason we also play videogames and stream via Twitch'
         />
         <meta
           name='robots'
@@ -137,7 +137,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
         <meta
           property='og:description'
-          content='Centro Spa, Nails, Lashes, Hair, Microblading, Lash Lifting, Eyebrow Laminate'
+          content='Mexican company dedicated to help small business to create their ideas, websites, mobile applications. zinns.io is a company committed with the new era of technology offering courses for those one who want to learn everything about this area. As a good mexican company we love everything we do and we need some free spaces that&gt;s the reason we also play videogames and stream via Twitch'
         />
         <meta
           property='og:site_name'
