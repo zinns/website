@@ -1,8 +1,20 @@
-import Head from 'next/head';
+import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { appWithTranslation } from 'next-i18next';
+import { ApolloProvider } from '@apollo/client';
 import 'styles/main.scss';
+import { useApollo } from 'hooks/useApollo';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const apolloClient = useApollo(pageProps);
+  const { push, pathname, asPath, locale } = useRouter();
+
+  useEffect(() => {
+    push(pathname, asPath, { locale });
+  }, [locale]);
+
   return (
     <>
       <Head>
@@ -232,9 +244,11 @@ const App = ({ Component, pageProps }: AppProps) => {
           sizes='640x1136'
         />
       </Head>
-      <Component {...pageProps} />
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
     </>
   );
 };
 
-export default App;
+export default appWithTranslation(App);

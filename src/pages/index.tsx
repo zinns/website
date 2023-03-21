@@ -1,3 +1,7 @@
+import type { GetServerSidePropsContext, NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
 import { CoolGradient, Layout } from 'components';
 
 const Home = () => {
@@ -14,6 +18,14 @@ const Home = () => {
       </section>
     </Layout>
   );
+};
+
+export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, ['common'])),
+    },
+  };
 };
 
 export default Home;

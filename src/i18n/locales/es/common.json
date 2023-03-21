@@ -1,0 +1,194 @@
+{
+  "authentication": {
+    "invalidToken": "Woops... Parece que debes iniciar sesión de nuevo"
+  },
+  "calendar": {
+    "TODAY": "Hoy",
+    "noDate": "Woops... No encontramos ninguna cita con esta información",
+    "notLogged": "Necesitas volver a iniciar sesión para editar esto"
+  },
+  "error": "Algo malo ocurrió. Favor de contactar a alguien de administración",
+  "footer": {
+    "created": "desarrollado por"
+  },
+  "home": {
+    "comingSoonDown": "Muy Pronto",
+    "comingSoonUp": "Una nueva experiencia"
+  },
+  "login": {
+    "actions": {
+      "logIn": "Iniciar Sesión"
+    },
+    "errors": {
+      "badCredentials": "Woops... Tu nombre de usuario o contraseña son incorrectos"
+    },
+    "identifier": "Usuario o Celular",
+    "password": "Contraseña",
+    "placeholder": {
+      "identifier": "5544332211 / misuperusuario",
+      "password": "********"
+    }
+  },
+  "modal": {
+    "activeAccount": {
+      "confirmTitle": "Esta es la información que tenemos de ti",
+      "errors": {
+        "notFound": "Woops... Al parecer aún no tenemos un usuario para ti..."
+      },
+      "informationNewHelp": "Puedes modificarla ahorita o después",
+      "passwordReset": "Tienes que crear una nueva contraseña y confirmarla"
+    },
+    "date": {
+      "actions": {
+        "cancel": "Cancelar",
+        "update": "Actualizar",
+        "save": "Guardar",
+        "delete": "Borrar"
+      },
+      "date": "Fecha",
+      "client": "Cliente",
+      "endHour": "Termina",
+      "newDate": "Agreguémos una nueva cita",
+      "notes": "Notas",
+      "existingDate": "Información",
+      "placeholder": {
+        "client": "Dua Lipa? 😳",
+        "notes": "Algún detalle a considerar?",
+        "service": "Uñas y pestañas?"
+      },
+      "service": "Servicio",
+      "startHour": "Empieza"
+    },
+    "forgot": {
+      "actions": {
+        "cancel": "Cancelar",
+        "recover": "Recuperar"
+      },
+      "error": {
+        "code": "Woops... el código de verificación no es correcto. Intenta de nuevo"
+      },
+      "identifier": "Username",
+      "placeholder": {
+        "identifier": "bebeshita",
+        "phone": "56 58 11 11 ?"
+      },
+      "phone": "Phone",
+      "success": "El código de verificación ha sido enviado"
+    },
+    "invite": {
+      "actions": {
+        "cancel": "Cancelar",
+        "invite": "Invitar"
+      },
+      "addTitle": "Vamos a agregar un/a integrante nuevo/a",
+      "created": "Usuario creado satisfactoriamente",
+      "informationNewHelp": "Esta información se podrá modificar después. No te preocupes",
+      "informationNewTitle": "Solo un poco de información de nuestro/a nuevo/a integrante",
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "options": {
+        "apprentice": "Colaborador/a",
+        "chancellor": "Cliente",
+        "jedi": "Administrador/a",
+        "phone": "Celular",
+        "whatsapp": "WhatsApp"
+      },
+      "phone": "Celular",
+      "placeholder": {
+        "lastName": "Pérez?",
+        "name": "Su fantástico nombre",
+        "phone": "56 58 11 11 ?",
+        "username": "Agente P"
+      },
+      "repeatedIdentifier": "Woops... Trata con otro celular o usuario",
+      "required": "Es necesario contar con al menos un medio de contacto para enviar un código de verificación",
+      "role": "Tipo de usuario",
+      "sent": "Hemos enviado el código de verificación para que pueda activar su cuenta",
+      "username": "Usuario"
+    },
+    "password": {
+      "actions": {
+        "cancel": "Cancelar",
+        "update": "Actualizar"
+      },
+      "confirmPassword": "Confirmar Password",
+      "newPassword": "Nueva Password",
+      "oldPassword": "Password Anterior",
+      "title": "Vamos a cambiar tu Paswword",
+      "placeholder": {
+        "confirmPassword": "********",
+        "oldPassword": "********",
+        "newPassword": "********"
+      }
+    },
+    "profile": {
+      "actions": {
+        "cancel": "Cancelar",
+        "update": "Actualizar"
+      },
+      "code": "Código de verificación",
+      "confirmChanges": "Confirmar Cambios",
+      "confirmPassword": "Confirmar Password",
+      "greeting": "Hola",
+      "informationHelp": "Puedes modificar esto en cualquier momento",
+      "informationTitle": "Esta es tu información",
+      "name": "Nombre",
+      "newPassword": "Nueva Password",
+      "lastName": "Apellido",
+      "oldPassword": "Password Anterior",
+      "phone": "Celular",
+      "placeholder": {
+        "code": "Código Súper Secreto",
+        "confirmPassword": "********",
+        "lastName": "Pérez?",
+        "name": "Tu fantástico nombre",
+        "newPassword": "********",
+        "oldPassword": "********",
+        "password": "********",
+        "phone": "56 58 11 11 ?",
+        "username": "Agente P"
+      },
+      "password": "Password",
+      "username": "Usuario"
+    },
+    "users": {
+      "actions": {
+        "delete": "Borrar"
+      },
+      "title": "Estos son todos los usuarios"
+    }
+  },
+  "navbar": {
+    "add": "Invitar",
+    "home": "Inicio",
+    "languages": {
+      "en": "EN",
+      "es": "ES"
+    },
+    "login": "Entrar",
+    "logout": "Salir",
+    "password": "Cambiar contraseña",
+    "profile": "Perfil",
+    "users": "Usuarios"
+  },
+  "verification": {
+    "actions": {
+      "validate": "Validar"
+    },
+    "errors": {
+      "usedCode": "Lo sentimos, este código ya ha sido usado",
+      "noCode": "Lo sentimos. No encotramos ningún código parecido"
+    },
+    "lastName": "Apellido",
+    "moreInfo": "Por favor contacta a alguien de administración para más información",
+    "name": "Nombre",
+    "placeholder": {
+      "code": "123456",
+      "lastName": "Pérez?",
+      "name": "Tu fantástico nombre"
+    },
+    "requestCode": "Por favor contacta a alguien de administración para solicitar un nuevo código",
+    "subtitle": "Si tu código es válido podrás activar tu cuenta",
+    "title": "Vamos a validar tu código de verififcación"
+  }
+}
