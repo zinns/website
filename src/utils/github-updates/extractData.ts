@@ -9,7 +9,7 @@ export const extractData = (body: any) => {
 
   return {
     actor,
-    repo: payload.repository ?? '',
+    repo: payload.repository.name ?? '',
     payload,
     update,
   };
