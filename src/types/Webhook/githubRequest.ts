@@ -1,25 +1,25 @@
-import { Assignee } from './assignee';
-import { Changes } from './changes';
 import { CheckRun } from './check_run';
 import { CheckSuite } from './check_suite';
-import { Comment } from './comment';
-import { Commit } from './commit';
-import { Delete } from './delete';
+import { DeploymentStatus } from './deploymentStatus';
 import { Issue } from './issue';
 import { Label } from './label';
-import { Milestone } from './milestone';
-import { Organization } from './organization';
-import { PullRequest } from './pull_request';
+import { Ping } from './ping';
 import { Push } from './push';
-import { Repo } from './repo';
-import { Repository } from './repository';
-import { Sender } from './sender';
-import { Workflow } from './workflow';
+import { Status } from './status';
 import { WorkflowJob } from './workflow_job';
 import { WorkflowRun } from './workflow_run';
-import { Ping } from './ping';
 
-export type GitHubBodyRequest = Ping | Issue | Push | WorkflowRun;
+export type GitHubBodyRequest =
+  | CheckRun
+  | DeploymentStatus
+  | Issue
+  | Label
+  | Ping
+  | Push
+  | WorkflowJob
+  | WorkflowRun
+  | CheckSuite
+  | Status;
 
 export const IMPORTANT_KEYS = [
   'check_run',

@@ -1,7 +1,7 @@
 import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
 
 export const createDescription = (payload: any, update: string[]): string => {
-  switch (update[0]) {
+  switch (update[0] ?? '') {
     case 'check_run':
       return ` \\-\\> ${payload?.check_run.name} \\-\\> status: ${payload?.check_run.status} \\-\\> conclusion: ${payload?.check_run?.conclusion}`;
     case 'check_suite':
@@ -45,9 +45,12 @@ export const formatMessage = (
   location: string,
   update: string[],
 ) => {
-  const updateFormatted = [...(update.length > 1 ? update.join('/') : update[0])]
-    .map(char => (char === '_' ? ' ' : char))
-    .join('');
+  const updateFormatted =
+    update.length > 0
+      ? [...(update.length > 1 ? update.join('/') : update[0])]
+          .map(char => (char === '_' ? ' ' : char))
+          .join('')
+      : 'There was an update but it is not handle, yet';
   const message = `*GitHub Changes*
 User: *${actor}*
 Update: *${updateFormatted}${description ?? ''}*

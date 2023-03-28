@@ -5,12 +5,11 @@ export const extractData = (body: any) => {
   const update = Object.keys(payload).filter(key => IMPORTANT_KEYS.includes(key));
   const {
     sender: { login: actor },
-    repository: { name: repo },
   } = payload;
 
   return {
     actor,
-    repo,
+    repo: payload.repository ?? '',
     payload,
     update,
   };
