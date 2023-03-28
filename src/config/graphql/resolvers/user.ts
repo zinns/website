@@ -5,7 +5,7 @@ import { User } from 'config/db/models';
 import { createToken, verifyToken } from 'utils/jwt';
 import { AuthenticateInputType, NewUserInputType } from 'types/resolvers';
 import { userExists } from 'utils/db';
-import { generateHash, generateSalt, isHashCorrect } from 'utils/pwd';
+import { generateHash, generateSalt, isHashCorrect } from 'utils/encryption';
 import { JWTUserType } from 'types/jwt';
 
 const KEY = process.env.JWT_KEY ?? '';
