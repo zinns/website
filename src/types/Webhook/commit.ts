@@ -1,4 +1,4 @@
-import { Pusher } from './push';
+import { Author } from './author';
 
 export interface Commit {
   id: string;
@@ -7,8 +7,8 @@ export interface Commit {
   message: string;
   timestamp: string;
   url: string;
-  author: Pusher;
-  committer: Pusher;
+  author: Author;
+  committer: Author;
   added: any[];
   removed: any[];
   modified: string[];
