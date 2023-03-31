@@ -16,9 +16,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const description = createDescription(payload, update);
       const message = formatMessage(actor, description, repo, update);
 
-      if (isValid) {
-        await sendMessage(message);
-      }
+      console.log({
+        isValid,
+        actor,
+        update,
+        description,
+        message,
+      });
+
+      // if (isValid) {
+      //   await sendMessage(message);
+      // }
 
       res.status(200).json({ message: 'Everything went well 🚀' });
     } catch (error) {

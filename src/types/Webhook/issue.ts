@@ -1,6 +1,6 @@
 import { Assignee } from './assignee';
-import { Label } from './label';
-import { Milestone } from './milestone';
+import { LabelClass } from './label';
+import { MilestoneClass } from './milestone';
 import { Organization } from './organization';
 import { Reactions } from './reactions';
 import { Repository } from './repository';
@@ -12,6 +12,7 @@ export interface Issue {
   repository: Repository;
   organization: Organization;
   sender: Assignee;
+  label: LabelClass;
 }
 
 export interface IssueClass {
@@ -26,12 +27,12 @@ export interface IssueClass {
   number: number;
   title: string;
   user: Assignee;
-  labels: Label[];
+  labels: LabelClass[];
   state: string;
   locked: boolean;
   assignee: Assignee;
   assignees: Assignee[];
-  milestone: Milestone;
+  milestone: MilestoneClass;
   comments: number;
   created_at: string;
   updated_at: string;

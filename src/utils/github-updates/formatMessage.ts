@@ -1,39 +1,53 @@
 import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
+import {
+  buildIssueMessage,
+  buildLabelMessage,
+  buildMilestoneMessage,
+  buildPullRequestMessage,
+  buildPushMessage,
+} from './buildMessage';
+import { CheckRun } from 'types/Webhook/check_run';
+import { CheckSuite } from 'types/Webhook/check_suite';
+import { Issue } from 'types/Webhook/issue';
+import { Label } from 'types/Webhook/label';
+import { Milestone } from 'types/Webhook/milestone';
+import { PullRequest } from 'types/Webhook/pull_request';
+import { Push } from 'types/Webhook/push';
+import { Delete } from 'types/Webhook/delete';
+import { Workflow } from 'types/Webhook/workflow';
+import { WorkflowJob } from 'types/Webhook/workflow_job';
+import { WorkflowRun } from 'types/Webhook/workflow_run';
 
-export const createDescription = (payload: any, update: string[]): string => {
+export const createDescription = (payload: GitHubBodyRequest, update: string[]): string => {
   switch (update[0] ?? '') {
     case 'check_run':
-      return ` \\-\\> ${payload?.check_run.name} \\-\\> status: ${payload?.check_run.status} \\-\\> conclusion: ${payload?.check_run?.conclusion}`;
+      return ` check run: *${(payload as CheckRun).check_run.name}* was completed with a *${
+        (payload as CheckRun).check_run.conclusion
+      }* status`;
     case 'check_suite':
-      return ` \\-\\> ${payload?.check_suite?.head_branch} \\-\\> status: ${payload?.check_suite?.status} \\-\\> conclusion: ${payload?.check_suite?.conclusion}`;
+      return ` check suite on *${
+        (payload as CheckSuite).check_suite.head_branch
+      }* was completed with a *${(payload as CheckSuite).check_suite.conclusion}* status`;
     case 'issue':
-      return ` \\-\\> name: ${payload?.issue?.title} ${
-        update?.[1] ? `\\-\\> action: ${update[1]}` : ''
-      } `;
+      return buildIssueMessage(payload as Issue);
+    case 'label':
+      return buildLabelMessage(payload as Label);
+    case 'milestone':
+      return buildMilestoneMessage(payload as Milestone);
     case 'pull_request':
-      return ` \\-\\> ${payload?.pull_request?.state} \\-\\> merged: ${
-        payload?.pull_request?.merged
-      } ${
-        payload?.pull_request?.merged
-          ? ` \\-\\> merged by: ${payload?.pull_request?.merged_by.login} \\-\\> reviewers: ${
-              payload?.pull_request?.requested_reviewers.length > 0
-                ? payload?.pull_request?.requested_reviewers.join(', ')
-                : payload?.pull_request?.requested_reviewers.length
-            } \\-\\> labels: ${
-              payload?.pull_request?.labels.length > 0
-                ? payload?.pull_request?.labels.join(', ')
-                : 0
-            }`
-          : ''
-      }`;
-    case 'push':
-      return ` \\-\\> ${payload?.commits?.length} ${
-        payload?.forced ? 'forced commit(s)' : 'commit(s)'
-      } \\-\\> ${payload?.ref?.split('/').splice(2).join('')}`;
+      return buildPullRequestMessage(payload as PullRequest);
+    case 'pusher':
+      return buildPushMessage(payload as Push);
+    case 'pusher_type':
+      return ` branch: ${(payload as Delete).ref} was deleted`;
     case 'workflow_job':
-      return ` \\-\\> ${payload?.workflow_job?.head_branch} \\-\\> job: ${payload?.workflow_job?.name} \\-\\> status: ${payload?.workflow_job?.status} \\-\\> conclusion: ${payload?.workflow_job?.conclusion}`;
+      return ` workflow job on *${
+        (payload as WorkflowJob).workflow_job.head_branch
+      }* was completed with *${(payload as WorkflowJob).workflow_job.conclusion}* status`;
     case 'workflow_run':
-      return ` \\-\\> ${payload?.workflow_run?.head_branch} \\-\\> status: ${payload?.workflow_run?.status} \\-\\> conclusion: ${payload?.workflow_run?.conclusion}`;
+      return ` workflow run on *${
+        (payload as WorkflowRun).workflow_run.head_branch
+      }* was completed with *${(payload as WorkflowRun).workflow_run.conclusion}* status`;
     default:
       return update.join(' - ');
   }
@@ -51,10 +65,12 @@ export const formatMessage = (
           .map(char => (char === '_' ? ' ' : char))
           .join('')
       : 'There was an update but it is not handle, yet';
-  const message = `*GitHub Changes*
-User: *${actor}*
-Update: *${updateFormatted}${description ?? ''}*
-Repo: *${location}*`;
+  const message = `
+  *GitHub Changes*
+  User: *${actor}*
+  Update: ${updateFormatted}${description ?? ''}
+  Repo: *${location}*
+  `;
 
   return message;
 };

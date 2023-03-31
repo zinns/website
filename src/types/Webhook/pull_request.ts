@@ -1,12 +1,24 @@
 import { Base } from './base';
 import { Links } from './links';
+import { MilestoneClass } from './milestone';
+import { Organization } from './organization';
+import { Repository } from './repository';
 import { Sender } from './sender';
 
 export interface PullRequest {
+  action: string;
+  number: number;
+  pull_request: PullRequestClass;
+  repository: Repository;
+  organization: Organization;
+  sender: Sender;
+}
+
+export interface PullRequestClass {
   _links: Links;
   active_lock_reason: null;
   additions: number;
-  assignee: null;
+  assignee: Sender;
   assignees: any[];
   author_association: string;
   auto_merge: null;
@@ -35,7 +47,7 @@ export interface PullRequest {
   merged_at: string;
   merged_by: Sender;
   merged: boolean;
-  milestone: null;
+  milestone: MilestoneClass;
   node_id: string;
   number: number;
   patch_url: string;
