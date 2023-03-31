@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prepare": "husky install",
+    "dev": "next dev",
     "fix:format": "prettier --write .",
-    "validate": "prettier --check . && eslint .",
-    "postinstall": "husky install"
+    "lint": "next lint",
+    "postinstall": "husky install",
+    "prepare": "husky install",
+    "start": "next start",
+    "status-reminder": "node src/utils/cron-reminders/status.mjs",
+    "status-counter": "node src/utils/cron-reminders/status-counter.mjs",
+    "validate": "prettier --check . && eslint ."
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
