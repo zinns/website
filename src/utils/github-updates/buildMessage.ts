@@ -7,25 +7,25 @@ import { Push } from 'types/Webhook/push';
 export const buildIssueMessage = ({ action, issue, label }: Issue): string => {
   switch (action) {
     case 'assigned':
-      return ` issue: *${issue.title}* was assigned to *${issue.assignee}*`;
+      return ` issue \\-\\> : *${issue.title}* was assigned to *${issue.assignee}*`;
     case 'created':
-      return ` issue: *${issue.title}* was commented`;
+      return ` issue \\-\\> : *${issue.title}* was commented`;
     case 'deleted':
-      return ` issue: *${issue.title}* was deleted`;
+      return ` issue \\-\\> : *${issue.title}* was deleted`;
     case 'demilestoned':
-      return ` issue: *${issue.title}* was removed from milestone: *${issue.milestone.title}*`;
+      return ` issue \\-\\> : *${issue.title}* was removed from milestone: *${issue.milestone.title}*`;
     case 'edited':
-      return ` issue: *${issue.title}* was edited`;
+      return ` issue \\-\\> : *${issue.title}* was edited`;
     case 'labeled':
-      return ` issue: *${issue.title}* has been labeled with: *${issue.labels
+      return ` issue \\-\\> : *${issue.title}* has been labeled with: *${issue.labels
         .map(label => label.name)
         .join(' / ')}*`;
     case 'milestoned':
-      return ` issue: *${issue.title}* was added to milestone: *${issue.milestone.title}*`;
+      return ` issue \\-\\> : *${issue.title}* was added to milestone: *${issue.milestone.title}*`;
     case 'opened':
-      return ` issue: *${issue.title}* was opened`;
+      return ` issue \\-\\> : *${issue.title}* was opened`;
     case 'unlabeled':
-      return ` issue: *${issue.title}* has been unlabeled with: *${label.name}*`;
+      return ` issue \\-\\> : *${issue.title}* has been unlabeled with: *${label.name}*`;
     default:
       return 'There was an issue update but it is not handle, yet';
   }
@@ -113,7 +113,7 @@ export const buildPushMessage = ({ created, ref, commits, forced }: Push): strin
   }
 
   if (commits.length) {
-    return ` *${commits.length}* commit\\(s\\) were ${
+    return ` *${commits.length}* commit(s) were ${
       forced ? '*forced*' : ''
     } pushed to *${ref.replace('refs/heads/', '')}*`;
   }

@@ -52,28 +52,30 @@ export const createDescription = (payload: GitHubBodyRequest, update: string[]):
   }
 };
 
-export const formatMessage = (
-  actor: string,
-  description: string,
-  location: string,
-  update: string[],
-) => {
+export const formatMessage = (actor: string, description: string, location: string) => {
   const message = `
+  %0A
+  \\-\\-\\-\\-\\-\\-
+  %0A
+%0A
 *GitHub Changes*%0A
 %0A
 User: *${actor}*%0A
 %0A
-Update: ${description ?? ''}%0A
+Update: ${
+    description
+      .replace('-', '\\-')
+      .replace('(', '\\(')
+      .replace(')', '\\)')
+      .replace('/', '\\/')
+      .replace('>', '\\>') ?? ''
+  }%0A
 %0A
 Repo: *${location}*%0A
 %0A
 \\-\\-\\-\\-\\-\\-
+%0A
 `;
 
-  return message
-    .replace('-', '\\-')
-    .replace('(', '\\(')
-    .replace(')', '\\)')
-    .replace('/', '\\/)')
-    .replace('>', '\\/)');
+  return message;
 };
