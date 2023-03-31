@@ -24,9 +24,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         message,
       });
 
-      // if (isValid) {
-      //   await sendMessage(message);
-      // }
+      if (isValid) {
+        await sendMessage(message);
+      }
 
       res.status(200).json({ message: 'Everything went well 🚀' });
     } catch (error) {
