@@ -14,7 +14,6 @@ import { Milestone } from 'types/Webhook/milestone';
 import { PullRequest } from 'types/Webhook/pull_request';
 import { Push } from 'types/Webhook/push';
 import { Delete } from 'types/Webhook/delete';
-import { Workflow } from 'types/Webhook/workflow';
 import { WorkflowJob } from 'types/Webhook/workflow_job';
 import { WorkflowRun } from 'types/Webhook/workflow_run';
 
@@ -59,18 +58,22 @@ export const formatMessage = (
   location: string,
   update: string[],
 ) => {
-  const updateFormatted =
-    update.length > 0
-      ? [...(update.length > 1 ? update.join('/') : update[0])]
-          .map(char => (char === '_' ? ' ' : char))
-          .join('')
-      : 'There was an update but it is not handle, yet';
   const message = `
-  *GitHub Changes*
-  User: *${actor}*
-  Update: ${updateFormatted}${description ?? ''}
-  Repo: *${location}*
-  `;
+*GitHub Changes*%0A
+%0A
+User: *${actor}*%0A
+%0A
+Update: ${description ?? ''}%0A
+%0A
+Repo: *${location}*%0A
+%0A
+\\-\\-\\-\\-\\-\\-
+`;
 
-  return message;
+  return message
+    .replace('-', '\\-')
+    .replace('(', '\\(')
+    .replace(')', '\\)')
+    .replace('/', '\\/)')
+    .replace('>', '\\/)');
 };
