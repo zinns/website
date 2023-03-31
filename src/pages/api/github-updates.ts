@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const { actor, repo, payload, update } = extractData(req.body);
       const isValid = validatePayload(payload);
       const description = createDescription(payload, update);
-      const message = formatMessage(actor, description, repo, update);
+      const message = formatMessage(actor, description, repo);
 
       if (isValid) {
         await sendMessage(message);
