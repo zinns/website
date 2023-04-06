@@ -23,6 +23,8 @@ const getMissingStatuses = async () => {
       since: new Date(`${year}-${month}-1`),
     });
 
+    console.log(status);
+
     const today = new Date();
     const lastComment =
       status.length > 0 ? new Date(status[status.length - 1].created_at) : fullDate;
@@ -40,6 +42,11 @@ const getMissingStatuses = async () => {
       process.env.ZINNS_TELEGRAM_CHAT_ID,
     );
   } catch (error) {
+    console.log(
+      process.env.GH_TOKEN,
+      process.env.TELEGRAM_TOKEN,
+      process.env.ZINNS_TELEGRAM_CHAT_ID,
+    );
     console.log(error);
   }
 };
