@@ -13,7 +13,6 @@ const getMissingStatuses = async () => {
   try {
     const octokit = new Octokit({
       auth: `${process.env.GH_TOKEN}`,
-      userAgent: 'zinns integration',
     });
 
     const { data: status } = await octokit.rest.issues.listComments({
@@ -22,8 +21,6 @@ const getMissingStatuses = async () => {
       repo: 'training',
       since: new Date(`${year}-${month}-1`),
     });
-
-    console.log(status);
 
     const today = new Date();
     const lastComment =
@@ -34,19 +31,7 @@ const getMissingStatuses = async () => {
     await axios.get(
       `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_CHAT_ID}&text=There are ${missingStatuses} missing status(es)`,
     );
-
-    console.log(
-      process.env.GH_TOKEN,
-      missingStatuses,
-      process.env.TELEGRAM_TOKEN,
-      process.env.ZINNS_TELEGRAM_CHAT_ID,
-    );
   } catch (error) {
-    console.log(
-      process.env.GH_TOKEN,
-      process.env.TELEGRAM_TOKEN,
-      process.env.ZINNS_TELEGRAM_CHAT_ID,
-    );
     console.log(error);
   }
 };
