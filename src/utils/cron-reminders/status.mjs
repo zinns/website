@@ -20,6 +20,9 @@ const getMissingStatuses = async () => {
       owner: 'zinns',
       repo: 'training',
       since: new Date(`${year}-${month}-1`),
+      headers: {
+        authorization: `Bearer ${process.env.GH_TOKEN}`,
+      },
     });
 
     const today = new Date();
