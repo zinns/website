@@ -32,6 +32,13 @@ const getMissingStatuses = async () => {
     await axios.get(
       `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_CHAT_ID}&text=There are ${missingStatuses} missing status(es)`,
     );
+
+    console.log(
+      process.env.GH_TOKEN,
+      missingStatuses,
+      process.env.TELEGRAM_TOKEN,
+      process.env.ZINNS_TELEGRAM_CHAT_ID,
+    );
   } catch (error) {
     console.log(error);
   }
