@@ -1,7 +1,7 @@
 export const validatePayload = (payload: any) => {
   const unusedStatuses = ['in_progress', 'queued'];
 
-  return !Object.keys(payload)
+  return Object.keys(payload)
     .map(key => {
       if (
         Object.prototype.toString.call(payload[key]) === '[object Object]' &&
@@ -12,5 +12,5 @@ export const validatePayload = (payload: any) => {
         return true;
       }
     })
-    .every(value => !value);
+    .every(value => value);
 };

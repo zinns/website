@@ -7,10 +7,14 @@ import { Sender } from './sender';
 
 export interface PullRequest {
   action: string;
+  changes: { [key: string]: string };
   number: number;
+  organization: Organization;
   pull_request: PullRequestClass;
   repository: Repository;
-  organization: Organization;
+  requested_reviewer: {
+    [key: string]: string;
+  };
   sender: Sender;
 }
 
