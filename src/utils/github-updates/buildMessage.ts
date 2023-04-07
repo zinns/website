@@ -12,27 +12,25 @@ export const buildCommentMessage = ({ comment, pull_request }: Comment): string 
 export const buildIssueMessage = ({ action, issue, label }: Issue): string => {
   switch (action) {
     case 'assigned':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was assigned to *${issue.assignee}*`;
+      return `issue: *${issue.title.toUpperCase()}* was assigned to *${issue.assignee}*`;
     case 'created':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was commented`;
+      return `issue: *${issue.title.toUpperCase()}* was commented`;
     case 'deleted':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was deleted`;
+      return `issue: *${issue.title.toUpperCase()}* was deleted`;
     case 'demilestoned':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was removed from milestone: *${issue.milestone.title.toUpperCase()}*`;
+      return `issue: *${issue.title.toUpperCase()}* was removed from milestone: *${issue.milestone.title.toUpperCase()}*`;
     case 'edited':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was edited`;
+      return `issue: *${issue.title.toUpperCase()}* was edited`;
     case 'labeled':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* has been labeled with: *${issue.labels
+      return `issue: *${issue.title.toUpperCase()}* has been labeled with: *${issue.labels
         .map(label => label.name)
         .join(' / ')}*`;
     case 'milestoned':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was added to milestone: *${issue.milestone.title.toUpperCase()}*`;
+      return `issue: *${issue.title.toUpperCase()}* was added to milestone: *${issue.milestone.title.toUpperCase()}*`;
     case 'opened':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* was opened`;
+      return `issue: *${issue.title.toUpperCase()}* was opened`;
     case 'unlabeled':
-      return ` issue \\-\\> : *${issue.title.toUpperCase()}* has been unlabeled with: *${
-        label.name
-      }*`;
+      return `issue: *${issue.title.toUpperCase()}* has been unlabeled with: *${label.name}*`;
     default:
       return 'There was an issue update but it is not handle, yet';
   }

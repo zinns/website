@@ -76,9 +76,6 @@ Update: ${
   }%0A
 %0A
 Repo: *${location}*%0A
-%0A
-\\-\\-\\-\\-\\-\\-
-%0A
 `;
 
   return message;
