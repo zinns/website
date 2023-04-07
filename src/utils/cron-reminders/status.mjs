@@ -15,15 +15,18 @@ const getMissingStatuses = async () => {
       auth: `${process.env.GH_TOKEN}`,
     });
 
-    const { data: status } = await octokit.request('GET /repos/{owner}/{repo}/issues/comments', {
-      issue_number: '40',
-      owner: 'zinns',
-      repo: 'training',
-      since: new Date(`${year}-${month}-1`),
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28',
+    const { data: status } = await octokit.request(
+      'GET /repos/{owner}/{repo}/issues/{issue_number}/comments',
+      {
+        issue_number: '40',
+        owner: 'zinns',
+        repo: 'training',
+        since: new Date(`${year}-${month}-1`),
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
       },
-    });
+    );
 
     const today = new Date();
     const lastComment =
