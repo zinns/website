@@ -1,5 +1,6 @@
 import { CheckRun } from './check_run';
 import { CheckSuite } from './check_suite';
+import { Comment } from './comment';
 import { Delete } from './delete';
 import { DeploymentStatus } from './deploymentStatus';
 import { Issue } from './issue';
@@ -15,6 +16,7 @@ import { WorkflowRun } from './workflow_run';
 export type GitHubBodyRequest =
   | CheckRun
   | CheckSuite
+  | Comment
   | Delete
   | DeploymentStatus
   | Issue

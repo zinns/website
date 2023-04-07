@@ -1,5 +1,6 @@
 import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
 import {
+  buildCommentMessage,
   buildIssueMessage,
   buildLabelMessage,
   buildMilestoneMessage,
@@ -16,6 +17,7 @@ import { Push } from 'types/Webhook/push';
 import { Delete } from 'types/Webhook/delete';
 import { WorkflowJob } from 'types/Webhook/workflow_job';
 import { WorkflowRun } from 'types/Webhook/workflow_run';
+import { Comment } from 'types/Webhook/comment';
 
 export const createDescription = (payload: GitHubBodyRequest, update: string[]): string => {
   switch (update[0] ?? '') {
@@ -27,6 +29,8 @@ export const createDescription = (payload: GitHubBodyRequest, update: string[]):
       return ` check suite on *${
         (payload as CheckSuite).check_suite.head_branch
       }* was completed with a *${(payload as CheckSuite).check_suite.conclusion}* status`;
+    case 'comment':
+      return buildCommentMessage(payload as Comment);
     case 'issue':
       return buildIssueMessage(payload as Issue);
     case 'label':

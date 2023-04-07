@@ -1,8 +1,13 @@
+import { Comment } from 'types/Webhook/comment';
 import { Issue } from 'types/Webhook/issue';
 import { Label } from 'types/Webhook/label';
 import { Milestone } from 'types/Webhook/milestone';
 import { PullRequest } from 'types/Webhook/pull_request';
 import { Push } from 'types/Webhook/push';
+
+export const buildCommentMessage = ({ comment, pull_request }: Comment): string => {
+  return `comment added by *${comment.user.login.toUpperCase()}* into PR *${pull_request.title.toUpperCase()}* opened by *${pull_request.user.login.toUpperCase()}*`;
+};
 
 export const buildIssueMessage = ({ action, issue, label }: Issue): string => {
   switch (action) {
