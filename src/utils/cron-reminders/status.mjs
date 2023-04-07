@@ -15,7 +15,7 @@ const getMissingStatuses = async () => {
       auth: `${process.env.GH_TOKEN}`,
     });
 
-    const { data: status } = await octokit.rest.issues.listComments({
+    const { data: status } = await octokit.request('GET /repos/{owner}/{repo}/issues/comments', {
       issue_number: '40',
       owner: 'zinns',
       repo: 'training',
