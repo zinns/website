@@ -9,7 +9,13 @@ export const validatePayload = (payload: any) => {
       ) {
         return !unusedStatuses.includes(payload[key].status);
       } else {
-        return !key.includes('project');
+        if (key.includes('project')) {
+          return false;
+        }
+        if (key === 'pusher' && payload.deleted) {
+          return false;
+        }
+        return true;
       }
     })
     .every(value => value);
