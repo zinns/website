@@ -9,7 +9,7 @@ export const validatePayload = (payload: any) => {
       ) {
         return !unusedStatuses.includes(payload[key].status);
       } else {
-        return true;
+        return !key.includes('project');
       }
     })
     .every(value => value);

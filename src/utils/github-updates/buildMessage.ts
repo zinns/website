@@ -13,6 +13,10 @@ export const buildIssueMessage = ({ action, issue, label }: Issue): string => {
   switch (action) {
     case 'assigned':
       return `issue: *${issue.title.toUpperCase()}* was assigned to *${issue.assignee}*`;
+    case 'closed':
+      return `issue: *${issue.title.toUpperCase()}* was closed with a *${
+        issue.state_reason
+      }* status`;
     case 'created':
       return `issue: *${issue.title.toUpperCase()}* was commented`;
     case 'deleted':
@@ -70,7 +74,6 @@ export const buildPullRequestMessage = ({
   changes,
   requested_reviewer,
 }: PullRequest): string => {
-  console.log(requested_reviewer);
   switch (action) {
     case 'assigned':
       return `pull request: *${pull_request.title.toUpperCase()}* opened by *${pull_request.user.login.toUpperCase()}* was assigned to *${pull_request.assignee.login.toUpperCase()}*'
