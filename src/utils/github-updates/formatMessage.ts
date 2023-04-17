@@ -72,7 +72,8 @@ Update: ${
       .replace('(', '\\(')
       .replace(')', '\\)')
       .replace('/', '\\/')
-      .replace('>', '\\>') ?? ''
+      .replace('>', '\\>')
+      .replace('_', ' ') ?? ''
   }%0A
 %0A
 Repo: *${location}*%0A
