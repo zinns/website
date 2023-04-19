@@ -8,8 +8,9 @@ export const validatePayload = (payload: any, update: string[]) => {
     update.includes('workflow_run') &&
     payload.workflow_run.name === 'Status Reminder' &&
     payload.workflow_run.conclusion === 'success';
+  const projectItemsInvalid = Object.keys(payload).some(key => key === 'projects_v2_item');
 
-  if (workflowJobInvalid || workflowRunInvalid) {
+  if (workflowJobInvalid || workflowRunInvalid || projectItemsInvalid) {
     return false;
   }
 
@@ -21,7 +22,7 @@ export const validatePayload = (payload: any, update: string[]) => {
       ) {
         return !unusedStatuses.includes(payload[key].status);
       } else {
-        if (['project', 'pusher_type'].includes(key)) {
+        if ([key].includes('pusher_type')) {
           return false;
         }
         return true;
