@@ -12,11 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method === 'POST') {
     try {
       const { actor, repo, payload, update } = extractData(req.body);
-      const isValid = validatePayload(payload);
-      const description = createDescription(payload, update);
-      const message = formatMessage(actor, description, repo);
+      const isValid = validatePayload(payload, update);
 
       if (isValid) {
+        const description = createDescription(payload, update);
+        const message = formatMessage(actor, description, repo);
+
         await sendMessage(message);
       }
 

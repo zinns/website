@@ -41,8 +41,6 @@ export const createDescription = (payload: GitHubBodyRequest, update: string[]):
       return buildPullRequestMessage(payload as PullRequest);
     case 'pusher':
       return buildPushMessage(payload as Push);
-    case 'pusher_type':
-      return ` branch: ${(payload as Delete).ref} was deleted`;
     case 'workflow_job':
       return ` workflow job on *${
         (payload as WorkflowJob).workflow_job.head_branch

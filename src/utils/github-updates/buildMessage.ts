@@ -108,6 +108,10 @@ export const buildPullRequestMessage = ({
       return `pull request: *${pull_request.title.toUpperCase()}* opened by *${pull_request.user.login.toUpperCase()}* assigned to *${
         pull_request.assignee?.login.toUpperCase() ?? 'unassigned'
       }* was *reopened*`;
+    case 'resolved':
+      return `pull request: *${pull_request.title.toUpperCase()}* opened by *${pull_request.user.login.toUpperCase()}* assigned to *${
+        pull_request.assignee?.login.toUpperCase() ?? 'unassigned'
+      }* *resolved* some conversations`;
     case 'review_requested':
       return `pull request: *${pull_request.title.toUpperCase()}* opened by *${pull_request.user?.login.toUpperCase()}* assigned to *${
         pull_request.assignee?.login.toUpperCase() ?? 'unassigned'
@@ -121,9 +125,13 @@ export const buildPullRequestMessage = ({
   }
 };
 
-export const buildPushMessage = ({ created, ref, commits, forced }: Push): string => {
+export const buildPushMessage = ({ created, deleted, ref, commits, forced }: Push): string => {
   if (created) {
     return ` branch: *${ref.replace('refs/heads/', '')}* was created`;
+  }
+
+  if (deleted) {
+    return ` branch: *${ref.replace('refs/heads/', '')}* was deleted`;
   }
 
   if (commits.length) {
