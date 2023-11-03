@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { extractData } from 'utils/github-updates/extractData';
-import { createDescription, formatMessage } from 'utils/github-updates/formatMessage';
+import { createMessage } from 'utils/github-updates/createMessage';
+import { createDescription } from 'utils/github-updates/createDescription';
 import { sendMessage } from 'utils/github-updates/sendMessage';
 import { validatePayload } from 'utils/github-updates/validatePayload';
 
@@ -16,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       if (isValid) {
         const description = createDescription(payload, update);
-        const message = formatMessage(actor, description, repo);
+        const message = createMessage(actor, description, repo);
 
         await sendMessage(message);
       }
