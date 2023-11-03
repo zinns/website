@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "assessments-reminder": "node ./automation/assessments_reminder.mjs",
     "build": "next build",
     "dev": "next dev",
     "fix:format": "prettier --write .",
@@ -10,8 +11,6 @@
     "postinstall": "husky install",
     "prepare": "husky install",
     "start": "next start",
-    "status-reminder": "node src/utils/cron-reminders/status.mjs",
-    "status-counter": "node src/utils/cron-reminders/status-counter.mjs",
     "validate": "prettier --check . && eslint ."
   },
   "dependencies": {

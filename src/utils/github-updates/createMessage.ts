@@ -2,7 +2,7 @@ import { formatContent } from './formatContent';
 
 export const createMessage = (actor: string, description: string, location: string) => {
   const formattedDescription = formatContent(description);
-  const formattedlocation = formatContent(location);
+  const formattedLocation = formatContent(location);
   const formattedActor = formatContent(actor);
 
   const message = `
@@ -16,7 +16,7 @@ User: *${formattedActor}*%0A
 %0A
 Update: ${formattedDescription}%0A
 %0A
-Repo: *${formattedlocation}*%0A
+Repo: *${formattedLocation}*%0A
 `;
 
   return message;
