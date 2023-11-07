@@ -3,22 +3,39 @@ dotenv.config();
 
 import axios from 'axios';
 
-const assessmentsReminder = async () => {
-  try {
-    const message = `
+const dev_assessment_link = 'https://forms.gle/RMQwMbVpoJ9n5rnJ7';
+const internal_assessment_link = 'https://forms.gle/eY24D9iLYKABosyU7';
+
+const formatContent = content =>
+  content
+    .split('')
+    .map(char => (/[-]|[(]|[)]|[>]|[_]|[/]|[:]|[.]/g.test(char) ? `\\${char}` : char))
+    .join('');
+
+const buildMessage = env => {
+  return `
 %0A
 \\-\\-\\-\\-\\-\\-
 *Reminder*%0A
 Please help us to do the assessment%0A
-Please visit this link *https\\:\\/\\/forms\\.gle\\/RMQwMbVpoJ9n5rnJ7*%0A
+Please visit this link *${formatContent(env)}*%0A
 %0A
 *Recordatorio*%0A
 Por favor\\, contesta el siguiente formulario%0A
-Visita este link *https\\:\\/\\/forms\\.gle\\/RMQwMbVpoJ9n5rnJ7*%0A
+Visita este link *${formatContent(env)}*%0A
 `;
+};
+
+const assessmentsReminder = async () => {
+  try {
+    const devAssessment = buildMessage(dev_assessment_link);
+    const internalAssessment = buildMessage(internal_assessment_link);
 
     await axios.get(
-      `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_CHAT_ID}&parse_mode=MarkdownV2&text=${message}`,
+      `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DEV_CHAT_ID}&parse_mode=MarkdownV2&text=${devAssessment}`,
+    );
+    await axios.get(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DESIGN_CHAT_ID}&parse_mode=MarkdownV2&text=${internalAssessment}`,
     );
   } catch (error) {
     console.log(error);
