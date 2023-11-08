@@ -3,8 +3,8 @@ dotenv.config();
 
 import axios from 'axios';
 
-const dev_assessment_link = 'https://forms.gle/RMQwMbVpoJ9n5rnJ7';
-const internal_assessment_link = 'https://forms.gle/eY24D9iLYKABosyU7';
+const devAssessmentLink = 'https://forms.gle/RMQwMbVpoJ9n5rnJ7';
+const internalAssessmentLink = 'https://forms.gle/eY24D9iLYKABosyU7';
 
 const formatContent = content =>
   content
@@ -28,8 +28,8 @@ Visita este link *${formatContent(env)}*%0A
 
 const assessmentsReminder = async () => {
   try {
-    const devAssessment = buildMessage(dev_assessment_link);
-    const internalAssessment = buildMessage(internal_assessment_link);
+    const devAssessment = buildMessage(devAssessmentLink);
+    const internalAssessment = buildMessage(internalAssessmentLink);
 
     await axios.get(
       `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DEV_CHAT_ID}&parse_mode=MarkdownV2&text=${devAssessment}`,
