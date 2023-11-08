@@ -5,7 +5,7 @@ import axios from 'axios';
 import { differenceInWeeks } from 'date-fns';
 
 const startDate = new Date('2023 26 Oct');
-const runningDate = new Date('2023 23 Nov');
+const runningDate = new Date();
 
 if (differenceInWeeks(runningDate, startDate) % 2 === 0) {
   const meetingLink = 'https://meet.google.com/nfk-wifd-tqi';
