@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "assessments-reminder": "node ./automation/assessments_reminder.mjs",
+    "assessments-reminder": "node ./automation/assessments.mjs",
     "build": "next build",
     "dev": "next dev",
     "fix:format": "prettier --write .",
     "lint": "next lint",
+    "padawan-meeting-reminder": "node ./automation/padawan_meeting.mjs",
     "postinstall": "husky install",
     "prepare": "husky install",
     "start": "next start",
