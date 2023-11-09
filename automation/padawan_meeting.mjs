@@ -31,6 +31,8 @@ if (differenceInWeeks(runningDate, startDate) % 2 === 0) {
     try {
       const devAssessment = buildMessage(meetingLink);
 
+      console.log(process.env);
+
       await axios.get(
         `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DEV_CHAT_ID}&parse_mode=MarkdownV2&text=${devAssessment}`,
       );
