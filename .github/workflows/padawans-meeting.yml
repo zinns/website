@@ -7,11 +7,11 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   workflow_dispatch:
   schedule:
-    - cron: '45 17 * * 4'
+    - cron: '00 22 * * 4'
 
 env:
-  TELEGRAM_TOKEN: ${{secrets.TELEGRAM_TOKEN}}
-  ZINNS_TELEGRAM_DEV_CHAT_ID: ${{secrets.ZINNS_TELEGRAM_DEV_CHAT_ID}}
+  TELEGRAM_TOKEN: ${{vars.TELEGRAM_TOKEN}}
+  ZINNS_TELEGRAM_DEV_CHAT_ID: ${{vars.ZINNS_TELEGRAM_DEV_CHAT_ID}}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,7 +25,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: main
       - name: Padawan Meeting Reminder
         run: |
           npm i

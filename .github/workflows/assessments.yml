@@ -10,9 +10,9 @@ on:
     - cron: '45 17 1 * *'
 
 env:
-  TELEGRAM_TOKEN: ${{secrets.TELEGRAM_TOKEN}}
-  ZINNS_TELEGRAM_DEV_CHAT_ID: ${{secrets.ZINNS_TELEGRAM_DEV_CHAT_ID}}
-  ZINNS_TELEGRAM_DESIGN_CHAT_ID: ${{secrets.ZINNS_TELEGRAM_CHAT_ID}}
+  TELEGRAM_TOKEN: ${{vars.TELEGRAM_TOKEN}}
+  ZINNS_TELEGRAM_DEV_CHAT_ID: ${{vars.ZINNS_TELEGRAM_DEV_CHAT_ID}}
+  ZINNS_TELEGRAM_DESIGN_CHAT_ID: ${{vars.ZINNS_TELEGRAM_DESIGN_CHAT_ID}}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -26,7 +26,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: main
       - name: Assessment Reminder
         run: |
           npm i
