@@ -21,7 +21,7 @@ if (differenceInWeeks(runningDate, startDate) % 2 === 0) {
   %0A
   *Reminder*%0A
   Hey guys\\!%0A
-  Today we have our meeting at *22\\:00*%0A
+  Today we have our meeting at *21\\:00*%0A
   Here it is the url\\: ${formatContent(env)}
   %0A
   `;
