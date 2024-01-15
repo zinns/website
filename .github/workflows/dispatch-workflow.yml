@@ -6,13 +6,13 @@ on:
       versionType:
         description: 'Version Type'
         required: true
-        default: 'PATCH'
+        default: patch
         type: choice
         options:
-          - 'MAJOR'
-          - 'MINOR'
-          - 'PATCH'
-          - 'RELEASE'
+          - major
+          - minor
+          - patch
+          - release
 
 jobs:
   bump-version:
@@ -38,11 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ vars.GH_TOKEN }}
         with:
           tag-prefix: 'v'
-          target-branch: 'master'
-          version-type: ${{inputs.versionType}}
-          minor-wording: 'MINOR'
-          major-wording: 'MAJOR'
-          patch-wording: 'PATCH'
-          rc-wording: 'RELEASE'
+          target-branch: 'develop'
+          version-type: '${{inputs.versionType}}'
       - name: 'cat package.json'
         run: cat ./package.json
