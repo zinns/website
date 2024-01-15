@@ -67,5 +67,5 @@
     "start": "next start",
     "validate": "prettier --check . && eslint ."
   },
-  "version": "0.0.3"
+  "version": "0.0.4"
 }
