@@ -1,0 +1,48 @@
+name: 'Dispatch Bump Version'
+
+on:
+  workflow_dispatch:
+    inputs:
+      versionType:
+        description: 'Version Type'
+        required: true
+        default: 'PATCH'
+        type: choice
+        options:
+          - 'MAJOR'
+          - 'MINOR'
+          - 'PATCH'
+          - 'RELEASE'
+
+jobs:
+  bump-version:
+    name: 'Bump Version on develop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ vars.GH_TOKEN }}
+      - name: 'Setup Git'
+        run: |
+          git config user.name "Edgar Zea"
+          git config user.email "cesszea@icloud.com"
+      - name: 'cat package.json'
+        run: cat ./package.json
+      - name: 'Automated Version Bump'
+        uses: 'phips28/gh-action-bump-version@master'
+
+        env:
+          GITHUB_TOKEN: ${{ vars.GH_TOKEN }}
+        with:
+          tag-prefix: 'v'
+          target-branch: 'master'
+          version-type: ${{inputs.versionType}}
+          minor-wording: 'MINOR'
+          major-wording: 'MAJOR'
+          patch-wording: 'PATCH'
+          rc-wording: 'RELEASE'
+      - name: 'cat package.json'
+        run: cat ./package.json
