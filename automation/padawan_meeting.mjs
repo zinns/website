@@ -27,6 +27,14 @@ if (differenceInWeeks(runningDate, startDate) % 2 === 0) {
   `;
   };
 
+  const buildErrorMessage = description => {
+    return `
+%0A
+Something wrong happened running this automation: *padawanMeetingReminder*%0A
+Here is the error \\-\\> ${description}
+`;
+  };
+
   const padawanMeetingReminder = async () => {
     try {
       const devAssessment = buildMessage(meetingLink);
@@ -35,7 +43,13 @@ if (differenceInWeeks(runningDate, startDate) % 2 === 0) {
         `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DEV_CHAT_ID}&parse_mode=MarkdownV2&text=${devAssessment}`,
       );
     } catch (error) {
-      console.log(error);
+      console.log('Something wrong happened -> ', JSON.stringify(error.response.data));
+
+      await axios.get(
+        `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${
+          process.env.ZINNS_TELEGRAM_GITHUB_CHAT_ID
+        }&parse_mode=MarkdownV2&text=${buildErrorMessage(error.response.data)}`,
+      );
     }
   };
 

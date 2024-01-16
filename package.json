@@ -56,7 +56,8 @@
   "name": "website",
   "private": true,
   "scripts": {
-    "assessments-reminder": "node ./automation/assessments.mjs",
+    "company-assessment-reminder": "node ./automation/company_assessment.mjs",
+    "dev-course-assessment-reminder": "node ./automation/dev_course_assessment.mjs",
     "build": "next build",
     "dev": "next dev",
     "fix:format": "prettier --write .",
@@ -65,6 +66,7 @@
     "postinstall": "husky install",
     "prepare": "husky install",
     "start": "next start",
+    "update-trello-reminder": "node ./automation/update_trello.mjs",
     "validate": "prettier --check . && eslint ."
   },
   "version": "0.0.4"
