@@ -4,7 +4,7 @@ dotenv.config();
 import makeRequest from './utils/makeRequest.mjs';
 import parseContent from './utils/parseContent.mjs';
 
-const personalAssessmentLink = 'https://forms.gle/eY24D9iLYKABosyU7';
+const personalAssessmentLink = 'https://forms.gle/bVxZnocJFz3bLmB5A';
 
 const buildMessage = env => {
   return `
