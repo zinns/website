@@ -1,16 +1,11 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import axios from 'axios';
 import { getMonth } from 'date-fns';
+import makeRequest from './utils/makeRequest.mjs';
+import parseContent from './utils/parseContent.mjs';
 
 const internalAssessmentLink = 'https://forms.gle/eY24D9iLYKABosyU7';
-
-const formatContent = content =>
-  content
-    .split('')
-    .map(char => (/[-]|[(]|[)]|[>]|[_]|[/]|[:]|[.]/g.test(char) ? `\\${char}` : char))
-    .join('');
 
 const buildMessage = env => {
   return `
@@ -18,50 +13,30 @@ const buildMessage = env => {
 \\-\\-\\-\\-\\-\\-
 *Reminder*%0A
 Please help us to do the company assessment%0A
-Please visit this link *${formatContent(env)}*%0A
+Please visit this link *${parseContent(env)}*%0A
 %0A
 *Recordatorio*%0A
 Por favor\\, contesta el siguiente formulario%0A
-Visita este link *${formatContent(env)}*%0A
-`;
-};
-
-const buildErrorMessage = description => {
-  return `
-%0A
-Something wrong happened running this automation: *companyAssessment*%0A
-Here is the error \\-\\> ${description}
+Visita este link *${parseContent(env)}*%0A
 `;
 };
 
 const companyAssessment = async () => {
-  try {
-    const month = getMonth(new Date()) + 1;
-    const isValidMonth = month % 3 === 0;
+  const month = getMonth(new Date()) + 1;
+  const isValidMonth = month % 3 === 0;
 
-    if (!isValidMonth) {
-      console.log(`This month is not a valid month -> ${month}`);
-      return;
-    }
-
-    const internalAssessment = buildMessage(internalAssessmentLink);
-
-    const { data: designResponseData } = await axios.get(
-      `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${process.env.ZINNS_TELEGRAM_DESIGN_CHAT_ID}&parse_mode=MarkdownV2&text=${internalAssessment}`,
-    );
-
-    if (!designResponseData?.ok) {
-      console.log('Something unexpected happened -> ', JSON.stringify(designResponseData));
-    }
-  } catch (error) {
-    console.log('Something wrong happened -> ', JSON.stringify(error.response.data));
-
-    await axios.get(
-      `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage?chat_id=${
-        process.env.ZINNS_TELEGRAM_GITHUB_CHAT_ID
-      }&parse_mode=MarkdownV2&text=${buildErrorMessage(error.response.data)}`,
-    );
+  if (!isValidMonth) {
+    console.log(`This month is not a valid month -> ${month}`);
+    return;
   }
+
+  const internalAssessment = buildMessage(internalAssessmentLink);
+
+  await makeRequest(
+    'companyAssessment',
+    process.env.ZINNS_TELEGRAM_DESIGN_CHAT_ID,
+    internalAssessment,
+  );
 };
 
 companyAssessment();
