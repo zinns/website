@@ -1,18 +1,8 @@
 {
-  "name": "website",
-  "version": "0.0.3",
-  "private": true,
-  "scripts": {
-    "assessments-reminder": "node ./automation/assessments.mjs",
-    "build": "next build",
-    "dev": "next dev",
-    "fix:format": "prettier --write .",
-    "lint": "next lint",
-    "padawan-meeting-reminder": "node ./automation/padawan_meeting.mjs",
-    "postinstall": "husky install",
-    "prepare": "husky install",
-    "start": "next start",
-    "validate": "prettier --check . && eslint ."
+  "author": "zinns.io",
+  "engines": {
+    "npm": ">= 10",
+    "yarn": ">= 1.19"
   },
   "dependencies": {
     "@apollo/client": "^3.7.11",
@@ -62,5 +52,23 @@
     "husky": "^8.0.3",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1"
-  }
+  },
+  "name": "website",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "company-assessment-reminder": "node ./automation/company_assessment.mjs",
+    "dev-course-assessment-reminder": "node ./automation/dev_course_assessment.mjs",
+    "dev": "next dev",
+    "fix:format": "prettier --write .",
+    "lint": "next lint",
+    "padawan-meeting-reminder": "node ./automation/padawan_meeting.mjs",
+    "personal-assessment-reminder": "node ./automation/padawan_meeting.mjs",
+    "postinstall": "husky install",
+    "prepare": "husky install",
+    "start": "next start",
+    "update-trello-reminder": "node ./automation/update_trello.mjs",
+    "validate": "prettier --check . && eslint ."
+  },
+  "version": "0.1.2"
 }
