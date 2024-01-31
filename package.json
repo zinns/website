@@ -63,12 +63,12 @@
     "fix:format": "prettier --write .",
     "lint": "next lint",
     "padawan-meeting-reminder": "node ./automation/padawan_meeting.mjs",
-    "personal-assessment-reminder": "node ./automation/padawan_meeting.mjs",
+    "personal-assessment-reminder": "node ./automation/personal_assessment.mjs",
     "postinstall": "husky install",
     "prepare": "husky install",
     "start": "next start",
     "update-trello-reminder": "node ./automation/update_trello.mjs",
     "validate": "prettier --check . && eslint ."
   },
-  "version": "0.1.2"
+  "version": "0.1.4"
 }
