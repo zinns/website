@@ -70,5 +70,5 @@
     "update-trello-reminder": "node ./automation/update_trello.mjs",
     "validate": "prettier --check . && eslint ."
   },
-  "version": "0.1.2"
+  "version": "0.1.3"
 }
