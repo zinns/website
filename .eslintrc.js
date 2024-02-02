@@ -8,6 +8,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/jsx-runtime',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -26,5 +27,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react/prop-types': 'off',
+  },
+  settings: {
+    react: 'detect',
   },
 };
