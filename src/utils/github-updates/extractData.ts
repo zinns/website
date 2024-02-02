@@ -1,6 +1,6 @@
-import { IMPORTANT_KEYS } from 'types/Webhook/githubRequest';
+import { GitHubBodyRequest, IMPORTANT_KEYS } from 'types/Webhook/githubRequest';
 
-export const extractData = (body: any) => {
+export const extractData = (body: GitHubBodyRequest) => {
   const payload = body;
   const update = Object.keys(payload).filter(key => IMPORTANT_KEYS.includes(key));
   const {
