@@ -6,5 +6,5 @@ module.exports = {
     localeDetection: false,
     locales: ['en', 'es'],
   },
-  localePath: path.resolve('./src/i18n/locales'),
+  localePath: path.resolve('./src/lang'),
 };
