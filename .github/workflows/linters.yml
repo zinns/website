@@ -24,4 +24,4 @@ jobs:
       - name: Run Prettier and ESLint
         run: |
           npm i
-          npm run validate
+          npm run validate && npm run lint
