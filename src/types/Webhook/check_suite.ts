@@ -22,7 +22,7 @@ export interface CheckSuiteClass {
   url: string;
   before: string;
   after: string;
-  pull_requests: any[];
+  pull_requests: unknown[];
   app: App;
   created_at: string;
   updated_at: string;

@@ -2,12 +2,14 @@
 
 import { Organization } from './organization';
 import { Sender } from './sender';
+import { Repository } from './repository';
 
 export interface Ping {
   zen: string;
   hook_id: number;
   hook: Hook;
   organization: Organization;
+  repository?: Repository;
   sender: Sender;
 }
 
