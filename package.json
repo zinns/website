@@ -68,7 +68,7 @@
     "prepare": "husky install",
     "start": "next start",
     "update-trello-reminder": "node ./automation/update_trello.mjs",
-    "validate": "prettier --check . && eslint ."
+    "validate": "prettier --check . && eslint . && next build"
   },
   "version": "0.1.4"
 }
