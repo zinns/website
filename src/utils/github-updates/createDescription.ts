@@ -14,7 +14,6 @@ import { Label } from 'types/Webhook/label';
 import { Milestone } from 'types/Webhook/milestone';
 import { PullRequest } from 'types/Webhook/pull_request';
 import { Push } from 'types/Webhook/push';
-import { Delete } from 'types/Webhook/delete';
 import { WorkflowJob } from 'types/Webhook/workflow_job';
 import { WorkflowRun } from 'types/Webhook/workflow_run';
 import { Comment } from 'types/Webhook/comment';

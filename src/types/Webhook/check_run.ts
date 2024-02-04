@@ -29,5 +29,5 @@ export interface CheckRunClass {
   output: Output;
   check_suite: CheckSuiteClass;
   app: App;
-  pull_requests: any[];
+  pull_requests: unknown[];
 }

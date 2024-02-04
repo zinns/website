@@ -1,4 +1,11 @@
-export const validatePayload = (payload: any, update: string[]) => {
+import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
+import { WorkflowJobClass } from 'types/Webhook/workflow_job';
+import { WorkflowRunClass } from 'types/Webhook/workflow_run';
+
+export const validatePayload = (
+  payload: GitHubBodyRequest & { workflow_job: WorkflowJobClass; workflow_run: WorkflowRunClass },
+  update: string[],
+) => {
   const unusedStatuses = ['in_progress', 'queued'];
   const workflowJobInvalid =
     update.includes('workflow_job') &&
@@ -17,9 +24,14 @@ export const validatePayload = (payload: any, update: string[]) => {
   return Object.keys(payload)
     .map(key => {
       if (
-        Object.prototype.toString.call(payload[key]) === '[object Object]' &&
+        Object.prototype.toString.call(payload[key as keyof GitHubBodyRequest]) ===
+          '[object Object]' &&
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         Object.keys(payload[key]).includes('status')
       ) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         return !unusedStatuses.includes(payload[key].status);
       } else {
         if ([key].includes('pusher_type')) {

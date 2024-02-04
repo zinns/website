@@ -9,7 +9,7 @@ export interface Commit {
   url: string;
   author: Author;
   committer: Author;
-  added: any[];
-  removed: any[];
+  added: unknown[];
+  removed: unknown[];
   modified: string[];
 }
