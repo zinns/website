@@ -24,11 +24,6 @@ const MemberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    verified: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
     tShirtSize: {
       type: String,
       required: true,
