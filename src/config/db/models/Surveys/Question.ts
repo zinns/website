@@ -24,7 +24,7 @@ const QuestionSchema = new mongoose.Schema(
 );
 
 QuestionSchema.method('toJSON', function () {
-  const { _id, ...object } = this.toObject();
+  const { _id, ...object }: { [key: string]: string } = this.toObject();
 
   object.id = _id;
 
