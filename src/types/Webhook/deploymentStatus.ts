@@ -31,7 +31,7 @@ export interface Deployment {
   creator: Sender;
   sha: string;
   ref: string;
-  payload: any;
+  payload: unknown;
   transient_environment: boolean;
   production_environment: boolean;
   performed_via_github_app: null;

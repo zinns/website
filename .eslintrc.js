@@ -8,6 +8,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:@next/next/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -26,5 +28,10 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react/prop-types': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React
+    },
   },
 };

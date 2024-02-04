@@ -39,8 +39,8 @@ export interface WorkflowRunClass {
   node_id: string;
   path: string;
   previous_attempt_url: null;
-  pull_requests: any[];
-  referenced_workflows: any[];
+  pull_requests: unknown[];
+  referenced_workflows: unknown[];
   repository: HeadRepository;
   rerun_url: string;
   run_attempt: number;

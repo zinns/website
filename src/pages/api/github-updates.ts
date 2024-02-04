@@ -4,6 +4,9 @@ import { createMessage } from 'utils/github-updates/createMessage';
 import { createDescription } from 'utils/github-updates/createDescription';
 import { sendMessage } from 'utils/github-updates/sendMessage';
 import { validatePayload } from 'utils/github-updates/validatePayload';
+import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
+import { WorkflowJobClass } from 'types/Webhook/workflow_job';
+import { WorkflowRunClass } from 'types/Webhook/workflow_run';
 
 type ResponseData = {
   message: string;
@@ -13,7 +16,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method === 'POST') {
     try {
       const { actor, repo, payload, update } = extractData(req.body);
-      const isValid = validatePayload(payload, update);
+      const isValid = validatePayload(
+        payload as GitHubBodyRequest & {
+          workflow_job: WorkflowJobClass;
+          workflow_run: WorkflowRunClass;
+        },
+        update,
+      );
 
       if (isValid) {
         const description = createDescription(payload, update);
