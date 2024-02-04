@@ -13,8 +13,6 @@
     "bcrypt": "5.1.1",
     "classnames": "2.5.1",
     "date-fns": "3.3.1",
-    "eslint": "8.56.0",
-    "eslint-config-next": "14.1.0",
     "i18next": "23.8.2",
     "jsonwebtoken": "9.0.2",
     "mongoose": "8.1.1",
@@ -41,6 +39,8 @@
     "babel-plugin-import": "1.13.8",
     "babel-plugin-module-resolver": "5.0.0",
     "dotenv": "16.4.1",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0",
     "husky": "9.0.10",
     "postcss": "8.4.33",
     "tailwindcss": "3.4.1"
