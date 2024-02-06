@@ -9,8 +9,18 @@ const SurveySchema = new mongoose.Schema(
     },
     questions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question',
+        title: {
+          type: String,
+          required: true,
+        },
+        answerType: {
+          type: String,
+          required: true,
+          enum: ['Multiple Choice', 'Text', 'Option', 'Scale'],
+        },
+        options: {
+          type: [String],
+        },
       },
     ],
   },

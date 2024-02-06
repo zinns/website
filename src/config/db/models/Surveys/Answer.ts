@@ -10,7 +10,7 @@ const AnswerSchema = new mongoose.Schema(
     period: {
       type: String,
       required: isPeriodRequired,
-      enum: ['1st period', '2nd period', '3rd period', '4th period'],
+      enum: ['1st period', '2nd period', '3rd period', '4th period', '5th period', '6th period'],
     },
     survey: {
       type: String,
