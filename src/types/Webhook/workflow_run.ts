@@ -2,19 +2,7 @@
 
 import { HeadCommit } from './headCommit';
 import { HeadRepository } from './headRepository';
-import { Organization } from './organization';
-import { Repository } from './repository';
 import { Sender } from './sender';
-import { Workflow } from './workflow';
-
-export interface WorkflowRun {
-  action: string;
-  workflow_run: WorkflowRunClass;
-  workflow: Workflow;
-  repository: Repository;
-  organization: Organization;
-  sender: Sender;
-}
 
 export interface WorkflowRunClass {
   actor: Sender;

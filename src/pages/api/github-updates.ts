@@ -16,13 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method === 'POST') {
     try {
       const { actor, repo, payload, update } = extractData(req.body);
-      const isValid = validatePayload(
-        payload as GitHubBodyRequest & {
-          workflow_job: WorkflowJobClass;
-          workflow_run: WorkflowRunClass;
-        },
-        update,
-      );
+      const isValid = validatePayload(payload as GitHubBodyRequest, update);
 
       if (isValid) {
         const description = createDescription(payload, update);
