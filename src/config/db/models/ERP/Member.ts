@@ -38,6 +38,10 @@ const MemberSchema = new mongoose.Schema(
       default: 'member',
       enum: ['Padawan', 'Worker'],
     },
+    position: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: {

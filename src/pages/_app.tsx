@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
 import 'styles/main.scss';
+import ProvidersTree from 'context';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { push, pathname, asPath, locale } = useRouter();
@@ -241,7 +242,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           sizes='640x1136'
         />
       </Head>
-      <Component {...pageProps} />
+      <ProvidersTree>
+        <Component {...pageProps} />
+      </ProvidersTree>
     </>
   );
 };

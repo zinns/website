@@ -1,48 +1,81 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI =
-  process.env.NODE_ENV.toLowerCase() !== 'production'
-    ? process.env.MONGODB_DEV_URI
-    : process.env.MONGODB_PROD_URI;
+export function DB_Register() {
+  const db: { connected: boolean; connections: mongoose.Connection[] | null } = {
+    connected: false,
+    connections: null,
+  };
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  return function ({
+    connections,
+    terminate,
+  }: {
+    connections?: mongoose.Connection[];
+    terminate?: boolean;
+  }) {
+    if (connections) {
+      db.connected = true;
+      db.connections = connections;
+    }
+
+    if (terminate) {
+      db.connected = false;
+      db.connections = null;
+    }
+
+    return db;
+  };
 }
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = global.mongoose;
+export const DB = DB_Register();
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+export async function connectDB() {
+  const getMongoDBuri = () => {
+    const uri =
+      process.env.NODE_ENV.toLowerCase() !== 'production'
+        ? process.env.ERP_DEV_URI
+        : process.env.ERP_PROD_URI;
 
-async function connectDB() {
-  if (cached.conn) {
-    return cached.conn;
-  }
+    if (!uri) {
+      throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+    }
 
-  if (!cached.promise) {
+    return uri;
+  };
+
+  if (DB({}).connected) {
+    console.log('There is already a DB connection', DB({}));
+  } else {
     const opts = {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI as string, opts).then(mongoose => {
-      return mongoose;
-    });
-  }
+    try {
+      console.log(`Connecting to database in ${process.env.NODE_ENV.toLowerCase()} environment`);
+      const connection = await mongoose.connect(getMongoDBuri() as string, opts);
 
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
+      console.log(`Database in ${process.env.NODE_ENV.toLowerCase()} environment connected`);
 
-  return cached.conn;
+      DB({ connections: connection.connections });
+      console.log(DB({}));
+    } catch (error) {
+      mongoose.disconnect();
+      console.log(error);
+      console.log(
+        `Something happened trying to connect database in ${process.env.NODE_ENV.toLowerCase()} environment`,
+        DB({}),
+      );
+    }
+  }
 }
 
-export default connectDB;
+export async function disconnectDB() {
+  try {
+    await mongoose.disconnect();
+    DB({ terminate: true });
+    console.log(DB({}));
+  } catch (error) {
+    console.log(DB({}));
+    console.log(error);
+  }
+}

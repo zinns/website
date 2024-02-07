@@ -1,0 +1,2 @@
+export const OPEN_MODAL_ACTION_TYPE = 'OPEN_MODAL';
+export const CLOSE_MODAL_ACTION_TYPE = 'CLOSE_MODAL';
