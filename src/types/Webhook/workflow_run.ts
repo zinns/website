@@ -2,19 +2,7 @@
 
 import { HeadCommit } from './headCommit';
 import { HeadRepository } from './headRepository';
-import { Organization } from './organization';
-import { Repository } from './repository';
 import { Sender } from './sender';
-import { Workflow } from './workflow';
-
-export interface WorkflowRun {
-  action: string;
-  workflow_run: WorkflowRunClass;
-  workflow: Workflow;
-  repository: Repository;
-  organization: Organization;
-  sender: Sender;
-}
 
 export interface WorkflowRunClass {
   actor: Sender;
@@ -39,8 +27,8 @@ export interface WorkflowRunClass {
   node_id: string;
   path: string;
   previous_attempt_url: null;
-  pull_requests: any[];
-  referenced_workflows: any[];
+  pull_requests: unknown[];
+  referenced_workflows: unknown[];
   repository: HeadRepository;
   rerun_url: string;
   run_attempt: number;

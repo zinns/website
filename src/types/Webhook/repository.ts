@@ -76,7 +76,7 @@ export interface Repository {
   svn_url: string;
   tags_url: string;
   teams_url: string;
-  topics: any[];
+  topics: unknown[];
   trees_url: string;
   updated_at: string;
   url: string;

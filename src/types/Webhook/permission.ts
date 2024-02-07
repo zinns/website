@@ -1,4 +1,1 @@
-export enum Permission {
-  Read = 'read',
-  Write = 'write',
-}
+export type Permission = 'read' | 'write';

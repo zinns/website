@@ -1,29 +1,16 @@
+import { Assignee } from './assignee';
 import { Base } from './base';
+import { LabelClass } from './label';
 import { Links } from './links';
 import { MilestoneClass } from './milestone';
-import { Organization } from './organization';
-import { Repository } from './repository';
 import { Sender } from './sender';
-
-export interface PullRequest {
-  action: string;
-  changes: { [key: string]: string };
-  number: number;
-  organization: Organization;
-  pull_request: PullRequestClass;
-  repository: Repository;
-  requested_reviewer: {
-    [key: string]: string;
-  };
-  sender: Sender;
-}
 
 export interface PullRequestClass {
   _links: Links;
   active_lock_reason: null;
   additions: number;
   assignee: Sender;
-  assignees: any[];
+  assignees: Assignee[];
   author_association: string;
   auto_merge: null;
   base: Base;
@@ -42,7 +29,7 @@ export interface PullRequestClass {
   html_url: string;
   id: number;
   issue_url: string;
-  labels: any[];
+  labels: LabelClass[];
   locked: boolean;
   maintainer_can_modify: boolean;
   merge_commit_sha: string;
@@ -56,8 +43,8 @@ export interface PullRequestClass {
   number: number;
   patch_url: string;
   rebaseable: null;
-  requested_reviewers: any[];
-  requested_teams: any[];
+  requested_reviewers: Assignee[];
+  requested_teams: unknown[];
   review_comment_url: string;
   review_comments_url: string;
   review_comments: number;

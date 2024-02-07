@@ -1,16 +1,5 @@
 import { App } from './app';
 import { HeadCommit } from './headCommit';
-import { Organization } from './organization';
-import { Repository } from './repository';
-import { Sender } from './sender';
-
-export interface CheckSuite {
-  action: string;
-  check_suite: CheckSuiteClass;
-  repository: Repository;
-  organization: Organization;
-  sender: Sender;
-}
 
 export interface CheckSuiteClass {
   id: number;
@@ -22,7 +11,7 @@ export interface CheckSuiteClass {
   url: string;
   before: string;
   after: string;
-  pull_requests: any[];
+  pull_requests: unknown[];
   app: App;
   created_at: string;
   updated_at: string;
