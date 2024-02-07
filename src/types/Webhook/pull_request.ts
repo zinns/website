@@ -3,22 +3,7 @@ import { Base } from './base';
 import { LabelClass } from './label';
 import { Links } from './links';
 import { MilestoneClass } from './milestone';
-import { Organization } from './organization';
-import { Repository } from './repository';
 import { Sender } from './sender';
-
-export interface PullRequest {
-  action: string;
-  changes: { [key: string]: string };
-  number: number;
-  organization: Organization;
-  pull_request: PullRequestClass;
-  repository: Repository;
-  requested_reviewer: {
-    [key: string]: string;
-  };
-  sender: Sender;
-}
 
 export interface PullRequestClass {
   _links: Links;

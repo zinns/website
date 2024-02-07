@@ -1,23 +1,32 @@
+import { CheckRunClass } from 'types/Webhook/check_run';
+import { CheckSuiteClass } from 'types/Webhook/check_suite';
 import { GitHubBodyRequest } from 'types/Webhook/githubRequest';
 import { WorkflowJobClass } from 'types/Webhook/workflow_job';
 import { WorkflowRunClass } from 'types/Webhook/workflow_run';
 
-export const validatePayload = (
-  payload: GitHubBodyRequest & { workflow_job: WorkflowJobClass; workflow_run: WorkflowRunClass },
-  update: string[],
-) => {
+export const validatePayload = (payload: GitHubBodyRequest, update: string[]) => {
   const unusedStatuses = ['in_progress', 'queued'];
-  const workflowJobInvalid =
-    update.includes('workflow_job') &&
-    payload.workflow_job.workflow_name === 'Status Reminder' &&
-    payload.workflow_job.conclusion === 'success';
-  const workflowRunInvalid =
-    update.includes('workflow_run') &&
-    payload.workflow_run.name === 'Status Reminder' &&
-    payload.workflow_run.conclusion === 'success';
+  const invalidUpdates = ['workflow_job', 'workflow_run', 'check_run', 'check_suite'];
+
+  const hasInvalidUpdate = [];
+
+  for (const invalidUpdate of invalidUpdates) {
+    if (
+      update.includes(invalidUpdate) &&
+      (
+        payload?.[invalidUpdate as keyof typeof payload] as
+          | CheckRunClass
+          | CheckSuiteClass
+          | WorkflowJobClass
+          | WorkflowRunClass
+      )?.conclusion === 'success'
+    ) {
+      hasInvalidUpdate.push(true);
+    }
+  }
   const projectItemsInvalid = Object.keys(payload).some(key => key === 'projects_v2_item');
 
-  if (workflowJobInvalid || workflowRunInvalid || projectItemsInvalid) {
+  if (hasInvalidUpdate.some(invUpd => invUpd) || projectItemsInvalid) {
     return false;
   }
 

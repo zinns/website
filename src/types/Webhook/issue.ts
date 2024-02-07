@@ -1,19 +1,7 @@
 import { Assignee } from './assignee';
 import { LabelClass } from './label';
 import { MilestoneClass } from './milestone';
-import { Organization } from './organization';
 import { Reactions } from './reactions';
-import { Repository } from './repository';
-
-export interface Issue {
-  action: string;
-  issue: IssueClass;
-  assignee: Assignee;
-  repository: Repository;
-  organization: Organization;
-  sender: Assignee;
-  label: LabelClass;
-}
 
 export interface IssueClass {
   url: string;

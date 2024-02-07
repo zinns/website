@@ -16,13 +16,13 @@
       "hooks": ["./hooks"],
       "styles": ["./styles"],
       "ts": ["./ts"],
-      "utils": ["./utils"]
+      "utils": ["./utils"],
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES6"
+    "target": "ES6",
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
