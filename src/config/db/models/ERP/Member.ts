@@ -33,11 +33,6 @@ const MemberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    memberType: {
-      type: String,
-      default: 'member',
-      enum: ['Padawan', 'Worker'],
-    },
     position: {
       type: String,
       required: true,

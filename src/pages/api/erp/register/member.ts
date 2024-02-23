@@ -1,33 +1,32 @@
-import { connectDB } from 'config/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Member } from 'config/db/models/ERP';
+import { DB } from 'config/db';
+import { cleanForm } from 'utils';
 
 type ResponseData = {
   message: string;
+  ok: boolean;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   if (req.method === 'POST') {
     try {
-      const {
-        birthday,
-        lastName,
-        memberSince,
-        memberType,
-        name,
-        phoneNumber,
-        position,
-        telegramUser,
-        tShirtSize,
-      } = JSON.parse(req.body);
+      if (!DB.connected) {
+        await DB.connect();
+      }
+      const data = JSON.parse(req.body);
 
-      await connectDB();
+      const dataFormatted = cleanForm(data);
 
-      res.status(200).json({ message: 'Everything went well 🚀' });
+      const newMember = new Member({ ...dataFormatted });
+      await newMember.save();
+
+      res.status(200).json({ message: 'Member registered', ok: true });
     } catch (error) {
       console.log(error);
-      res
-        .status(200)
-        .json({ message: 'There was an update but there was an error sending the body' });
+      res.status(200).json({ message: 'There was an error trying to register', ok: false });
+    } finally {
+      DB.disconnect();
     }
   }
 }
