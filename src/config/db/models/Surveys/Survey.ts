@@ -5,7 +5,7 @@ const SurveySchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ['Company', 'Padawan', 'Personal', 'Service'],
+      enum: ['company', 'padawan', 'personal', 'service'],
     },
     questions: [
       {
@@ -13,10 +13,10 @@ const SurveySchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        answerType: {
+        type: {
           type: String,
           required: true,
-          enum: ['Multiple Choice', 'Text', 'Option', 'Scale'],
+          enum: ['multiple', 'text', 'select', 'scale'],
         },
         options: {
           type: [String],
@@ -40,4 +40,4 @@ SurveySchema.method('toJSON', function () {
   return object;
 });
 
-export default mongoose.models.Survey || mongoose.model('Survey', SurveySchema);
+export default mongoose.model('Survey', SurveySchema);

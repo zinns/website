@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { AnswerSchemaType } from './types';
+import { AnswerSchemaType } from 'types/models/survey';
 
 const AnswerSchema = new mongoose.Schema(
   {
@@ -42,4 +42,4 @@ AnswerSchema.method('toJSON', function () {
   return object;
 });
 
-export default mongoose.models.Answer || mongoose.model('Answer', AnswerSchema);
+export default mongoose.model('Answer', AnswerSchema);

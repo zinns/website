@@ -1,4 +1,4 @@
-import { registerMember } from 'middlewares/erp/register';
+import { registerUser } from 'middlewares/erp/register';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -10,9 +10,10 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
-  if (path.includes('api/erp/register/member')) {
+  if (path.includes('api/erp/register')) {
     const reqTransformed = await request.json();
-    return registerMember(reqTransformed);
+
+    return registerUser(reqTransformed);
   }
 
   return NextResponse.next();

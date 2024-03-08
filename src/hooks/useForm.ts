@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
-const useForm = (initialForm: { [key: string]: string }) => {
+type X = string | { [key: string]: string | string[] }[];
+
+const useForm = (initialForm: { [key: string]: X }) => {
   const [form, setForm] = useState(initialForm);
 
-  const handleChange = (value: string, key: string) => {
+  const handleChange = (value: X, key: string) => {
     setForm(Object.assign({}, { ...form }, { [key]: value }));
   };
 

@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
-const MemberSchema = new mongoose.Schema(
+const PadawanSchema = new mongoose.Schema(
   {
+    githubUser: {
+      type: String,
+      unique: true,
+    },
     lastName: {
       type: String,
       required: true,
@@ -33,10 +37,6 @@ const MemberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    position: {
-      type: String,
-      required: true,
-    },
   },
   {
     timestamps: {
@@ -46,4 +46,4 @@ const MemberSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model('Member', MemberSchema);
+export default mongoose.model('Padawan', PadawanSchema);

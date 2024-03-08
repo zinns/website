@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Member } from 'config/db/models/ERP';
 import { DB } from 'config/db';
-import { cleanForm } from 'utils';
+import { cleanForm, createDBinstance } from 'utils';
 
 type ResponseData = {
   message: string;
@@ -16,12 +16,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       }
       const data = JSON.parse(req.body);
 
-      const dataFormatted = cleanForm(data);
+      const instance = createDBinstance(req.headers.type as string, data);
 
-      const newMember = new Member({ ...dataFormatted });
-      await newMember.save();
+      await instance.save();
 
-      res.status(200).json({ message: 'Member registered', ok: true });
+      res.status(200).json({ message: 'User registered', ok: true });
     } catch (error) {
       console.log(error);
       res.status(200).json({ message: 'There was an error trying to register', ok: false });

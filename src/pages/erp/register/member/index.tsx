@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import useForm from 'hooks/useForm';
 import { FormEvent } from 'react';
+import { cleanInputValue } from 'utils';
 
 const Member = () => {
   const { form, handleChange } = useForm({
@@ -19,11 +20,12 @@ const Member = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await fetch('/api/erp/register/member', {
+    const response = await fetch('/api/erp/register', {
       method: 'POST',
       body: JSON.stringify(form),
       headers: {
         accept: 'application/json',
+        type: 'member',
       },
     });
 
@@ -42,8 +44,8 @@ const Member = () => {
           type='text'
           name='name'
           id='name'
-          value={form.name}
-          onChange={e => handleChange(e.target.value, 'name')}
+          value={form.name as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'name')}
         />
         <br />
         <br />
@@ -53,8 +55,8 @@ const Member = () => {
           type='text'
           name='lastName'
           id='lastName'
-          value={form.lastName}
-          onChange={e => handleChange(e.target.value, 'lastName')}
+          value={form.lastName as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'lastName')}
         />
         <br />
         <br />
@@ -64,8 +66,8 @@ const Member = () => {
           type='text'
           name='phoneNumber'
           id='phoneNumber'
-          value={form.phoneNumber}
-          onChange={e => handleChange(e.target.value, 'phoneNumber')}
+          value={form.phoneNumber as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'phoneNumber')}
         />
         <br />
         <br />
@@ -75,8 +77,8 @@ const Member = () => {
           type='text'
           name='telegramUser'
           id='telegramUser'
-          value={form.telegramUser}
-          onChange={e => handleChange(e.target.value, 'telegramUser')}
+          value={form.telegramUser as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'telegramUser')}
         />
         <br />
         <br />
@@ -87,8 +89,8 @@ const Member = () => {
           name='birthday'
           id='birthday'
           min='1950-01-01'
-          value={form.birthday}
-          onChange={e => handleChange(e.target.value, 'birthday')}
+          value={form.birthday as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'birthday')}
         />
         <br />
         <br />
@@ -97,8 +99,8 @@ const Member = () => {
           className='border border-solid'
           name='tShirtSize'
           id='tShirtSize'
-          value={form.tShirtSize}
-          onChange={e => handleChange(e.target.value, 'tShirtSize')}
+          value={form.tShirtSize as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'tShirtSize')}
         >
           <option value='xs'>XS</option>
           <option value='s'>S</option>
@@ -116,8 +118,8 @@ const Member = () => {
           max={maxDate}
           name='memberSince'
           id='memberSince'
-          value={form.memberSince}
-          onChange={e => handleChange(e.target.value, 'memberSince')}
+          value={form.memberSince as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'memberSince')}
         />
         <br />
         <br />
@@ -127,8 +129,8 @@ const Member = () => {
           type='text'
           name='position'
           id='position'
-          value={form.position}
-          onChange={e => handleChange(e.target.value, 'position')}
+          value={form.position as string}
+          onChange={e => handleChange(cleanInputValue(e.target.value), 'position')}
         />
         <br />
         <br />

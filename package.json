@@ -55,8 +55,8 @@
     "lint": "next lint",
     "padawan-meeting-reminder": "node ./automation/padawan_meeting.mjs",
     "personal-assessment-reminder": "node ./automation/personal_assessment.mjs",
-    "postinstall": "husky install",
-    "prepare": "husky install",
+    "postinstall": "husky",
+    "prepare": "husky",
     "start": "next start",
     "update-trello-reminder": "node ./automation/update_trello.mjs",
     "validate": "prettier --check . && eslint ."
