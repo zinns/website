@@ -73,27 +73,23 @@ ON_IPURPLE='\033[0;105m'  # Purple
 ON_ICYAN='\033[0;106m'    # Cyan
 ON_IWHITE='\033[0;107m'   # White
 
-if [ ! -d "node_modules" ]
-then
+if [ ! -d "node_modules" ]; then
   yarn
 fi
 
 local_branch_name="$(git branch --show-current)"
 valid_branch_regex="^(build|ci|docs|feat|fix|perf|refactor|revert|style|test)\/[a-zA-Z\-]+"
-not_valid_branch_regex="^(develop|main)$"
+invalid_branch_regex="^(develop|main)$"
 
-if [[ $local_branch_name =~ $not_valid_branch_regex ]]; then
+if [[ $local_branch_name =~ $invalid_branch_regex ]]; then
     echo ""
-    echo "$ON_IRED ⚠︎ ERROR ⚠︎ "
+    echo "$ON_IYELLOW ⚠︎ WARNING ⚠︎ "
     echo "$COLOR_OFF"
     echo "You are trying to commit in a branch where you are not allowed to commit"
-    echo "Please make this commit in a valid branch"
-    exit 1
-fi
-
-if [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
+    echo "Please reconsider making this commit in a valid branch"
+elif [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
     echo ""
-    echo "$ON_IRED ⚠︎ ERROR ⚠︎ "
+    echo "$ON_IRED ⚠︎ WARNING ⚠︎ "
     echo "$COLOR_OFF"
     echo "There is something wrong with your branch name."
     echo "Branch names in this project must adhere to this contract: $ON_GREEN build|ci|docs|feat|fix|perf|refactor|revert|style|test $ON_YELLOW / $ON_GREEN subject."
@@ -102,12 +98,12 @@ if [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
     echo "$COLOR_OFF"
     echo "You should rename your branch to a valid name and try again."
     exit 1
+else
+    echo ""
+    echo "$BIGREEN ✔︎ CONGRATS ✔︎ "
+    echo "$COLOR_OFF"
+    echo " Your branch name matches with our branch convention."
+    echo "$COLOR_OFF"
 fi
-
-echo ""
-echo "$BIGREEN ✔︎ CONGRATS ✔︎ "
-echo "$COLOR_OFF"
-echo " Your branch name matches with our branch convention."
-echo "$COLOR_OFF"
 
 npm run validate
