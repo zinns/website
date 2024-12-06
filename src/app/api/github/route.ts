@@ -104,13 +104,15 @@ const handler = async (req:Request) => {
 
     await notify(message);
 
-    return new Response(JSON.stringify({
-      statusCode: 200,
-      body: JSON.stringify({ message }),
+    return NextResponse.json({
+      message
+    }, {
+      status: 200,
       headers: {
         'Content-Type': 'application/json',
-      },
-    }));
+      }
+    })
+
   } catch (error) {
     console.log(error)
 
