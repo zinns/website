@@ -1,8 +1,0 @@
-.husky
-.next
-commitlint.config.js
-next.config.js
-node_modules
-out
-README.md
-public/
