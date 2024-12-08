@@ -55,13 +55,22 @@ const verifySignature = async (req: Request) => {
   }
 };
 
-const onStar = (payload: { action: any; repository: any; sender: any }): string => {
+const onStar = (payload: {
+  action: string;
+  repository: { full_name: string };
+  sender: {
+    login: string;
+  };
+}): string => {
   const { action, sender, repository } = payload;
 
   return `User ${sender.login} ${action} star on ${repository.full_name}`;
 };
 
-const onIssue = (payload: { action: any; issue: any }): string => {
+const onIssue = (payload: {
+  action: string;
+  issue: { title: string; user: { login: string } };
+}): string => {
   const { action, issue } = payload;
 
   if (action === 'opened') {
