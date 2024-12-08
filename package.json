@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "crypto-js": "^4.2.0",
     "next": "15.0.4",
     "react-dom": "19.0.0",
     "react": "19.0.0"
