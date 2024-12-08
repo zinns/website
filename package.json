@@ -2,25 +2,16 @@
   "name": "zinns",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "format:fix": "prettier --write .",
-    "style:fix": "npx stylelint **/*.css --fix",
-    "lint": "next lint",
-    "prepare": "husky",
-    "start": "next start",
-    "validate": "npx prettier --check . && npx eslint --pass-on-no-patterns --no-error-on-unmatched-pattern --no-warn-ignored **/*.{js,ts,jsx,tsx,mjs} && npx stylelint **/*.{css,scss} --aei"
-  },
   "dependencies": {
-    "react": "19.0.0",
+    "crypto-js": "^4.2.0",
+    "next": "15.0.4",
     "react-dom": "19.0.0",
-    "next": "15.0.4"
+    "react": "19.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@types/node": "^22.10.1",
+    "@types/node": "22.10.1",
     "@types/react-dom": "19.0.0",
     "@types/react": "19.0.0",
     "eslint-config-next": "15.0.4",
@@ -36,5 +27,15 @@
     "stylelint": "16.8.1",
     "tailwindcss": "3.4.16",
     "typescript": "5.7.2"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbopack",
+    "format:fix": "prettier --write .",
+    "style:fix": "npx stylelint **/*.css --fix",
+    "lint": "next lint",
+    "prepare": "husky",
+    "start": "next start",
+    "validate": "npx prettier --check . && npx eslint --pass-on-no-patterns --no-error-on-unmatched-pattern --no-warn-ignored **/*.{js,ts,jsx,tsx,mjs} && npx stylelint **/*.{css,scss} --aei"
   }
 }

@@ -22,6 +22,9 @@ const config = [
     'plugin:prettier/recommended',
     'prettier',
     'next/core-web-vitals',
+    'next/typescript',
+    'next/core-web-vitals',
+    'next/typescript',
   ),
   {
     languageOptions: {
@@ -158,7 +161,6 @@ const config = [
           objectsInObjects: true,
         },
       ],
-
       'object-property-newline': [
         'error',
         {
