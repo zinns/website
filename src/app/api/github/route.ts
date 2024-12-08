@@ -15,11 +15,11 @@ const notify = async (message: string) => {
   };
 
   const response = await fetch(discordWebhookUrl, {
-    method: 'POST',
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    method: 'POST',
   });
 
   if (!response.ok) {
@@ -30,9 +30,9 @@ const notify = async (message: string) => {
   return true;
 };
 
-const verify_signature = async (req: Request) => {
+const verifySignature = async (req: Request) => {
   try {
-    const body = req.body;
+    const { body } = req;
     const signature = crypto
       .createHmac('sha256', GITHUB_SECRET)
       .update(JSON.stringify(body))
@@ -49,19 +49,19 @@ const verify_signature = async (req: Request) => {
     console.log({ error });
 
     return {
-      ok: false,
       error,
+      ok: false,
     };
   }
 };
 
-const onStar = (payload: Record<{action: any, issue: any}>): string => {
+const onStar = (payload: { action: any; repository: any; sender: any }): string => {
   const { action, sender, repository } = payload;
 
   return `User ${sender.login} ${action} star on ${repository.full_name}`;
 };
 
-const onIssue = (payload: Record<{action: any, issue: any}>): string => {
+const onIssue = (payload: { action: any; issue: any }): string => {
   const { action, issue } = payload;
 
   if (action === 'opened') {
@@ -75,18 +75,24 @@ const onIssue = (payload: Record<{action: any, issue: any}>): string => {
   return `Unhandled action for the issue event ${action}`;
 };
 
-const handler = async (req:Request) => {
+const handler = async (req: Request) => {
   try {
     const body = await req.json();
 
     const githubEvent = req.headers.get('x-github-event') ?? 'unknown';
 
-    const isGithubReq = await verify_signature(req);
+    const isGithubReq = await verifySignature(req);
 
     if (!isGithubReq.ok) {
-      return NextResponse.json({ message: 'Unauthorized', error: isGithubReq.error }, { status: 401, headers: {
-          'Content-Type': 'application/json',
-        } });
+      return NextResponse.json(
+        { error: isGithubReq.error, message: 'Unauthorized' },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          status: 401,
+        },
+      );
     }
 
     let message: string;
@@ -104,21 +110,29 @@ const handler = async (req:Request) => {
 
     await notify(message);
 
-    return NextResponse.json({
-      message
-    }, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-
+    return NextResponse.json(
+      {
+        message,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 200,
+      },
+    );
   } catch (error) {
-    console.log(error)
+    console.log(error);
 
-    return NextResponse.json({ message: 'Internal Server Error', error }, { status: 500, headers: {
-        'Content-Type': 'application/json',
-      }});
+    return NextResponse.json(
+      { error, message: 'Internal Server Error' },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 500,
+      },
+    );
   }
 };
 
