@@ -3,24 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
+    "dev": "next dev --turbopack",
+    "format:fix": "prettier --write .",
+    "style:fix": "npx stylelint **/*.css --fix",
+    "lint": "next lint",
+    "prepare": "husky",
     "start": "next start",
-    "lint": "next lint"
+    "validate": "npx prettier --check . && npx eslint --pass-on-no-patterns --no-error-on-unmatched-pattern --no-warn-ignored **/*.{js,ts,jsx,tsx,mjs} && npx stylelint **/*.{css,scss} --aei"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "next": "15.0.4"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.4"
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "@types/node": "^22.10.1",
+    "@types/react-dom": "19.0.0",
+    "@types/react": "19.0.0",
+    "eslint-config-next": "15.0.4",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-hooks": "0.4.3",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint": "9.8.0",
+    "husky": "9.1.4",
+    "postcss": "8.4.41",
+    "prettier": "3.3.3",
+    "stylelint-config-standard-scss": "13.1.0",
+    "stylelint-order": "6.0.4",
+    "stylelint": "16.8.1",
+    "tailwindcss": "3.4.16",
+    "typescript": "5.7.2"
   }
 }
