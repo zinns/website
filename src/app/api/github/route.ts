@@ -1,88 +1,8 @@
-import * as crypto from 'crypto';
+import { notify, verifySignature, onIssue, onStar, onDeployment, onPR } from '@/helpers';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
-
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
-
-const GITHUB_SECRET = process.env.GITHUB_SECRET ?? '';
-
-const notify = async (message: string) => {
-  const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL ?? '';
-
-  const body = {
-    content: message,
-  };
-
-  const response = await fetch(discordWebhookUrl, {
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  });
-
-  if (!response.ok) {
-    console.log('Error sending message');
-    return false;
-  }
-
-  return true;
-};
-
-const verifySignature = async (req: Request) => {
-  try {
-    const { body } = req;
-    const signature = crypto
-      .createHmac('sha256', GITHUB_SECRET)
-      .update(JSON.stringify(body))
-      .digest('hex');
-    const xHubSignature = req.headers.get('x-hub-signature-256') ?? '';
-
-    const trusted = Buffer.from(`sha256=${signature}`, 'ascii');
-    const untrusted = Buffer.from(xHubSignature, 'ascii');
-
-    return {
-      ok: crypto.timingSafeEqual(trusted, untrusted),
-    };
-  } catch (error) {
-    console.log({ error });
-
-    return {
-      error,
-      ok: false,
-    };
-  }
-};
-
-const onStar = (payload: {
-  action: string;
-  repository: { full_name: string };
-  sender: {
-    login: string;
-  };
-}): string => {
-  const { action, sender, repository } = payload;
-
-  return `User ${sender.login} ${action} star on ${repository.full_name}`;
-};
-
-const onIssue = (payload: {
-  action: string;
-  issue: { title: string; user: { login: string } };
-}): string => {
-  const { action, issue } = payload;
-
-  if (action === 'opened') {
-    return `An issue was opened with this title ${issue.title}`;
-  }
-
-  if (action === 'closed') {
-    return `An issue was closed by ${issue.user.login}`;
-  }
-
-  return `Unhandled action for the issue event ${action}`;
-};
 
 const handler = async (req: Request) => {
   try {
@@ -90,7 +10,7 @@ const handler = async (req: Request) => {
 
     const githubEvent = req.headers.get('x-github-event') ?? 'unknown';
 
-    const isGithubReq = await verifySignature(req);
+    const isGithubReq = await verifySignature(req, body);
 
     if (!isGithubReq.ok) {
       return NextResponse.json(
@@ -107,11 +27,17 @@ const handler = async (req: Request) => {
     let message: string;
 
     switch (githubEvent) {
-      case 'star':
-        message = onStar(body);
+      case 'deployment_status':
+        message = onDeployment(body);
         break;
       case 'issue':
         message = onIssue(body);
+        break;
+      case 'pull_request':
+        message = onPR(body);
+        break;
+      case 'star':
+        message = onStar(body);
         break;
       default:
         message = `Unknown event ${githubEvent}`;
