@@ -25,6 +25,9 @@ const handler = async (req: Request) => {
     }
 
     let message: string;
+    const {
+      repository: { name: repositoryName },
+    } = body;
 
     switch (githubEvent) {
       case 'deployment_status':
@@ -40,7 +43,11 @@ const handler = async (req: Request) => {
         message = onStar(body);
         break;
       default:
-        message = `Unknown event ${githubEvent}`;
+        message = `
+        Something happened in **${repositoryName}**
+
+        An unhandled event ${githubEvent}
+        `;
     }
 
     await notify(message);
