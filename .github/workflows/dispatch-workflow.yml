@@ -25,20 +25,23 @@ jobs:
         with:
           ref: ${{ github.ref }}
           token: ${{ vars.GH_TOKEN }}
+
       - name: 'Setup Git'
         run: |
           git config user.name "Edgar Zea"
           git config user.email "cesszea@icloud.com"
-      - name: 'cat package.json'
+
+      - name: 'Get Version'
         run: cat ./package.json
+
       - name: 'Automated Version Bump'
         uses: 'phips28/gh-action-bump-version@master'
-
         env:
           GITHUB_TOKEN: ${{ vars.GH_TOKEN }}
         with:
           tag-prefix: 'v'
           target-branch: 'develop'
           version-type: '${{inputs.versionType}}'
-      - name: 'cat package.json'
+
+      - name: 'New Version'
         run: cat ./package.json

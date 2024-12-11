@@ -1,10 +1,19 @@
-import { notify, verifySignature, onIssue, onStar, onDeployment, onPR } from '@/helpers';
+import {
+  notify,
+  verifySignature,
+  onIssue,
+  onStar,
+  onDeployment,
+  onPullRequest,
+  onWorkflowCompleted,
+  onWorkflowRun,
+} from '@/helpers';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 
-const handler = async (req: Request) => {
+export async function POST(req: Request) {
   try {
     const body = await req.json();
 
@@ -24,12 +33,15 @@ const handler = async (req: Request) => {
       );
     }
 
-    let message: string;
+    let message: string | null;
     const {
       repository: { name: repositoryName },
     } = body;
 
     switch (githubEvent) {
+      case 'deployment':
+        message = null;
+        break;
       case 'deployment_status':
         message = onDeployment(body);
         break;
@@ -37,24 +49,48 @@ const handler = async (req: Request) => {
         message = onIssue(body);
         break;
       case 'pull_request':
-        message = onPR(body);
+        message = onPullRequest(body);
         break;
       case 'star':
         message = onStar(body);
         break;
+      case 'workflow_job':
+        message = onWorkflowCompleted(body);
+        break;
+      case 'workflow_run':
+        message = onWorkflowRun(body);
+        break;
       default:
         message = `
-        Something happened in **${repositoryName}**
+---
+Something happened in **${repositoryName}**
 
-        An unhandled event ${githubEvent}
+An unhandled event ${githubEvent}
+---
         `;
+    }
+
+    if (!message) {
+      return NextResponse.json(
+        {
+          ok: true,
+          response: 'Nothing important to notify',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          status: 200,
+        },
+      );
     }
 
     await notify(message);
 
     return NextResponse.json(
       {
-        message,
+        ok: true,
+        response: 'Accepted',
       },
       {
         headers: {
@@ -76,8 +112,4 @@ const handler = async (req: Request) => {
       },
     );
   }
-};
-
-export function POST(request: Request) {
-  return handler(request);
 }
