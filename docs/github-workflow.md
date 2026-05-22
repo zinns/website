@@ -70,9 +70,18 @@ because local hooks can be skipped.
 
 ## Automation Backlog
 
-- Create or update the `develop` to `release` PR after every push to `develop`.
-- Require exactly one `version:*` label before the release candidate PR can merge.
-- Create the production release PR after the release candidate PR merges.
-- Generate release notes from merged PRs and labels.
-- Tag the production merge as `vX.Y.Z`.
-- Optionally sync `.github/labels.yml` to repository labels through a label sync workflow.
+These workflows now define the automation contract:
+
+- `ci.yml`: validates formatting, linting, TypeScript, tests, build, dependency review, and workflow
+  syntax.
+- `branch-protection-check.yml`: verifies PR branch direction and production release commit shape.
+- `release-candidate-pr.yml`: creates or updates the `develop` to `release` PR after every push to
+  `develop`.
+- `release-label-guard.yml`: requires exactly one `version:*` label before the release candidate PR
+  can merge.
+- `production-release-pr.yml`: creates the production release PR after the release candidate PR
+  merges.
+- `production-release-guard.yml`: verifies the production PR targets `main`, uses one release commit,
+  and updates `package.json` to the release version.
+- `publish-release.yml`: tags the production merge as `vX.Y.Z` and creates the GitHub Release.
+- `labels-sync.yml`: applies `.github/labels.yml` to repository labels.
