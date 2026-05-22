@@ -52,8 +52,8 @@ After the production PR is merged, automation should create the matching Git tag
 ## Merge Strategies
 
 - Work PRs into `develop`: squash merge.
-- Release candidate PR from `develop` to `release`: create a merge commit once staging is approved
-  and one `version:*` label is selected.
+- Release candidate PR from `develop` or `release-candidate/*` to `release`: create a merge commit
+  once staging is approved and one `version:*` label is selected.
 - Production release PR into `main`: squash merge so production history contains only release
   commits.
 
