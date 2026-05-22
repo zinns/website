@@ -2,14 +2,36 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #111111;
-  --muted: #6b7280;
+  --foreground: #102f35;
+  --ink: #102f35;
+  --primary: #155f6b;
+  --secondary: #496970;
+  --muted: #7d9298;
+  --border: #d8e5e8;
+  --strong: #afc8ce;
+  --soft: #f4fafb;
+  --cyan: #39bfd3;
+  --accent: #e85f86;
+  --accent-soft: rgb(232 95 134 / 10%);
+  --success: #1fa971;
+  --error: #d9435e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
   --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-strong: var(--strong);
+  --color-soft: var(--soft);
+  --color-cyan: var(--cyan);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-error: var(--error);
   --font-sans: 'Geist', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
 }
@@ -19,6 +41,7 @@
 }
 
 html {
+  scroll-behavior: smooth;
   background: var(--background);
 }
 
@@ -29,5 +52,26 @@ body {
 }
 
 ::selection {
-  background: rgb(17 17 17 / 10%);
+  background: rgb(57 191 211 / 24%);
+}
+
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.brand-grid {
+  background:
+    linear-gradient(135deg, rgb(57 191 211 / 14%), rgb(232 95 134 / 14%)),
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:
+    auto,
+    52px 52px,
+    52px 52px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(135deg, #39bfd3 0%, #8ed2d8 38%, #e89aad 70%, #e85f86 100%);
 }

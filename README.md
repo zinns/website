@@ -1,14 +1,19 @@
 # Zinns Website
 
-This repository is the blank baseline for the Zinns website.
+The company website for Zinns, a founder-led creative technology lab that builds customized digital
+tools and helps people increase their technical abilities.
 
-The current state is intentionally small:
+The current implementation is a small bilingual landing site on `/` with visible placeholder content
+for projects, reviews, and people until real company information is approved.
 
-- latest stable Next.js stack
-- `pnpm` package migration
-- no automations
-- no GitHub workflows
-- minimal placeholder UI until the design direction is defined
+## Quick Start
+
+```bash
+corepack pnpm install
+corepack pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Stack
 
@@ -18,66 +23,29 @@ The current state is intentionally small:
 - TypeScript `6.0.3`
 - pnpm `11.1.3`
 
-## Getting Started
-
-Install dependencies:
-
-```bash
-corepack pnpm install
-```
-
-Start the development server:
+## Main Scripts
 
 ```bash
 corepack pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Available Scripts
-
-```bash
-corepack pnpm dev
-corepack pnpm lint
-corepack pnpm typecheck
-corepack pnpm test
 corepack pnpm validate
-corepack pnpm check
+corepack pnpm test
+corepack pnpm build
 ```
 
-## Commit Rules
+## Documentation
 
-Commits must follow conventional commit format and include a GitHub issue reference in the first
-line.
+- [Project Overview](docs/project-overview.md)
+- [Development](docs/development.md)
+- [Content Guide](docs/content-guide.md)
+- [Contact Email](docs/contact-email.md)
+- [Assets](docs/assets.md)
+- [GitHub Workflow](docs/github-workflow.md)
+- [Design System](docs/design-system.md)
 
-Example:
+## Current Scope
 
-```text
-feat(site): define homepage direction (#123)
-```
-
-Accepted issue references:
-
-- `#123`
-- `GH-123`
-- `owner/repo#123`
-- closing keywords in the first line, such as `fixes #123` or `closes #123`
-
-## Local Hooks
-
-- `pre-commit`: formats and lints staged JS, TS, CSS, and SCSS files, then runs TypeScript and Vitest
-- `commit-msg`: validates the conventional header and required GitHub issue reference
-- `pre-push`: blocks direct pushes to `main` and `develop`, then runs ESLint, TypeScript, Vitest, and
-  the production build
-
-The hook output is intentionally step-based and colorized so failures are easy to spot.
-
-## GitHub Workflow
-
-Branching, PR templates, issue templates, labels, and the planned release automation contract are
-defined in [docs/github-workflow.md](docs/github-workflow.md).
-
-## Notes
-
-- The app is intentionally blank.
-- Design, palette, routes, auth, database, and automations will be added later.
+- Public bilingual `/` page only
+- Local English and Spanish content dictionaries
+- Contact form endpoint prepared for Resend email delivery
+- GitHub templates, labels, local hooks, and release workflow automation
+- No authentication, database, dashboard, CMS, or automation backend yet

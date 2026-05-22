@@ -17,7 +17,8 @@ export const metadata: Metadata = {
     default: 'Zinns',
     template: '%s | Zinns',
   },
-  description: 'Blank baseline for the Zinns website.',
+  description:
+    'Zinns builds customized digital tools and helps people increase their technical abilities.',
 };
 
 export default function RootLayout({

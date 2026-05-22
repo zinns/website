@@ -1,6 +1,6 @@
 # GitHub Workflow
 
-This document defines the repository workflow before release automations are implemented.
+This document defines the repository workflow and release automation contract.
 
 ## Branches
 
