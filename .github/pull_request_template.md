@@ -1,21 +1,28 @@
-## Pull Request Title
+# Pull request
 
-<!-- Brief description about what this PR does and which ISSUE (#issueNumber -> #100) is closed -->
+Use the template that matches the target branch:
 
-## Implementation
+- Change PR to `develop`: `.github/PULL_REQUEST_TEMPLATE/change.md`
+- Release candidate PR to `release`: `.github/PULL_REQUEST_TEMPLATE/release-candidate.md`
+- Production release PR to `main`: `.github/PULL_REQUEST_TEMPLATE/production-release.md`
 
-<!-- Explanation of what was done in this PR, main changes, refactors, renames, etc -->
+## Summary
 
-## Screenshots
+<!-- What changed and why? -->
 
-|         | before | after |
-| ------- | ------ | ----- |
-| desktop |        |       |
-| mobile  |        |       |
+## Linked issue
 
-## Steps to reproduce
+<!-- Use #123 for normal references. Use fixes #123, closes #123, or resolves #123 only when this PR targets the default branch and should close the issue. -->
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Merge strategy
+
+<!-- Select the strategy that matches the base branch. -->
+
+- [ ] `develop`: squash merge with a conventional commit title and issue reference, for example `feat(site): add project index (#123)`
+- [ ] `release`: create a merge commit after staging approval and exactly one `version:*` label
+- [ ] `main`: squash merge the automated production release PR so `main` receives only a release commit
+
+## Validation
+
+- [ ] `pnpm validate`
+- [ ] Vercel preview or staging deployment reviewed when applicable

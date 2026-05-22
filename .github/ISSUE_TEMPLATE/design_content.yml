@@ -1,0 +1,48 @@
+name: Design or content request
+description: Request visual direction, page content, copy, or brand-related work.
+title: '[Design]: '
+labels: ['type:design', 'status:triage']
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should the design or content accomplish?
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - Brand system
+        - Homepage
+        - Projects
+        - Courses
+        - Dashboard
+        - Documentation
+        - Marketing content
+    validations:
+      required: true
+  - type: textarea
+    id: direction
+    attributes:
+      label: Direction or constraints
+      description: Include tone, palette, references, copy requirements, or things to avoid.
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Expected deliverables
+      description: What output is needed?
+      placeholder: Palette, typography direction, homepage wireframe, copy blocks.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Add links, screenshots, competitors, or related issues.
+    validations:
+      required: false

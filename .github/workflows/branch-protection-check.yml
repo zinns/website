@@ -1,0 +1,40 @@
+name: Branch Protection Check
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - release
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+  push:
+    branches:
+      - develop
+      - release
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  branch-policy:
+    name: Branch Policy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Validate branch policy
+        run: node .github/scripts/validate-branch-policy.mjs
