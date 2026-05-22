@@ -40,9 +40,42 @@ Open [http://localhost:3000](http://localhost:3000).
 corepack pnpm dev
 corepack pnpm lint
 corepack pnpm typecheck
-corepack pnpm build
+corepack pnpm test
+corepack pnpm validate
 corepack pnpm check
 ```
+
+## Commit Rules
+
+Commits must follow conventional commit format and include a GitHub issue reference in the first
+line.
+
+Example:
+
+```text
+feat(site): define homepage direction (#123)
+```
+
+Accepted issue references:
+
+- `#123`
+- `GH-123`
+- `owner/repo#123`
+- closing keywords in the first line, such as `fixes #123` or `closes #123`
+
+## Local Hooks
+
+- `pre-commit`: formats and lints staged JS, TS, CSS, and SCSS files, then runs TypeScript and Vitest
+- `commit-msg`: validates the conventional header and required GitHub issue reference
+- `pre-push`: blocks direct pushes to `main` and `develop`, then runs ESLint, TypeScript, Vitest, and
+  the production build
+
+The hook output is intentionally step-based and colorized so failures are easy to spot.
+
+## GitHub Workflow
+
+Branching, PR templates, issue templates, labels, and the planned release automation contract are
+defined in [docs/github-workflow.md](docs/github-workflow.md).
 
 ## Notes
 

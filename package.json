@@ -9,14 +9,21 @@
     "node": ">=24.0.0"
   },
   "scripts": {
+    "prepare": "husky",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm build"
+    "branch:protect": "node ./scripts/run-protected-branch-check.mjs",
+    "commit:verify": "node ./scripts/run-commit-msg-check.mjs",
+    "staged:check": "node ./scripts/run-staged-checks.mjs",
+    "validate": "node ./scripts/run-quality-checks.mjs",
+    "check": "pnpm validate"
   },
   "dependencies": {
     "next": "16.2.6",
@@ -24,14 +31,19 @@
     "react-dom": "19.2.6"
   },
   "devDependencies": {
+    "@commitlint/cli": "21.0.1",
+    "@commitlint/config-conventional": "21.0.1",
     "@tailwindcss/postcss": "4.3.0",
     "@types/node": "25.9.1",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.5",
     "prettier": "3.8.3",
     "tailwindcss": "4.3.0",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.7"
   }
 }
