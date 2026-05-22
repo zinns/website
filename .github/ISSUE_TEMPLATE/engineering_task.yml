@@ -1,0 +1,51 @@
+name: Engineering task
+description: Track technical work that is not directly user-facing.
+title: '[Task]: '
+labels: ['type:task', 'status:triage']
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What needs to change?
+      placeholder: Add commit validation for GitHub issue references.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Tooling
+        - CI
+        - Release
+        - Dependencies
+        - Testing
+        - Documentation
+        - Infrastructure
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included and excluded?
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: Which checks or tests should prove the task is complete?
+      placeholder: |
+        - pnpm validate passes
+        - Hook behavior is tested locally
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks or dependencies
+      description: Add rollout concerns, blockers, or required follow-up work.
+    validations:
+      required: false

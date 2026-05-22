@@ -1,0 +1,60 @@
+name: Bug report
+description: Report behavior that is broken or incorrect.
+title: '[Bug]: '
+labels: ['type:bug', 'status:triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when existing behavior is failing. Keep the report concrete enough that someone else can reproduce it.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken?
+      placeholder: The homepage fails to render on mobile Safari.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the shortest path that reproduces the issue.
+      placeholder: |
+        1. Open the site on mobile Safari
+        2. Navigate to ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened?
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - Blocks production usage
+        - Breaks a primary flow
+        - Breaks a secondary flow
+        - Visual or content issue
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Add screenshots, logs, browser details, URLs, or related issues.
+    validations:
+      required: false
