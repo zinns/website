@@ -1,4 +1,5 @@
 import { isReleaseTitle } from './semver.mjs';
+import { isProductionReleaseBranch } from './release-branches.mjs';
 
 const PROTECTED_PR_BRANCHES = ['develop', 'release', 'main'];
 
@@ -18,8 +19,8 @@ export function validatePullRequestBranchPolicy(pullRequest) {
   if (base === 'main') {
     const errors = [];
 
-    if (!head.startsWith('release/main-v')) {
-      errors.push('Production PRs to main must come from a release/main-vX.Y.Z branch.');
+    if (!isProductionReleaseBranch(head)) {
+      errors.push('Production PRs to main must come from a production-release/vX.Y.Z branch.');
     }
 
     if (!isReleaseTitle(title)) {
