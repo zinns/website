@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 import { getRepository, githubRequest } from './lib/github-api.mjs';
+import { getProductionReleaseBranch } from './lib/release-branches.mjs';
 import { getReleaseTypeFromVersionLabel, getSingleVersionLabel } from './lib/release-labels.mjs';
 import { incrementVersion } from './lib/semver.mjs';
 
@@ -68,7 +69,7 @@ run('git', ['fetch', 'origin', 'main', 'release', '--prune', '--tags']);
 
 const currentPackage = readPackageJsonFromMain();
 const nextVersion = incrementVersion(currentPackage.version, releaseType);
-const releaseBranch = `release/main-v${nextVersion}`;
+const releaseBranch = getProductionReleaseBranch(nextVersion);
 const title = `chore(release): v${nextVersion} (#${pullRequest.number})`;
 
 run('git', ['switch', '-C', releaseBranch, 'origin/main']);

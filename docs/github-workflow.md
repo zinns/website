@@ -35,10 +35,12 @@ After the release candidate PR is merged into `release`, automation should:
 
 1. Read the selected `version:*` label from the merged release candidate PR.
 2. Calculate the next version.
-3. Create a branch from `main`, for example `release/main-vX.Y.Z`.
+3. Create a branch from `main`, for example `production-release/vX.Y.Z`.
 4. Apply the accepted diff from `release` as a single release commit.
 5. Update release metadata such as `package.json` and release notes.
 6. Open a production release PR directly to `main`.
+7. After the production release is published, create a sync PR from `sync/develop-vX.Y.Z` to
+   `develop`.
 
 The production release PR must contain only release commits. The merge method for `main` is squash
 merge, with a commit title like:
@@ -56,6 +58,7 @@ After the production PR is merged, automation should create the matching Git tag
   once staging is approved and one `version:*` label is selected.
 - Production release PR into `main`: squash merge so production history contains only release
   commits.
+- Post-release sync PR into `develop`: merge commit so `develop` keeps release ancestry from `main`.
 
 ## Required Local Checks
 
@@ -84,4 +87,6 @@ These workflows now define the automation contract:
 - `production-release-guard.yml`: verifies the production PR targets `main`, uses one release commit,
   and updates `package.json` to the release version.
 - `publish-release.yml`: tags the production merge as `vX.Y.Z` and creates the GitHub Release.
+- `develop-sync-pr.yml`: creates a PR to sync production release changes from `main` back into
+  `develop`.
 - `labels-sync.yml`: applies `.github/labels.yml` to repository labels.

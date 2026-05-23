@@ -15,6 +15,12 @@ describe('branch policy helpers', () => {
     expect(validatePullRequestBranchPolicy(pullRequest('develop', 'feature/homepage'))).toEqual([]);
   });
 
+  it('allows generated sync branches into develop', () => {
+    expect(validatePullRequestBranchPolicy(pullRequest('develop', 'sync/develop-v1.2.3'))).toEqual(
+      [],
+    );
+  });
+
   it('requires develop to release PRs', () => {
     expect(validatePullRequestBranchPolicy(pullRequest('release', 'feature/homepage'))).toEqual([
       'Release candidate PRs must come from develop or a release-candidate/* branch.',
@@ -30,7 +36,7 @@ describe('branch policy helpers', () => {
   it('requires generated production release PRs into main', () => {
     expect(
       validatePullRequestBranchPolicy(
-        pullRequest('main', 'release/main-v1.2.3', 'chore(release): v1.2.3 (#44)'),
+        pullRequest('main', 'production-release/v1.2.3', 'chore(release): v1.2.3 (#44)'),
       ),
     ).toEqual([]);
   });

@@ -15,8 +15,10 @@ if (pullRequest.base.ref !== 'release') {
   errors.push('Release label guard must target the release branch.');
 }
 
-if (pullRequest.head.ref !== 'develop') {
-  errors.push('Release candidate PRs must use develop as the source branch.');
+if (pullRequest.head.ref !== 'develop' && !pullRequest.head.ref.startsWith('release-candidate/')) {
+  errors.push(
+    'Release candidate PRs must use develop or a release-candidate/* branch as the source.',
+  );
 }
 
 try {

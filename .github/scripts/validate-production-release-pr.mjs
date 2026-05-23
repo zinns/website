@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 import { getRepository, githubPaginate } from './lib/github-api.mjs';
+import { isProductionReleaseBranch } from './lib/release-branches.mjs';
 import { getVersionFromReleaseTitle } from './lib/semver.mjs';
 
 const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
@@ -22,8 +23,8 @@ if (!version) {
   errors.push('Production PR title must match chore(release): vX.Y.Z (#123).');
 }
 
-if (!pullRequest.head.ref.startsWith('release/main-v')) {
-  errors.push('Production PR source branch must match release/main-vX.Y.Z.');
+if (!isProductionReleaseBranch(pullRequest.head.ref)) {
+  errors.push('Production PR source branch must match production-release/vX.Y.Z.');
 }
 
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
