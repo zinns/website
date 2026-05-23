@@ -14,3 +14,7 @@ This folder describes how the current project works and where future work should
 - [Development](development.md): local setup, scripts, quality checks, and hooks.
 - [Contact Email](contact-email.md): contact form behavior and required email environment variables.
 - [GitHub Workflow](github-workflow.md): branch strategy, PR flow, release automation, and labels.
+- [GitHub Governance](github-governance.md): issue lifecycle, branch naming, labels, milestones,
+  projects, and branch protection requirements.
+- [Release Automation Strategy](release-automation-strategy.md): planned fixes for release checks,
+  generated change lists, and release PR metadata.
