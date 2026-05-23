@@ -14,8 +14,11 @@ This document defines the repository workflow and release automation contract.
 1. Create a work branch from `develop`.
 2. Open a PR back to `develop` using the change PR template.
 3. Squash merge the PR into `develop` after review and validation.
-4. Vercel handles the staging deployment from `develop`.
-5. Release automation creates or updates the `develop` to `release` PR after every push to `develop`.
+4. Vercel deployments are handled by the connected Vercel project when its Git integration is
+   enabled. Temporary release automation branches are excluded from Vercel auto-deployments through
+   `vercel.json`.
+5. Release automation creates or updates the `develop` to `release` PR after every push to
+   `develop`.
 
 ## Release Candidate Flow
 
@@ -27,7 +30,7 @@ have exactly one version label:
 - `version:major`
 
 The selected version label determines the next semantic version. The release candidate PR should only
-be merged after the Vercel staging deployment for `develop` has been reviewed.
+be merged after repository checks pass and known release blockers are resolved.
 
 ## Production Flow
 
@@ -55,7 +58,7 @@ After the production PR is merged, automation should create the matching Git tag
 
 - Work PRs into `develop`: squash merge.
 - Release candidate PR from `develop` or `release-candidate/*` to `release`: create a merge commit
-  once staging is approved and one `version:*` label is selected.
+  once repository checks pass, blockers are resolved, and one `version:*` label is selected.
 - Production release PR into `main`: squash merge so production history contains only release
   commits.
 - Post-release sync PR into `develop`: merge commit so `develop` keeps release ancestry from `main`.
