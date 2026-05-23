@@ -51,6 +51,7 @@ describe('change PR policy', () => {
     expect(
       validateChangePullRequest(pullRequest({ labels: ['type:task', 'status:approved'] }), [
         commit('Release 📦 v1.2.3'),
+        commit('Release v0.2.6 (#21)'),
       ]),
     ).toEqual([]);
   });

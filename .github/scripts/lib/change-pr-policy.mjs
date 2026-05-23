@@ -27,7 +27,9 @@ function commitHeaderReferencesIssue(header, issueId) {
 }
 
 function shouldSkipCommitIssueCheck(header) {
-  return header.startsWith('Merge ') || isReleaseTitle(header);
+  return (
+    header.startsWith('Merge ') || isReleaseTitle(header) || /^Release v\d+\.\d+\.\d+/.test(header)
+  );
 }
 
 export function validateChangePullRequest(pullRequest, commits = []) {
