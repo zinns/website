@@ -30,8 +30,12 @@ export function incrementVersion(version, releaseType) {
   throw new Error(`Unsupported release type: ${releaseType}`);
 }
 
+export function getReleaseTitle(version) {
+  return `Release 📦 v${version}`;
+}
+
 export function getVersionFromReleaseTitle(title) {
-  const match = /^chore\(release\): v(\d+\.\d+\.\d+) \(#\d+\)$/.exec(title);
+  const match = /^Release 📦 v(\d+\.\d+\.\d+)$/u.exec(title);
   return match?.[1] ?? null;
 }
 

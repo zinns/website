@@ -24,7 +24,7 @@ export function validatePullRequestBranchPolicy(pullRequest) {
     }
 
     if (!isReleaseTitle(title)) {
-      errors.push('Production PR titles must match chore(release): vX.Y.Z (#123).');
+      errors.push('Production PR titles must match Release 📦 vX.Y.Z.');
     }
 
     return errors;
@@ -38,7 +38,7 @@ export function validatePushBranchPolicy(event) {
   const message = event.head_commit?.message?.split(/\r?\n/, 1)[0] ?? '';
 
   if (branch === 'main' && !isReleaseTitle(message)) {
-    return ['Pushes to main must contain a release commit titled chore(release): vX.Y.Z (#123).'];
+    return ['Pushes to main must contain a release commit titled Release 📦 vX.Y.Z.'];
   }
 
   return [];

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  getMissingLabels,
   getReleaseTypeFromVersionLabel,
   getSingleVersionLabel,
   getVersionLabels,
@@ -23,5 +24,11 @@ describe('release label helpers', () => {
 
   it('maps version labels to release types', () => {
     expect(getReleaseTypeFromVersionLabel('version:major')).toBe('major');
+  });
+
+  it('returns missing required labels', () => {
+    expect(getMissingLabels(['type:release'], ['type:release', 'status:in-review'])).toEqual([
+      'status:in-review',
+    ]);
   });
 });
