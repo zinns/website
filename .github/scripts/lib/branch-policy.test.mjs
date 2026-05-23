@@ -36,7 +36,7 @@ describe('branch policy helpers', () => {
   it('requires generated production release PRs into main', () => {
     expect(
       validatePullRequestBranchPolicy(
-        pullRequest('main', 'production-release/v1.2.3', 'chore(release): v1.2.3 (#44)'),
+        pullRequest('main', 'production-release/v1.2.3', 'Release 📦 v1.2.3'),
       ),
     ).toEqual([]);
   });

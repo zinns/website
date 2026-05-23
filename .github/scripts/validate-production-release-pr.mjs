@@ -2,6 +2,12 @@ import { readFileSync } from 'node:fs';
 
 import { getRepository, githubPaginate } from './lib/github-api.mjs';
 import { isProductionReleaseBranch } from './lib/release-branches.mjs';
+import {
+  getMissingLabels,
+  getSingleVersionLabel,
+  REQUIRED_PRODUCTION_RELEASE_LABELS,
+  VERSION_LABELS,
+} from './lib/release-labels.mjs';
 import { getVersionFromReleaseTitle } from './lib/semver.mjs';
 
 const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
@@ -20,11 +26,24 @@ if (pullRequest.base.ref !== 'main') {
 }
 
 if (!version) {
-  errors.push('Production PR title must match chore(release): vX.Y.Z (#123).');
+  errors.push('Production PR title must match Release 📦 vX.Y.Z.');
 }
 
 if (!isProductionReleaseBranch(pullRequest.head.ref)) {
   errors.push('Production PR source branch must match production-release/vX.Y.Z.');
+}
+
+const missingLabels = getMissingLabels(pullRequest.labels, REQUIRED_PRODUCTION_RELEASE_LABELS);
+
+if (missingLabels.length > 0) {
+  errors.push(`Production PR is missing required labels: ${missingLabels.join(', ')}.`);
+}
+
+try {
+  const label = getSingleVersionLabel(pullRequest.labels);
+  console.log(`approved production version label: ${label}`);
+} catch (error) {
+  errors.push(`${error.message} Add exactly one of: ${VERSION_LABELS.join(', ')}.`);
 }
 
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));

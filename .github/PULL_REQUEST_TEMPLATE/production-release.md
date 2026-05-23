@@ -11,12 +11,13 @@
 - Version: `v0.0.0`
 - Source release candidate PR:
 - Version label used:
+- Required labels: `type:release`, `status:in-review`, and exactly one `version:*`
 
 ## Merge strategy
 
 - [ ] Squash merge into `main`
 - [ ] The PR contains only release commit changes
-- [ ] Squash commit title is `chore(release): v0.0.0 (#123)`
+- [ ] Squash commit title is `Release 📦 v0.0.0`
 - [ ] After merge, automation creates the matching Git tag and GitHub Release
 
 ## Validation

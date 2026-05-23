@@ -8,6 +8,8 @@ on:
       - opened
       - synchronize
       - reopened
+      - labeled
+      - unlabeled
       - edited
       - ready_for_review
 

@@ -1,6 +1,7 @@
 import { spawnSync } from 'node:child_process';
 
 import { getRepository, githubRequest } from './lib/github-api.mjs';
+import { getReleaseTitle } from './lib/semver.mjs';
 
 const { owner, repo } = getRepository();
 
@@ -31,13 +32,9 @@ async function findProductionPr(version) {
   const pullRequests = await githubRequest(
     `/repos/${owner}/${repo}/pulls?state=closed&base=main&sort=updated&direction=desc&per_page=25`,
   );
-  const titlePattern = new RegExp(
-    `^chore\\(release\\): v${version.replaceAll('.', '\\.')} \\(#\\d+\\)$`,
-  );
+  const title = getReleaseTitle(version);
 
-  return pullRequests.find(
-    pullRequest => pullRequest.merged_at && titlePattern.test(pullRequest.title),
-  );
+  return pullRequests.find(pullRequest => pullRequest.merged_at && pullRequest.title === title);
 }
 
 function renderBody(version, productionPr) {

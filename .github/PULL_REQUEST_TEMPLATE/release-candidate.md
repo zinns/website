@@ -18,6 +18,8 @@ Exactly one version label is required before merge:
 - [ ] `version:minor`
 - [ ] `version:major`
 
+Required labels: `type:release`, `status:in-review`, and exactly one `version:*`.
+
 ## Merge strategy
 
 - [ ] Merge after repository checks pass and release blockers are resolved

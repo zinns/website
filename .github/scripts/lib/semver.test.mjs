@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  getReleaseTitle,
   getVersionFromReleaseTitle,
   incrementVersion,
   isReleaseTitle,
@@ -19,7 +20,8 @@ describe('release version helpers', () => {
   });
 
   it('extracts versions from production release titles', () => {
-    expect(getVersionFromReleaseTitle('chore(release): v1.2.3 (#99)')).toBe('1.2.3');
+    expect(getReleaseTitle('1.2.3')).toBe('Release 📦 v1.2.3');
+    expect(getVersionFromReleaseTitle('Release 📦 v1.2.3')).toBe('1.2.3');
     expect(isReleaseTitle('feat(repo): add workflow (#99)')).toBe(false);
   });
 });
