@@ -22,7 +22,7 @@
 ## Validation
 
 - [ ] `pnpm validate`
-- [ ] Production deployment will be handled by Vercel from `main`
+- [ ] Production deployment is handled by the connected Vercel project from `main`
 - [ ] Release notes are accurate
 
 ## Release notes

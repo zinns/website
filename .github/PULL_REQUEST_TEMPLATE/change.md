@@ -33,7 +33,7 @@
 
 - [ ] `pnpm validate`
 - [ ] Browser or visual check completed when UI changed
-- [ ] Vercel preview reviewed when available
+- [ ] Vercel deployment is handled by the connected Vercel project when applicable
 
 ## Notes
 
