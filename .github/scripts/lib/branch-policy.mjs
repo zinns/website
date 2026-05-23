@@ -1,4 +1,5 @@
 import { isReleaseTitle } from './semver.mjs';
+import { isProductionReleaseBranch } from './release-branches.mjs';
 
 const PROTECTED_PR_BRANCHES = ['develop', 'release', 'main'];
 
@@ -11,19 +12,19 @@ export function validatePullRequestBranchPolicy(pullRequest) {
     return [`PRs to develop must come from a work branch, not ${head}.`];
   }
 
-  if (base === 'release' && head !== 'develop') {
-    return ['Release candidate PRs must come from develop into release.'];
+  if (base === 'release' && head !== 'develop' && !head.startsWith('release-candidate/')) {
+    return ['Release candidate PRs must come from develop or a release-candidate/* branch.'];
   }
 
   if (base === 'main') {
     const errors = [];
 
-    if (!head.startsWith('release/main-v')) {
-      errors.push('Production PRs to main must come from a release/main-vX.Y.Z branch.');
+    if (!isProductionReleaseBranch(head)) {
+      errors.push('Production PRs to main must come from a production-release/vX.Y.Z branch.');
     }
 
     if (!isReleaseTitle(title)) {
-      errors.push('Production PR titles must match chore(release): vX.Y.Z (#123).');
+      errors.push('Production PR titles must match Release 📦 vX.Y.Z.');
     }
 
     return errors;
@@ -37,7 +38,7 @@ export function validatePushBranchPolicy(event) {
   const message = event.head_commit?.message?.split(/\r?\n/, 1)[0] ?? '';
 
   if (branch === 'main' && !isReleaseTitle(message)) {
-    return ['Pushes to main must contain a release commit titled chore(release): vX.Y.Z (#123).'];
+    return ['Pushes to main must contain a release commit titled Release 📦 vX.Y.Z.'];
   }
 
   return [];

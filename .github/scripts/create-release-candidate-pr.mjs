@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 import { getRepository, githubRequest, githubRequestOrNull } from './lib/github-api.mjs';
+import { REQUIRED_RELEASE_LABELS } from './lib/release-labels.mjs';
 
 const { owner, repo } = getRepository();
 const releaseRefPath = `/repos/${owner}/${repo}/git/ref/heads/release`;
@@ -40,17 +41,13 @@ Automation metadata:
 `;
 }
 
-async function addBestEffortLabels(prNumber) {
-  try {
-    await githubRequest(`/repos/${owner}/${repo}/issues/${prNumber}/labels`, {
-      method: 'POST',
-      body: {
-        labels: ['type:release', 'status:in-review'],
-      },
-    });
-  } catch (error) {
-    console.warn(`Could not add release labels: ${error.message}`);
-  }
+async function addRequiredLabels(prNumber) {
+  await githubRequest(`/repos/${owner}/${repo}/issues/${prNumber}/labels`, {
+    method: 'POST',
+    body: {
+      labels: REQUIRED_RELEASE_LABELS,
+    },
+  });
 }
 
 await ensureReleaseBranch();
@@ -70,7 +67,7 @@ if (existingPr) {
       body,
     },
   });
-  await addBestEffortLabels(existingPr.number);
+  await addRequiredLabels(existingPr.number);
   console.log(`updated release candidate PR #${existingPr.number}.`);
 } else {
   const createdPr = await githubRequest(`/repos/${owner}/${repo}/pulls`, {
@@ -83,6 +80,6 @@ if (existingPr) {
       maintainer_can_modify: true,
     },
   });
-  await addBestEffortLabels(createdPr.number);
+  await addRequiredLabels(createdPr.number);
   console.log(`created release candidate PR #${createdPr.number}.`);
 }
