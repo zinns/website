@@ -38,6 +38,9 @@
 - name: 'status:in-review'
   color: '1D76DB'
   description: 'Implementation is under review.'
+- name: 'status:approved'
+  color: '0E8A16'
+  description: 'Approved for merge after review.'
 
 - name: 'priority:p0'
   color: 'B60205'

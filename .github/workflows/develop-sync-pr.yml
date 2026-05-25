@@ -6,6 +6,10 @@ on:
       - Publish Release
     types:
       - completed
+  release:
+    types:
+      - published
+  workflow_dispatch:
 
 concurrency:
   group: develop-sync-pr
@@ -19,7 +23,7 @@ permissions:
 jobs:
   create:
     name: Create Develop Sync PR
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:

@@ -3,8 +3,9 @@
 ## Target
 
 - Base branch: `develop`
-- Source branch: created from latest `develop`
-- Required issue reference: `#123` in the PR description and first commit line
+- Source branch: `issue/123/short-description`, `issue-123-short-description`, or a conventional
+  branch like `feat/short-description`, created from latest `develop`
+- Required issue reference: `#123` in the PR title or description and first commit line
 
 ## Summary
 
@@ -12,7 +13,7 @@
 
 ## Linked issue
 
-<!-- Reference the issue without closing it unless this PR targets the default branch. Example: #123 -->
+<!-- Use a closing keyword because develop is the default branch. Example: Closes #123 -->
 
 ## Type
 
@@ -26,6 +27,7 @@
 ## Merge strategy
 
 - [ ] Squash merge into `develop`
+- [ ] `status:approved` label was added after review approval
 - [ ] Squash commit title uses conventional commit format with the issue reference in the first line
 - [ ] Example: `feat(site): add course index (#123)`
 
