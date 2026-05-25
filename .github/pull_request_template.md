@@ -22,6 +22,12 @@ Use the template that matches the target branch:
 - [ ] `release`: create a merge commit after staging approval and exactly one `version:*` label
 - [ ] `main`: squash merge the automated production release PR so `main` receives only a release commit
 
+Suggested commit titles:
+
+- `develop`: `feat(site): add project index (#123)`
+- `release`: `chore(release): merge release candidate (#123)`
+- `main`: `Release 📦 v0.0.0`
+
 ## Validation
 
 - [ ] `pnpm validate`
