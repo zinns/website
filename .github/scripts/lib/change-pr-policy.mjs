@@ -1,29 +1,59 @@
 import { getLabelNames } from './release-labels.mjs';
 import { isReleaseTitle } from './semver.mjs';
 
-const ISSUE_BRANCH_PATTERN = /^issue-(\d+)(?:[-_/].*)?$/;
+const ISSUE_BRANCH_PATTERNS = [/^issue\/(\d+)(?:[-_/].*)?$/, /^issue-(\d+)(?:[-_/].*)?$/];
+const CONVENTIONAL_BRANCH_PATTERN =
+  /^(?:feat|fix|chore|docs|style|refactor|perf|test|ci|build|design|content)\/[a-z0-9][a-z0-9._/-]*$/i;
 const AUTOMATION_BRANCH_PREFIXES = ['sync/', 'dependabot/'];
+const ISSUE_REFERENCE_PATTERN =
+  /(^|[\s([{:])(?:#(\d+)|GH-(\d+)|[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+#(\d+))(?=$|[\s)\],.;:])/gi;
 
 function getCommitHeader(message = '') {
   return message.trimStart().split(/\r?\n/, 1)[0]?.trim() ?? '';
 }
 
 function getIssueIdFromBranch(branch = '') {
-  return ISSUE_BRANCH_PATTERN.exec(branch)?.[1] ?? null;
+  for (const pattern of ISSUE_BRANCH_PATTERNS) {
+    const match = pattern.exec(branch);
+
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return null;
+}
+
+function isConventionalBranch(branch = '') {
+  return CONVENTIONAL_BRANCH_PATTERN.test(branch);
 }
 
 function isAutomationBranch(branch = '') {
   return AUTOMATION_BRANCH_PREFIXES.some(prefix => branch.startsWith(prefix));
 }
 
-function commitHeaderReferencesIssue(header, issueId) {
-  const escapedIssueId = issueId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(
-    `(^|[\\s([{:])(?:#${escapedIssueId}|GH-${escapedIssueId}|[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+#${escapedIssueId})(?=$|[\\s)\\],.;:])`,
-    'i',
-  );
+function getIssueIdsFromText(text = '') {
+  const issueIds = new Set();
 
-  return pattern.test(header);
+  for (const match of text.matchAll(ISSUE_REFERENCE_PATTERN)) {
+    const issueId = match[2] ?? match[3] ?? match[4];
+
+    if (issueId) {
+      issueIds.add(issueId);
+    }
+  }
+
+  return issueIds;
+}
+
+function hasExpectedIssueReference(text, expectedIssueIds) {
+  const issueIds = getIssueIdsFromText(text);
+
+  if (expectedIssueIds.size === 0) {
+    return issueIds.size > 0;
+  }
+
+  return [...issueIds].some(issueId => expectedIssueIds.has(issueId));
 }
 
 function shouldSkipCommitIssueCheck(header) {
@@ -39,6 +69,8 @@ export function validateChangePullRequest(pullRequest, commits = []) {
   const labels = getLabelNames(pullRequest.labels);
   const isAutomation = isAutomationBranch(head);
   const issueId = getIssueIdFromBranch(head);
+  const prIssueIds = getIssueIdsFromText(`${pullRequest.title ?? ''}\n${pullRequest.body ?? ''}`);
+  const expectedIssueIds = issueId ? new Set([issueId]) : prIssueIds;
 
   if (base !== 'develop') {
     errors.push('Change PR guard must target develop.');
@@ -52,24 +84,36 @@ export function validateChangePullRequest(pullRequest, commits = []) {
     errors.push('PRs to develop must include status:approved before merge.');
   }
 
-  if (!isAutomation && !issueId) {
-    errors.push('Human work branches must use issue-123-short-description naming.');
+  if (!isAutomation && !issueId && !isConventionalBranch(head)) {
+    errors.push(
+      'Human work branches must use issue/123/short-description, issue-123-short-description, or conventional naming like feat/short-description.',
+    );
   }
 
-  if (issueId) {
+  if (!isAutomation && issueId && !prIssueIds.has(issueId)) {
+    errors.push(`Human work PRs must reference branch issue #${issueId} in the PR title or body.`);
+  }
+
+  if (!isAutomation && !issueId && expectedIssueIds.size === 0) {
+    errors.push('Human work PRs must reference a GitHub issue in the PR title or body.');
+  }
+
+  if (!isAutomation && expectedIssueIds.size > 0) {
     const invalidCommit = commits.find(commit => {
       const header = getCommitHeader(commit.commit?.message ?? commit.message ?? '');
 
       return (
         header &&
         !shouldSkipCommitIssueCheck(header) &&
-        !commitHeaderReferencesIssue(header, issueId)
+        !hasExpectedIssueReference(header, expectedIssueIds)
       );
     });
 
     if (invalidCommit) {
       const header = getCommitHeader(invalidCommit.commit?.message ?? invalidCommit.message ?? '');
-      errors.push(`Commit must reference issue #${issueId}: ${header}`);
+      const issueList = [...expectedIssueIds].map(id => `#${id}`).join(', ');
+
+      errors.push(`Commit must reference linked issue ${issueList}: ${header}`);
     }
   }
 

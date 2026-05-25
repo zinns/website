@@ -12,7 +12,8 @@ This document defines the repository workflow and release automation contract.
 ## Change Flow
 
 1. Create a work branch from `develop`.
-2. Include the issue ID in the branch name, for example `issue-123-short-description`.
+2. Use either an explicit issue branch such as `issue/123/homepage-content` or a conventional
+   branch such as `feat/homepage-content`.
 3. Open a PR back to `develop` using the change PR template.
 4. Add `status:approved` only after review approval.
 5. Squash merge the PR into `develop` after review and validation.
@@ -86,8 +87,8 @@ These workflows now define the automation contract:
 - `ci.yml`: validates formatting, linting, TypeScript, tests, build, dependency review, and workflow
   syntax.
 - `branch-protection-check.yml`: verifies PR branch direction and production release commit shape.
-- `change-pr-guard.yml`: verifies PRs to `develop` use issue branches, required labels, and
-  issue-referenced commits.
+- `change-pr-guard.yml`: verifies PRs to `develop` use accepted branch names, required labels, and
+  issue-referenced PRs and commits.
 - `release-candidate-pr.yml`: creates or updates the `develop` to `release` PR after every push to
   `develop`.
 - `release-label-guard.yml`: requires release metadata labels and exactly one `version:*` label

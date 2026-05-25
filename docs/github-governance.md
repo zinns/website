@@ -14,7 +14,7 @@ Lifecycle:
 2. Add labels for type, area, priority, and status.
 3. Assign the issue to the person doing the work.
 4. Create a branch from the latest `develop`.
-5. Include the issue ID in the branch name.
+5. Use an accepted human branch name.
 6. Commit using conventional commit format with the issue reference in the first line.
 7. Open a PR back to `develop`.
 8. Keep the PR in `status:in-review` until the reviewer approves the change.
@@ -36,20 +36,48 @@ Use release-blocker issues for problems found during release review.
 
 ## Branch Naming
 
-Human work branches must be created from `develop` and include the issue ID.
+Human work branches must be created from `develop` and use one of the accepted formats.
 
-Format:
+Preferred explicit issue format:
+
+```text
+issue/123/short-description
+```
+
+Compatible explicit issue format:
 
 ```text
 issue-123-short-description
 ```
 
+Conventional work format:
+
+```text
+type/short-description
+```
+
+Accepted conventional prefixes:
+
+- `feat`
+- `fix`
+- `chore`
+- `docs`
+- `style`
+- `refactor`
+- `perf`
+- `test`
+- `ci`
+- `build`
+- `design`
+- `content`
+
 Examples:
 
 ```text
-issue-44-post-release-governance
+issue/44/post-release-governance
 issue-52-course-card-design
-issue-71-contact-form-email
+feat/homepage-showcase
+chore/update-release-docs
 ```
 
 Automation branches are exceptions:
@@ -91,12 +119,13 @@ PRs to `develop` represent approved product or repository changes.
 
 Requirements:
 
-- Source branch uses `issue-123-short-description`, unless it is an automation branch.
-- PR references the issue.
+- Source branch uses `issue/123/short-description`, `issue-123-short-description`, or a conventional
+  branch like `feat/short-description`, unless it is an automation branch.
+- PR title or body references the issue.
 - PR uses a closing keyword when it should close the issue on merge to `develop`.
 - PR has at least one `type:*` label.
 - PR has `status:approved` before merge.
-- Commits reference the issue ID unless they are merge commits or generated release commits.
+- Commits reference a linked issue unless they are merge commits or generated release commits.
 - Required checks pass.
 
 Recommended PR body:

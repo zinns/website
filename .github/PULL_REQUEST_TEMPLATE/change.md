@@ -3,8 +3,9 @@
 ## Target
 
 - Base branch: `develop`
-- Source branch: `issue-123-short-description`, created from latest `develop`
-- Required issue reference: `#123` in the PR description and first commit line
+- Source branch: `issue/123/short-description`, `issue-123-short-description`, or a conventional
+  branch like `feat/short-description`, created from latest `develop`
+- Required issue reference: `#123` in the PR title or description and first commit line
 
 ## Summary
 
