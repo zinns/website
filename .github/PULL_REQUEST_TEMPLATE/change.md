@@ -29,7 +29,7 @@
 - [ ] Squash merge into `develop`
 - [ ] `status:approved` label was added after review approval
 - [ ] Squash commit title uses conventional commit format with the issue reference in the first line
-- [ ] Example: `feat(site): add course index (#123)`
+- [ ] Suggested squash commit title: `feat(site): add course index (#123)`
 
 ## Validation
 
