@@ -316,5 +316,10 @@ Automation should:
 
 The automation must not push directly to `develop`.
 
+If `package.json` conflicts only because `main` has the new release version, the sync automation can
+resolve that conflict automatically by preserving the `develop` package metadata and adopting the
+released `main` version. Any package conflict beyond the version field must fail and be handled by a
+manual sync PR.
+
 For the current `v0.3.0` release, the sync is handled by issue `#44` because the workflow was not yet
 available on the default branch when the release was published.

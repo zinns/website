@@ -24,6 +24,7 @@ Required labels: `type:release`, `status:in-review`, and exactly one `version:*`
 
 - [ ] Merge after repository checks pass and release blockers are resolved
 - [ ] Create a merge commit into `release`
+- [ ] Suggested merge commit title: `chore(release): merge release candidate (#123)`
 - [ ] Do not squash this PR unless the release automation is changed to preserve the required release scope another way
 - [ ] After merge, automation creates the production release PR to `main`
 
