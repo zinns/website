@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { validateChangePullRequest } from './change-pr-policy.mjs';
 
 function pullRequest({
+  number = 44,
   base = 'develop',
   head = 'issue/44/governance',
   labels = [],
@@ -10,6 +11,7 @@ function pullRequest({
   body = 'Closes #44',
 } = {}) {
   return {
+    number,
     base: { ref: base },
     head: { ref: head },
     title,
@@ -23,6 +25,14 @@ function commit(message) {
     commit: {
       message,
     },
+  };
+}
+
+function openPullRequest({ number = 99, base = 'develop', head = 'sync/develop-v1.2.3' } = {}) {
+  return {
+    number,
+    base: { ref: base },
+    head: { ref: head },
   };
 }
 
@@ -100,6 +110,32 @@ describe('change PR policy', () => {
         pullRequest({ head: 'sync/develop-v1.2.3', labels: ['type:release'] }),
       ),
     ).toContain('PRs to develop must include status:approved before merge.');
+  });
+
+  it('blocks non-sync develop PRs while a develop sync PR is open', () => {
+    expect(
+      validateChangePullRequest(
+        pullRequest({ labels: ['type:task', 'status:approved'] }),
+        [commit('docs(repo): document governance (#44)')],
+        [openPullRequest()],
+      ),
+    ).toContain(
+      'PRs to develop are blocked while post-release sync PRs are open: #99 (sync/develop-v1.2.3). Merge or close the sync PR first.',
+    );
+  });
+
+  it('allows the current develop sync PR to pass the sync queue guard', () => {
+    expect(
+      validateChangePullRequest(
+        pullRequest({
+          number: 99,
+          head: 'sync/develop-v1.2.3',
+          labels: ['type:release', 'status:approved'],
+        }),
+        [commit('chore(sync): merge v1.2.3 into develop (#98)')],
+        [openPullRequest()],
+      ),
+    ).toEqual([]);
   });
 
   it('skips release commits when validating issue references', () => {

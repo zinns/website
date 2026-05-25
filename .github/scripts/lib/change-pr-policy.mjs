@@ -5,6 +5,7 @@ const ISSUE_BRANCH_PATTERNS = [/^issue\/(\d+)(?:[-_/].*)?$/, /^issue-(\d+)(?:[-_
 const CONVENTIONAL_BRANCH_PATTERN =
   /^(?:feat|fix|chore|docs|style|refactor|perf|test|ci|build|design|content)\/[a-z0-9][a-z0-9._/-]*$/i;
 const AUTOMATION_BRANCH_PREFIXES = ['sync/', 'dependabot/'];
+const DEVELOP_SYNC_BRANCH_PATTERN = /^sync\/develop-v\d+\.\d+\.\d+$/;
 const ISSUE_REFERENCE_PATTERN =
   /(^|[\s([{:])(?:#(\d+)|GH-(\d+)|[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+#(\d+))(?=$|[\s)\],.;:])/gi;
 
@@ -30,6 +31,23 @@ function isConventionalBranch(branch = '') {
 
 function isAutomationBranch(branch = '') {
   return AUTOMATION_BRANCH_PREFIXES.some(prefix => branch.startsWith(prefix));
+}
+
+function isDevelopSyncBranch(branch = '') {
+  return DEVELOP_SYNC_BRANCH_PATTERN.test(branch);
+}
+
+function getBlockingSyncPullRequests(pullRequest, openPullRequests = []) {
+  return openPullRequests.filter(openPullRequest => {
+    const isCurrentPullRequest =
+      pullRequest.number && openPullRequest.number && pullRequest.number === openPullRequest.number;
+
+    return (
+      !isCurrentPullRequest &&
+      openPullRequest.base?.ref === 'develop' &&
+      isDevelopSyncBranch(openPullRequest.head?.ref)
+    );
+  });
 }
 
 function getIssueIdsFromText(text = '') {
@@ -62,12 +80,13 @@ function shouldSkipCommitIssueCheck(header) {
   );
 }
 
-export function validateChangePullRequest(pullRequest, commits = []) {
+export function validateChangePullRequest(pullRequest, commits = [], openPullRequests = []) {
   const errors = [];
   const base = pullRequest.base.ref;
   const head = pullRequest.head.ref;
   const labels = getLabelNames(pullRequest.labels);
   const isAutomation = isAutomationBranch(head);
+  const isDevelopSync = isDevelopSyncBranch(head);
   const issueId = getIssueIdFromBranch(head);
   const prIssueIds = getIssueIdsFromText(`${pullRequest.title ?? ''}\n${pullRequest.body ?? ''}`);
   const expectedIssueIds = issueId ? new Set([issueId]) : prIssueIds;
@@ -82,6 +101,22 @@ export function validateChangePullRequest(pullRequest, commits = []) {
 
   if (!labels.includes('status:approved')) {
     errors.push('PRs to develop must include status:approved before merge.');
+  }
+
+  const blockingSyncPullRequests = isDevelopSync
+    ? []
+    : getBlockingSyncPullRequests(pullRequest, openPullRequests);
+
+  if (blockingSyncPullRequests.length > 0) {
+    const blockingRefs = blockingSyncPullRequests
+      .map(
+        blockingPullRequest => `#${blockingPullRequest.number} (${blockingPullRequest.head.ref})`,
+      )
+      .join(', ');
+
+    errors.push(
+      `PRs to develop are blocked while post-release sync PRs are open: ${blockingRefs}. Merge or close the sync PR first.`,
+    );
   }
 
   if (!isAutomation && !issueId && !isConventionalBranch(head)) {

@@ -12,7 +12,10 @@ if (!pullRequest) {
 }
 
 const commits = await githubPaginate(`/repos/${owner}/${repo}/pulls/${pullRequest.number}/commits`);
-const errors = validateChangePullRequest(pullRequest, commits);
+const openPullRequests = await githubPaginate(
+  `/repos/${owner}/${repo}/pulls?state=open&base=develop`,
+);
+const errors = validateChangePullRequest(pullRequest, commits, openPullRequests);
 
 if (errors.length > 0) {
   for (const error of errors) {

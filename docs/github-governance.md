@@ -311,10 +311,15 @@ Automation should:
 2. Create `sync/develop-vX.Y.Z` from `develop`.
 3. Merge `origin/main` into that sync branch.
 4. Open a PR to `develop`.
-5. Let CI and review validate the sync.
+5. Let repository checks and review validate the sync.
 6. Merge the sync PR into `develop`.
 
 The automation must not push directly to `develop`.
+
+While a `sync/develop-vX.Y.Z` PR is open, normal PRs to `develop` are blocked. The sync automation
+removes `status:approved` and adds `status:blocked` to other open `develop` PRs, and the `Change
+Policy` guard fails non-sync PRs until the sync PR is merged or closed. This prevents newly merged
+feature work from making the release sync stale or conflicting.
 
 If `package.json` conflicts only because `main` has the new release version, the sync automation can
 resolve that conflict automatically by preserving the `develop` package metadata and adopting the
