@@ -34,7 +34,7 @@ This should not be copied.`;
 
 ## Merge strategy
 
-- [ ] Squash commit title is \`Release 📦 v0.0.0\`
+- [ ] Suggested squash commit title: \`Release 📦 v0.0.0\`
 
 ## Release notes
 

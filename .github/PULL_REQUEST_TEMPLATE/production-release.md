@@ -17,7 +17,7 @@
 
 - [ ] Squash merge into `main`
 - [ ] The PR contains only release commit changes
-- [ ] Squash commit title is `Release 📦 v0.0.0`
+- [ ] Suggested squash commit title: `Release 📦 v0.0.0`
 - [ ] After merge, automation creates the matching Git tag and GitHub Release
 
 ## Validation
