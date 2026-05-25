@@ -1,6 +1,8 @@
 import { spawnSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
 
 import { getRepository, githubRequest } from './lib/github-api.mjs';
+import { resolvePackageJsonForDevelopSync, stringifyPackageJson } from './lib/develop-sync.mjs';
 import { getReleaseTitle } from './lib/semver.mjs';
 
 const { owner, repo } = getRepository();
@@ -24,8 +26,76 @@ function readPackageJsonFromMain() {
   return JSON.parse(packageJson);
 }
 
+function readPackageJsonFromDevelop() {
+  const packageJson = run('git', ['show', 'origin/develop:package.json'], { capture: true });
+  return JSON.parse(packageJson);
+}
+
 function getCommitCountSinceDevelop() {
   return Number(run('git', ['rev-list', '--count', 'origin/develop..HEAD'], { capture: true }));
+}
+
+function getUnmergedFiles() {
+  const output = run('git', ['diff', '--name-only', '--diff-filter=U'], { capture: true });
+
+  if (!output) {
+    return [];
+  }
+
+  return output.split(/\r?\n/).filter(Boolean);
+}
+
+function hasMergeHead() {
+  const result = spawnSync('git', ['rev-parse', '-q', '--verify', 'MERGE_HEAD'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  return result.status === 0;
+}
+
+function resolveKnownSyncConflicts(mainPackageJson) {
+  const unmergedFiles = getUnmergedFiles();
+
+  if (unmergedFiles.length === 0) {
+    return;
+  }
+
+  if (unmergedFiles.length !== 1 || unmergedFiles[0] !== 'package.json') {
+    throw new Error(`Unsupported develop sync conflicts: ${unmergedFiles.join(', ')}`);
+  }
+
+  const resolvedPackageJson = resolvePackageJsonForDevelopSync(
+    readPackageJsonFromDevelop(),
+    mainPackageJson,
+  );
+
+  writeFileSync('package.json', stringifyPackageJson(resolvedPackageJson));
+  run('git', ['add', 'package.json']);
+  console.log(`resolved package.json release version conflict as v${mainPackageJson.version}.`);
+}
+
+function mergeMainIntoDevelopSync(title, mainPackageJson) {
+  const result = spawnSync('git', ['merge', '--no-ff', '--no-commit', 'origin/main'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  if (result.status !== 0) {
+    const output = [result.stdout, result.stderr].filter(Boolean).join('\n');
+
+    if (getUnmergedFiles().length === 0) {
+      throw new Error(`git merge --no-ff --no-commit origin/main failed.\n${output}`);
+    }
+
+    resolveKnownSyncConflicts(mainPackageJson);
+  }
+
+  if (!hasMergeHead()) {
+    return;
+  }
+
+  run('git', ['commit', '-m', title]);
 }
 
 async function findProductionPr(version) {
@@ -37,7 +107,7 @@ async function findProductionPr(version) {
   return pullRequests.find(pullRequest => pullRequest.merged_at && pullRequest.title === title);
 }
 
-function renderBody(version, productionPr) {
+function renderBody(version, productionPr, title) {
   const productionReference = productionPr ? `#${productionPr.number}` : `v${version}`;
 
   return `# Develop Sync PR
@@ -58,6 +128,7 @@ function renderBody(version, productionPr) {
 ## Merge strategy
 
 - [ ] Merge commit into \`develop\`
+- [ ] Suggested merge commit title: \`${title}\`
 - [ ] Do not squash unless the release ancestry is intentionally being flattened
 - [ ] Delete the sync branch after merge
 
@@ -93,7 +164,7 @@ const productionReference = productionPr ? `#${productionPr.number}` : `v${versi
 const title = `chore(sync): merge v${version} into develop (${productionReference})`;
 
 run('git', ['switch', '-C', syncBranch, 'origin/develop']);
-run('git', ['merge', '--no-ff', 'origin/main', '-m', title]);
+mergeMainIntoDevelopSync(title, currentPackage);
 
 if (getCommitCountSinceDevelop() === 0) {
   console.log(`develop is already aligned with v${version}. Nothing to sync.`);
@@ -102,7 +173,7 @@ if (getCommitCountSinceDevelop() === 0) {
 
 run('git', ['push', '--force-with-lease', 'origin', `HEAD:${syncBranch}`]);
 
-const body = renderBody(version, productionPr);
+const body = renderBody(version, productionPr, title);
 const existingPrs = await githubRequest(
   `/repos/${owner}/${repo}/pulls?state=open&base=develop&head=${owner}:${syncBranch}`,
 );
