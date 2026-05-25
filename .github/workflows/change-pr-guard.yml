@@ -1,9 +1,9 @@
-name: Production Release Guard
+name: Change PR Guard
 
 on:
   pull_request:
     branches:
-      - main
+      - develop
     types:
       - opened
       - synchronize
@@ -18,22 +18,20 @@ permissions:
   pull-requests: read
 
 jobs:
-  release-shape:
-    name: Release Shape
+  change-policy:
+    name: Change Policy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR Head
+      - name: Checkout
         uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
 
-      - name: Validate production release PR
+      - name: Validate change PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node .github/scripts/validate-production-release-pr.mjs
+        run: node .github/scripts/validate-change-pr.mjs

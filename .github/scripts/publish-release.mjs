@@ -15,7 +15,7 @@ if (!pullRequest?.merged || pullRequest.base.ref !== 'main') {
 const version = getVersionFromReleaseTitle(pullRequest.title);
 
 if (!version) {
-  throw new Error('Merged production PR title must match chore(release): vX.Y.Z (#123).');
+  throw new Error('Merged production PR title must match Release 📦 vX.Y.Z.');
 }
 
 const tagName = `v${version}`;

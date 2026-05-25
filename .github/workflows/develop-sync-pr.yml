@@ -1,12 +1,18 @@
-name: Release Candidate PR
+name: Develop Sync PR
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_run:
+    workflows:
+      - Publish Release
+    types:
+      - completed
+  release:
+    types:
+      - published
+  workflow_dispatch:
 
 concurrency:
-  group: release-candidate-pr
+  group: develop-sync-pr
   cancel-in-progress: false
 
 permissions:
@@ -15,8 +21,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  create-or-update:
-    name: Create or Update Release Candidate PR
+  create:
+    name: Create Develop Sync PR
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +37,7 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Create or update PR
+      - name: Create develop sync PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node .github/scripts/create-release-candidate-pr.mjs
+        run: node .github/scripts/create-develop-sync-pr.mjs

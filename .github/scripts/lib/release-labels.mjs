@@ -1,4 +1,6 @@
 export const VERSION_LABELS = ['version:patch', 'version:minor', 'version:major'];
+export const REQUIRED_RELEASE_LABELS = ['type:release', 'status:in-review'];
+export const REQUIRED_PRODUCTION_RELEASE_LABELS = [...REQUIRED_RELEASE_LABELS];
 
 export function getLabelNames(labels = []) {
   return labels.map(label => (typeof label === 'string' ? label : label.name)).filter(Boolean);
@@ -7,6 +9,11 @@ export function getLabelNames(labels = []) {
 export function getVersionLabels(labels = []) {
   const labelNames = getLabelNames(labels);
   return labelNames.filter(label => VERSION_LABELS.includes(label));
+}
+
+export function getMissingLabels(labels = [], requiredLabels = []) {
+  const labelNames = new Set(getLabelNames(labels));
+  return requiredLabels.filter(label => !labelNames.has(label));
 }
 
 export function getReleaseTypeFromVersionLabel(label) {

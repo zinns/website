@@ -18,9 +18,11 @@ Exactly one version label is required before merge:
 - [ ] `version:minor`
 - [ ] `version:major`
 
+Required labels: `type:release`, `status:in-review`, and exactly one `version:*`.
+
 ## Merge strategy
 
-- [ ] Merge only after the Vercel staging deployment from `develop` is approved
+- [ ] Merge after repository checks pass and release blockers are resolved
 - [ ] Create a merge commit into `release`
 - [ ] Do not squash this PR unless the release automation is changed to preserve the required release scope another way
 - [ ] After merge, automation creates the production release PR to `main`
@@ -28,7 +30,7 @@ Exactly one version label is required before merge:
 ## Validation
 
 - [ ] `pnpm validate`
-- [ ] Vercel staging deployment reviewed
+- [ ] Vercel deployment is handled by the connected Vercel project
 - [ ] Known release blockers are resolved or explicitly accepted
 
 ## Release notes draft

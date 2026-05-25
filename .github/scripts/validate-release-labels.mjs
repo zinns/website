@@ -1,6 +1,11 @@
 import { readFileSync } from 'node:fs';
 
-import { getSingleVersionLabel, VERSION_LABELS } from './lib/release-labels.mjs';
+import {
+  getMissingLabels,
+  getSingleVersionLabel,
+  REQUIRED_RELEASE_LABELS,
+  VERSION_LABELS,
+} from './lib/release-labels.mjs';
 
 const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
 const pullRequest = event.pull_request;
@@ -15,8 +20,16 @@ if (pullRequest.base.ref !== 'release') {
   errors.push('Release label guard must target the release branch.');
 }
 
-if (pullRequest.head.ref !== 'develop') {
-  errors.push('Release candidate PRs must use develop as the source branch.');
+if (pullRequest.head.ref !== 'develop' && !pullRequest.head.ref.startsWith('release-candidate/')) {
+  errors.push(
+    'Release candidate PRs must use develop or a release-candidate/* branch as the source.',
+  );
+}
+
+const missingLabels = getMissingLabels(pullRequest.labels, REQUIRED_RELEASE_LABELS);
+
+if (missingLabels.length > 0) {
+  errors.push(`Release candidate PR is missing required labels: ${missingLabels.join(', ')}.`);
 }
 
 try {

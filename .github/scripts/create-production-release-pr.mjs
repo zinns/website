@@ -2,8 +2,14 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 import { getRepository, githubRequest } from './lib/github-api.mjs';
-import { getReleaseTypeFromVersionLabel, getSingleVersionLabel } from './lib/release-labels.mjs';
-import { incrementVersion } from './lib/semver.mjs';
+import { renderProductionReleaseBody } from './lib/release-body.mjs';
+import { getProductionReleaseBranch } from './lib/release-branches.mjs';
+import {
+  getReleaseTypeFromVersionLabel,
+  getSingleVersionLabel,
+  REQUIRED_PRODUCTION_RELEASE_LABELS,
+} from './lib/release-labels.mjs';
+import { getReleaseTitle, incrementVersion } from './lib/semver.mjs';
 
 const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
 const pullRequest = event.pull_request;
@@ -34,24 +40,26 @@ function updatePackageVersion(version) {
   writeFileSync('package.json', `${JSON.stringify(packageJson, null, 2)}\n`);
 }
 
-function renderBody(version, versionLabel, branch) {
+function renderBody(version, versionLabel, branch, title) {
   const template = readFileSync('.github/PULL_REQUEST_TEMPLATE/production-release.md', 'utf8');
 
-  return template
-    .replace('- Version: `v0.0.0`', `- Version: \`v${version}\``)
-    .replace(
-      '- Source release candidate PR:',
-      `- Source release candidate PR: #${pullRequest.number}`,
-    )
-    .replace('- Version label used:', `- Version label used: \`${versionLabel}\``)
-    .replace(
-      '`chore(release): v0.0.0 (#123)`',
-      `\`chore(release): v${version} (#${pullRequest.number})\``,
-    )
-    .replace(
-      '<!-- Final release notes copied from the release candidate PR and automation output. -->',
-      `Generated from release candidate PR #${pullRequest.number}.\n\nSource branch: \`${branch}\`\n\n${pullRequest.body ?? ''}`,
-    );
+  return renderProductionReleaseBody({
+    branch,
+    sourcePullRequest: pullRequest,
+    template,
+    title,
+    version,
+    versionLabel,
+  });
+}
+
+async function addRequiredLabels(prNumber, versionLabel) {
+  await githubRequest(`/repos/${owner}/${repo}/issues/${prNumber}/labels`, {
+    method: 'POST',
+    body: {
+      labels: [...REQUIRED_PRODUCTION_RELEASE_LABELS, versionLabel],
+    },
+  });
 }
 
 if (!pullRequest?.merged || pullRequest.base.ref !== 'release') {
@@ -68,8 +76,8 @@ run('git', ['fetch', 'origin', 'main', 'release', '--prune', '--tags']);
 
 const currentPackage = readPackageJsonFromMain();
 const nextVersion = incrementVersion(currentPackage.version, releaseType);
-const releaseBranch = `release/main-v${nextVersion}`;
-const title = `chore(release): v${nextVersion} (#${pullRequest.number})`;
+const releaseBranch = getProductionReleaseBranch(nextVersion);
+const title = getReleaseTitle(nextVersion);
 
 run('git', ['switch', '-C', releaseBranch, 'origin/main']);
 run('git', ['read-tree', '--reset', '-u', 'origin/release']);
@@ -85,13 +93,14 @@ if (!hasChanges) {
 run('git', ['commit', '-m', title]);
 run('git', ['push', '--force-with-lease', 'origin', `HEAD:${releaseBranch}`]);
 
-const body = renderBody(nextVersion, versionLabel, releaseBranch);
+const body = renderBody(nextVersion, versionLabel, releaseBranch, title);
 const existingPrs = await githubRequest(
   `/repos/${owner}/${repo}/pulls?state=open&base=main&head=${owner}:${releaseBranch}`,
 );
 const existingPr = existingPrs[0];
 
 if (existingPr) {
+  await addRequiredLabels(existingPr.number, versionLabel);
   await githubRequest(`/repos/${owner}/${repo}/pulls/${existingPr.number}`, {
     method: 'PATCH',
     body: {
@@ -111,5 +120,6 @@ if (existingPr) {
       maintainer_can_modify: false,
     },
   });
+  await addRequiredLabels(createdPr.number, versionLabel);
   console.log(`created production release PR #${createdPr.number}.`);
 }
