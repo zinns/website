@@ -134,7 +134,10 @@ function renderBody(version, productionPr, title) {
 
 ## Validation
 
-- [ ] CI passes
+- [ ] \`Branch Policy\` passes
+- [ ] \`Change Policy\` passes after review approval adds \`status:approved\`
+- [ ] \`Quality Gate\` passes (format, lint, typecheck, tests, and build)
+- [ ] \`Workflow Lint\` passes
 - [ ] Diff contains only release sync changes
 `;
 }
@@ -149,6 +152,52 @@ async function addBestEffortLabels(prNumber) {
     });
   } catch (error) {
     console.warn(`Could not add sync PR labels: ${error.message}`);
+  }
+}
+
+function isDevelopSyncBranch(branch = '') {
+  return /^sync\/develop-v\d+\.\d+\.\d+$/.test(branch);
+}
+
+async function removeBestEffortLabel(issueNumber, label) {
+  try {
+    await githubRequest(
+      `/repos/${owner}/${repo}/issues/${issueNumber}/labels/${encodeURIComponent(label)}`,
+      {
+        method: 'DELETE',
+      },
+    );
+  } catch (error) {
+    if (!error.message.includes('404')) {
+      console.warn(`Could not remove ${label} from PR #${issueNumber}: ${error.message}`);
+    }
+  }
+}
+
+async function blockOpenDevelopPullRequests(syncPrNumber) {
+  const pullRequests = await githubRequest(
+    `/repos/${owner}/${repo}/pulls?state=open&base=develop&per_page=100`,
+  );
+  const blockedPullRequests = pullRequests.filter(pullRequest => {
+    return pullRequest.number !== syncPrNumber && !isDevelopSyncBranch(pullRequest.head.ref);
+  });
+
+  for (const pullRequest of blockedPullRequests) {
+    await removeBestEffortLabel(pullRequest.number, 'status:approved');
+
+    try {
+      await githubRequest(`/repos/${owner}/${repo}/issues/${pullRequest.number}/labels`, {
+        method: 'POST',
+        body: {
+          labels: ['status:blocked'],
+        },
+      });
+      console.log(
+        `blocked develop PR #${pullRequest.number} until sync PR #${syncPrNumber} lands.`,
+      );
+    } catch (error) {
+      console.warn(`Could not block develop PR #${pullRequest.number}: ${error.message}`);
+    }
   }
 }
 
@@ -188,6 +237,7 @@ if (existingPr) {
     },
   });
   await addBestEffortLabels(existingPr.number);
+  await blockOpenDevelopPullRequests(existingPr.number);
   console.log(`updated develop sync PR #${existingPr.number}.`);
 } else {
   const createdPr = await githubRequest(`/repos/${owner}/${repo}/pulls`, {
@@ -201,5 +251,6 @@ if (existingPr) {
     },
   });
   await addBestEffortLabels(createdPr.number);
+  await blockOpenDevelopPullRequests(createdPr.number);
   console.log(`created develop sync PR #${createdPr.number}.`);
 }

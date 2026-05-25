@@ -68,6 +68,8 @@ After the production PR is merged, automation should create the matching Git tag
 - Production release PR into `main`: squash merge so production history contains only release
   commits.
 - Post-release sync PR into `develop`: merge commit so `develop` keeps release ancestry from `main`.
+- While a post-release sync PR is open, non-sync PRs into `develop` are blocked by `Change Policy`
+  until the sync PR merges or closes.
 
 ## Required Local Checks
 
