@@ -135,16 +135,20 @@ The intended release automation sequence is:
 
 1. Work PR merges into `develop`.
 2. `release-candidate-pr.yml` creates or updates the `develop` to `release` PR.
-3. The release-candidate PR body includes an generated `Included changes` list.
-4. Release labels are applied automatically.
-5. Release guards validate branch direction and required labels.
-6. Release candidate merges into `release`.
-7. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
-8. Production PR receives required labels and a focused release body.
-9. Production guards validate title, labels, single release commit, and version.
-10. Production PR merges into `main`.
-11. Release publishing tags `vX.Y.Z`.
-12. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
+3. The release-candidate PR body includes a generated `Included changes` list.
+4. Production release commits and post-release sync commits are ignored when calculating releasable
+   changes.
+5. If no releasable changes remain, the release-candidate PR is not created, or the stale automated
+   PR is closed.
+6. Release labels are applied automatically.
+7. Release guards validate branch direction and required labels.
+8. Release candidate merges into `release`.
+9. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
+10. Production PR receives required labels and a focused release body.
+11. Production guards validate title, labels, single release commit, and version.
+12. Production PR merges into `main`.
+13. Release publishing tags `vX.Y.Z`.
+14. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
 
 ## Implementation Plan
 
