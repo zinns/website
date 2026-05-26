@@ -21,9 +21,13 @@ describe('branch policy helpers', () => {
     );
   });
 
-  it('requires develop to release PRs', () => {
+  it('requires generated release candidate branches into release', () => {
     expect(validatePullRequestBranchPolicy(pullRequest('release', 'feature/homepage'))).toEqual([
-      'Release candidate PRs must come from develop or a release-candidate/* branch.',
+      'Release candidate PRs must come from a release-candidate/* branch.',
+    ]);
+
+    expect(validatePullRequestBranchPolicy(pullRequest('release', 'develop'))).toEqual([
+      'Release candidate PRs must come from a release-candidate/* branch.',
     ]);
   });
 

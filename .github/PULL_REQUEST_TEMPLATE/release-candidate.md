@@ -3,8 +3,9 @@
 ## Target
 
 - Base branch: `release`
-- Source branch: `develop`
-- Created and updated by automation after every push to `develop`
+- Source branch: generated `release-candidate/develop`
+- Source content: latest releasable changes from `develop`
+- Created and updated by automation after every push to `develop` or `release`
 
 ## Release scope
 
