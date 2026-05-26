@@ -3,7 +3,8 @@
 Use the template that matches the target branch:
 
 - Change PR to `develop`: `.github/PULL_REQUEST_TEMPLATE/change.md`
-- Release candidate PR to `release`: `.github/PULL_REQUEST_TEMPLATE/release-candidate.md`
+- Release candidate PR from `release-candidate/develop` to `release`:
+  `.github/PULL_REQUEST_TEMPLATE/release-candidate.md`
 - Production release PR to `main`: `.github/PULL_REQUEST_TEMPLATE/production-release.md`
 
 ## Summary
