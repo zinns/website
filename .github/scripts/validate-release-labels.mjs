@@ -20,10 +20,8 @@ if (pullRequest.base.ref !== 'release') {
   errors.push('Release label guard must target the release branch.');
 }
 
-if (pullRequest.head.ref !== 'develop' && !pullRequest.head.ref.startsWith('release-candidate/')) {
-  errors.push(
-    'Release candidate PRs must use develop or a release-candidate/* branch as the source.',
-  );
+if (!pullRequest.head.ref.startsWith('release-candidate/')) {
+  errors.push('Release candidate PRs must use a release-candidate/* branch as the source.');
 }
 
 const missingLabels = getMissingLabels(pullRequest.labels, REQUIRED_RELEASE_LABELS);

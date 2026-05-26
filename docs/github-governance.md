@@ -148,12 +148,14 @@ PRs to `release` represent release-candidate updates.
 
 Requirements:
 
-- Source branch is `develop` or `release-candidate/*`.
+- Source branch is generated as `release-candidate/develop` or, for manual release fixes,
+  `release-candidate/*`.
 - Labels include `type:release`.
 - Labels include `status:in-review`.
 - Exactly one `version:*` label is present.
-- The PR body includes generated included changes from `release..develop` when the source is
-  `develop`.
+- The PR body includes generated included changes from `release..develop`.
+- Expected `package.json` version conflicts are resolved in the generated source branch, not in
+  `develop` or `release`.
 - The PR uses a merge commit into `release`.
 
 ### PRs To `main`

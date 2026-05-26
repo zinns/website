@@ -22,8 +22,8 @@ workflow setup. They should not be expected from the current workflow set.
 
 ### Release Candidate Context
 
-The automated PR from `develop` to `release` currently uses a template, but it should also include a
-generated list of changes included in the release candidate.
+The automated release-candidate PR uses a template, but it should also include a generated list of
+changes included in the release candidate.
 
 The release manager should be able to answer these questions from the PR body:
 
@@ -61,10 +61,10 @@ Fallback if branch protection cannot be changed immediately:
 
 Preferred approach: update GitHub branch protection instead of keeping duplicate workflow jobs.
 
-### 2. Generate Included Changes For `develop` To `release`
+### 2. Generate Included Changes For Release Candidates
 
 The release-candidate automation should generate an `Included changes` section when it creates or
-updates the PR from `develop` to `release`.
+updates the generated PR from `release-candidate/develop` to `release`.
 
 Source of truth:
 
@@ -134,21 +134,28 @@ The guards should fail when these labels are missing or duplicated.
 The intended release automation sequence is:
 
 1. Work PR merges into `develop`.
-2. `release-candidate-pr.yml` creates or updates the `develop` to `release` PR.
-3. The release-candidate PR body includes a generated `Included changes` list.
-4. Production release commits and post-release sync commits are ignored when calculating releasable
+2. `release-candidate-pr.yml` creates or updates a generated `release-candidate/develop` branch from
+   `release`.
+3. The generated branch merges `develop` and resolves expected `package.json` version conflicts
+   there, keeping principal branches free of conflict-only commits.
+4. Expected release-candidate automation and governance conflicts are resolved in the generated
+   branch by taking `develop`; unrelated conflicts still fail for manual review.
+5. The release-candidate PR body includes a generated `Included changes` list.
+6. Production release commits and post-release sync commits are ignored when calculating releasable
    changes.
-5. If no releasable changes remain, the release-candidate PR is not created, or the stale automated
+7. If no releasable changes remain, the release-candidate PR is not created, or the stale automated
    PR is closed.
-6. Release labels are applied automatically.
-7. Release guards validate branch direction and required labels.
-8. Release candidate merges into `release`.
-9. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
-10. Production PR receives required labels and a focused release body.
-11. Production guards validate title, labels, single release commit, and version.
-12. Production PR merges into `main`.
-13. Release publishing tags `vX.Y.Z`.
-14. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
+8. Older direct `develop -> release` release-candidate PRs are closed and replaced by the generated
+   branch PR.
+9. Release labels are applied automatically.
+10. Release guards validate branch direction and required labels.
+11. Release candidate merges into `release`.
+12. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
+13. Production PR receives required labels and a focused release body.
+14. Production guards validate title, labels, single release commit, and version.
+15. Production PR merges into `main`.
+16. Release publishing tags `vX.Y.Z`.
+17. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
 
 ## Implementation Plan
 
@@ -174,7 +181,7 @@ The intended release automation sequence is:
 ## Acceptance Criteria
 
 - PRs are not blocked by stale required checks.
-- The `develop` to `release` PR contains an accurate `Included changes` section.
+- The generated release-candidate PR contains an accurate `Included changes` section.
 - Generated release PRs always include required labels.
 - Guards fail clearly when required labels are missing.
 - Production PR body contains only production release context and release notes.
