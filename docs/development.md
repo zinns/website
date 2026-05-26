@@ -2,13 +2,20 @@
 
 ## Requirements
 
-- Node.js `>=24.0.0`
+- Node.js latest active LTS from `.nvmrc` (`lts/*`)
 - pnpm `11.1.3`
 
 Use Corepack so the package manager version from `package.json` is respected:
 
 ```bash
 corepack pnpm install
+```
+
+Use the Node version declared in `.nvmrc` before installing dependencies:
+
+```bash
+nvm install
+nvm use
 ```
 
 ## Local Server
