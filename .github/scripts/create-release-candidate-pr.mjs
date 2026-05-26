@@ -1,12 +1,17 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 import { getRepository, githubRequest, githubRequestOrNull } from './lib/github-api.mjs';
+import { stringifyPackageJson } from './lib/develop-sync.mjs';
 import {
   filterReleaseCandidateCommits,
   renderIncludedChanges,
   renderReleaseCandidateBody,
 } from './lib/release-candidate-body.mjs';
+import {
+  RELEASE_CANDIDATE_BRANCH,
+  resolvePackageJsonForReleaseCandidate,
+} from './lib/release-candidate-merge.mjs';
 import { REQUIRED_RELEASE_LABELS } from './lib/release-labels.mjs';
 
 const { owner, repo } = getRepository();
@@ -74,6 +79,96 @@ function getIncludedCommits() {
   return filterReleaseCandidateCommits(commits);
 }
 
+function readPackageJsonFromRelease() {
+  const packageJson = run('git', ['show', 'origin/release:package.json'], { capture: true });
+  return JSON.parse(packageJson);
+}
+
+function readPackageJsonFromDevelop() {
+  const packageJson = run('git', ['show', 'origin/develop:package.json'], { capture: true });
+  return JSON.parse(packageJson);
+}
+
+function getCommitCountSinceRelease() {
+  return Number(run('git', ['rev-list', '--count', 'origin/release..HEAD'], { capture: true }));
+}
+
+function getUnmergedFiles() {
+  const output = run('git', ['diff', '--name-only', '--diff-filter=U'], { capture: true });
+
+  if (!output) {
+    return [];
+  }
+
+  return output.split(/\r?\n/).filter(Boolean);
+}
+
+function hasMergeHead() {
+  const result = spawnSync('git', ['rev-parse', '-q', '--verify', 'MERGE_HEAD'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  return result.status === 0;
+}
+
+function resolveKnownReleaseCandidateConflicts() {
+  const unmergedFiles = getUnmergedFiles();
+
+  if (unmergedFiles.length === 0) {
+    return;
+  }
+
+  if (unmergedFiles.length !== 1 || unmergedFiles[0] !== 'package.json') {
+    throw new Error(`Unsupported release candidate conflicts: ${unmergedFiles.join(', ')}`);
+  }
+
+  const resolvedPackageJson = resolvePackageJsonForReleaseCandidate(
+    readPackageJsonFromRelease(),
+    readPackageJsonFromDevelop(),
+  );
+
+  writeFileSync('package.json', stringifyPackageJson(resolvedPackageJson));
+  run('git', ['add', 'package.json']);
+  console.log(
+    `resolved package.json release candidate version conflict as v${resolvedPackageJson.version}.`,
+  );
+}
+
+function mergeDevelopIntoReleaseCandidate() {
+  const result = spawnSync('git', ['merge', '--no-ff', '--no-commit', 'origin/develop'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  if (result.status !== 0) {
+    const output = [result.stdout, result.stderr].filter(Boolean).join('\n');
+
+    if (getUnmergedFiles().length === 0) {
+      throw new Error(`git merge --no-ff --no-commit origin/develop failed.\n${output}`);
+    }
+
+    resolveKnownReleaseCandidateConflicts();
+  }
+
+  if (!hasMergeHead()) {
+    return;
+  }
+
+  run('git', ['commit', '-m', 'chore(release): prepare release candidate']);
+}
+
+function prepareReleaseCandidateBranch() {
+  run('git', ['switch', '-C', RELEASE_CANDIDATE_BRANCH, 'origin/release']);
+  mergeDevelopIntoReleaseCandidate();
+
+  if (getCommitCountSinceRelease() === 0) {
+    throw new Error('No release candidate diff exists after merging develop into release.');
+  }
+
+  run('git', ['push', '--force-with-lease', 'origin', `HEAD:${RELEASE_CANDIDATE_BRANCH}`]);
+}
+
 function renderBody(includedCommits) {
   const template = readFileSync('.github/PULL_REQUEST_TEMPLATE/release-candidate.md', 'utf8');
   const includedChanges = renderIncludedChanges(includedCommits);
@@ -105,18 +200,44 @@ async function closeStalePullRequest(pullRequest) {
   console.log(`closed release candidate PR #${pullRequest.number}; no releasable changes remain.`);
 }
 
+async function closeLegacyDevelopPullRequest(existingPr) {
+  if (!existingPr) {
+    return;
+  }
+
+  await githubRequest(`/repos/${owner}/${repo}/pulls/${existingPr.number}`, {
+    method: 'PATCH',
+    body: {
+      state: 'closed',
+    },
+  });
+  console.log(
+    `closed legacy develop release candidate PR #${existingPr.number}; generated branch will replace it.`,
+  );
+}
+
 await ensureReleaseBranch();
+run('git', ['config', 'user.name', 'github-actions[bot]']);
+run('git', ['config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com']);
 
 const title = 'chore(release): prepare release candidate';
-const existingPrs = await githubRequest(
+const existingGeneratedPrs = await githubRequest(
+  `/repos/${owner}/${repo}/pulls?state=open&base=release&head=${owner}:${RELEASE_CANDIDATE_BRANCH}`,
+);
+const existingGeneratedPr = existingGeneratedPrs[0];
+const existingLegacyPrs = await githubRequest(
   `/repos/${owner}/${repo}/pulls?state=open&base=release&head=${owner}:develop`,
 );
-const existingPr = existingPrs[0];
+const existingLegacyPr = existingLegacyPrs[0];
 const includedCommits = getIncludedCommits();
 
 if (includedCommits.length === 0) {
-  if (existingPr) {
-    await closeStalePullRequest(existingPr);
+  if (existingGeneratedPr) {
+    await closeStalePullRequest(existingGeneratedPr);
+  }
+
+  if (existingLegacyPr) {
+    await closeStalePullRequest(existingLegacyPr);
   } else {
     console.log('no releasable develop changes detected; release candidate PR was not created.');
   }
@@ -124,27 +245,30 @@ if (includedCommits.length === 0) {
   process.exit(0);
 }
 
+await closeLegacyDevelopPullRequest(existingLegacyPr);
+prepareReleaseCandidateBranch();
+
 const body = renderBody(includedCommits);
 
-if (existingPr) {
-  await githubRequest(`/repos/${owner}/${repo}/pulls/${existingPr.number}`, {
+if (existingGeneratedPr) {
+  await githubRequest(`/repos/${owner}/${repo}/pulls/${existingGeneratedPr.number}`, {
     method: 'PATCH',
     body: {
       title,
       body,
     },
   });
-  await addRequiredLabels(existingPr.number);
-  console.log(`updated release candidate PR #${existingPr.number}.`);
+  await addRequiredLabels(existingGeneratedPr.number);
+  console.log(`updated release candidate PR #${existingGeneratedPr.number}.`);
 } else {
   const createdPr = await githubRequest(`/repos/${owner}/${repo}/pulls`, {
     method: 'POST',
     body: {
       title,
-      head: 'develop',
+      head: RELEASE_CANDIDATE_BRANCH,
       base: 'release',
       body,
-      maintainer_can_modify: true,
+      maintainer_can_modify: false,
     },
   });
   await addRequiredLabels(createdPr.number);
