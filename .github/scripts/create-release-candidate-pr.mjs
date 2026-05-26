@@ -112,6 +112,24 @@ function hasMergeHead() {
   return result.status === 0;
 }
 
+function hasCachedChanges() {
+  const result = spawnSync('git', ['diff', '--cached', '--quiet'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  if (result.status === 0) {
+    return false;
+  }
+
+  if (result.status === 1) {
+    return true;
+  }
+
+  const output = [result.stdout, result.stderr].filter(Boolean).join('\n');
+  throw new Error(`git diff --cached --quiet failed.\n${output}`);
+}
+
 function resolveKnownReleaseCandidateConflicts() {
   const unmergedFiles = getUnmergedFiles();
 
@@ -152,21 +170,30 @@ function mergeDevelopIntoReleaseCandidate() {
   }
 
   if (!hasMergeHead()) {
-    return;
+    return getCommitCountSinceRelease() > 0;
   }
 
-  run('git', ['commit', '-m', 'chore(release): prepare release candidate']);
+  if (!hasCachedChanges()) {
+    run('git', ['merge', '--abort']);
+    console.log('no release candidate tree diff remains after resolving expected conflicts.');
+    return false;
+  }
+
+  run('git', ['commit', '--no-verify', '-m', 'chore(release): prepare release candidate']);
+  return true;
 }
 
 function prepareReleaseCandidateBranch() {
   run('git', ['switch', '-C', RELEASE_CANDIDATE_BRANCH, 'origin/release']);
-  mergeDevelopIntoReleaseCandidate();
+  const hasReleaseCandidateDiff = mergeDevelopIntoReleaseCandidate();
 
-  if (getCommitCountSinceRelease() === 0) {
-    throw new Error('No release candidate diff exists after merging develop into release.');
+  if (!hasReleaseCandidateDiff || getCommitCountSinceRelease() === 0) {
+    console.log('release candidate branch was not pushed because no release diff exists.');
+    return false;
   }
 
   run('git', ['push', '--force-with-lease', 'origin', `HEAD:${RELEASE_CANDIDATE_BRANCH}`]);
+  return true;
 }
 
 function renderBody(includedCommits) {
@@ -246,7 +273,16 @@ if (includedCommits.length === 0) {
 }
 
 await closeLegacyDevelopPullRequest(existingLegacyPr);
-prepareReleaseCandidateBranch();
+const hasReleaseCandidateDiff = prepareReleaseCandidateBranch();
+
+if (!hasReleaseCandidateDiff) {
+  if (existingGeneratedPr) {
+    await closeStalePullRequest(existingGeneratedPr);
+  }
+
+  console.log('no release candidate PR was created because no release diff exists.');
+  process.exit(0);
+}
 
 const body = renderBody(includedCommits);
 
