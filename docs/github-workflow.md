@@ -42,6 +42,10 @@ The release candidate PR body must include a generated included-change list from
 Production release commits and post-release sync commits are filtered out. If no releasable commits
 remain after filtering, the automation must not create a release candidate PR.
 
+Expected release-candidate automation or governance conflicts are resolved in the generated branch by
+taking the `develop` version. `package.json` is the exception: the generated branch keeps the
+`release` version so production versioning remains controlled by the production release PR.
+
 If an older direct `develop -> release` release-candidate PR is open, the automation closes it and
 replaces it with the generated `release-candidate/develop` PR.
 

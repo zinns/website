@@ -138,22 +138,24 @@ The intended release automation sequence is:
    `release`.
 3. The generated branch merges `develop` and resolves expected `package.json` version conflicts
    there, keeping principal branches free of conflict-only commits.
-4. The release-candidate PR body includes a generated `Included changes` list.
-5. Production release commits and post-release sync commits are ignored when calculating releasable
+4. Expected release-candidate automation and governance conflicts are resolved in the generated
+   branch by taking `develop`; unrelated conflicts still fail for manual review.
+5. The release-candidate PR body includes a generated `Included changes` list.
+6. Production release commits and post-release sync commits are ignored when calculating releasable
    changes.
-6. If no releasable changes remain, the release-candidate PR is not created, or the stale automated
+7. If no releasable changes remain, the release-candidate PR is not created, or the stale automated
    PR is closed.
-7. Older direct `develop -> release` release-candidate PRs are closed and replaced by the generated
+8. Older direct `develop -> release` release-candidate PRs are closed and replaced by the generated
    branch PR.
-8. Release labels are applied automatically.
-9. Release guards validate branch direction and required labels.
-10. Release candidate merges into `release`.
-11. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
-12. Production PR receives required labels and a focused release body.
-13. Production guards validate title, labels, single release commit, and version.
-14. Production PR merges into `main`.
-15. Release publishing tags `vX.Y.Z`.
-16. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
+9. Release labels are applied automatically.
+10. Release guards validate branch direction and required labels.
+11. Release candidate merges into `release`.
+12. `production-release-pr.yml` creates or updates the `production-release/vX.Y.Z` to `main` PR.
+13. Production PR receives required labels and a focused release body.
+14. Production guards validate title, labels, single release commit, and version.
+15. Production PR merges into `main`.
+16. Release publishing tags `vX.Y.Z`.
+17. Develop sync PR opens from `sync/develop-vX.Y.Z` to `develop`.
 
 ## Implementation Plan
 

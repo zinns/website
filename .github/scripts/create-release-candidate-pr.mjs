@@ -9,6 +9,8 @@ import {
   renderReleaseCandidateBody,
 } from './lib/release-candidate-body.mjs';
 import {
+  getDevelopSideReleaseCandidateConflictFiles,
+  getUnsupportedReleaseCandidateConflictFiles,
   RELEASE_CANDIDATE_BRANCH,
   resolvePackageJsonForReleaseCandidate,
 } from './lib/release-candidate-merge.mjs';
@@ -137,20 +139,34 @@ function resolveKnownReleaseCandidateConflicts() {
     return;
   }
 
-  if (unmergedFiles.length !== 1 || unmergedFiles[0] !== 'package.json') {
-    throw new Error(`Unsupported release candidate conflicts: ${unmergedFiles.join(', ')}`);
+  const unsupportedFiles = getUnsupportedReleaseCandidateConflictFiles(unmergedFiles);
+
+  if (unsupportedFiles.length > 0) {
+    throw new Error(`Unsupported release candidate conflicts: ${unsupportedFiles.join(', ')}`);
   }
 
-  const resolvedPackageJson = resolvePackageJsonForReleaseCandidate(
-    readPackageJsonFromRelease(),
-    readPackageJsonFromDevelop(),
-  );
+  const developSideFiles = getDevelopSideReleaseCandidateConflictFiles(unmergedFiles);
 
-  writeFileSync('package.json', stringifyPackageJson(resolvedPackageJson));
-  run('git', ['add', 'package.json']);
-  console.log(
-    `resolved package.json release candidate version conflict as v${resolvedPackageJson.version}.`,
-  );
+  if (developSideFiles.length > 0) {
+    run('git', ['checkout', '--theirs', '--', ...developSideFiles]);
+    run('git', ['add', ...developSideFiles]);
+    console.log(
+      `resolved release candidate conflicts from develop: ${developSideFiles.join(', ')}.`,
+    );
+  }
+
+  if (unmergedFiles.includes('package.json')) {
+    const resolvedPackageJson = resolvePackageJsonForReleaseCandidate(
+      readPackageJsonFromRelease(),
+      readPackageJsonFromDevelop(),
+    );
+
+    writeFileSync('package.json', stringifyPackageJson(resolvedPackageJson));
+    run('git', ['add', 'package.json']);
+    console.log(
+      `resolved package.json release candidate version conflict as v${resolvedPackageJson.version}.`,
+    );
+  }
 }
 
 function mergeDevelopIntoReleaseCandidate() {
