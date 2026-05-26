@@ -20,13 +20,16 @@ This document defines the repository workflow and release automation contract.
 6. Vercel deployments are handled by the connected Vercel project when its Git integration is
    enabled. Temporary release automation branches are excluded from Vercel auto-deployments through
    `vercel.json`.
-7. Release automation creates or updates the `develop` to `release` PR after every push to
-   `develop`.
+7. Release automation creates or updates a generated release-candidate PR after every push to
+   `develop` or `release`.
 
 ## Release Candidate Flow
 
-The release candidate PR has `release` as the base branch and `develop` as the source branch. It must
-have `type:release`, `status:in-review`, and exactly one version label:
+The release candidate PR has `release` as the base branch and `release-candidate/develop` as the
+source branch. The generated source branch starts from `release`, merges `develop`, and resolves the
+expected `package.json` version conflict in that temporary branch instead of forcing a conflict
+commit into `develop` or `release`. The PR must have `type:release`, `status:in-review`, and exactly
+one version label:
 
 - `version:patch`
 - `version:minor`
@@ -38,6 +41,13 @@ be merged after repository checks pass and known release blockers are resolved.
 The release candidate PR body must include a generated included-change list from `release..develop`.
 Production release commits and post-release sync commits are filtered out. If no releasable commits
 remain after filtering, the automation must not create a release candidate PR.
+
+Expected release-candidate automation or governance conflicts are resolved in the generated branch by
+taking the `develop` version. `package.json` is the exception: the generated branch keeps the
+`release` version so production versioning remains controlled by the production release PR.
+
+If an older direct `develop -> release` release-candidate PR is open, the automation closes it and
+replaces it with the generated `release-candidate/develop` PR.
 
 ## Production Flow
 
@@ -65,7 +75,7 @@ After the production PR is merged, automation should create the matching Git tag
 ## Merge Strategies
 
 - Work PRs into `develop`: squash merge.
-- Release candidate PR from `develop` or `release-candidate/*` to `release`: create a merge commit
+- Release candidate PR from `release-candidate/*` to `release`: create a merge commit
   once repository checks pass, blockers are resolved, and one `version:*` label is selected.
 - Production release PR into `main`: squash merge so production history contains only release
   commits.
@@ -93,8 +103,8 @@ These workflows now define the automation contract:
 - `branch-protection-check.yml`: verifies PR branch direction and production release commit shape.
 - `change-pr-guard.yml`: verifies PRs to `develop` use accepted branch names, required labels, and
   issue-referenced PRs and commits.
-- `release-candidate-pr.yml`: creates or updates the `develop` to `release` PR after every push to
-  `develop`.
+- `release-candidate-pr.yml`: creates or updates the generated `release-candidate/develop` PR after
+  every push to `develop` or `release`.
 - `release-label-guard.yml`: requires release metadata labels and exactly one `version:*` label
   before the release candidate PR can merge.
 - `production-release-pr.yml`: creates the production release PR after the release candidate PR
