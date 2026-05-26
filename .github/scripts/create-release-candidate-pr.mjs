@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 
 import { getRepository, githubRequest, githubRequestOrNull } from './lib/github-api.mjs';
 import {
+  filterReleaseCandidateCommits,
   renderIncludedChanges,
   renderReleaseCandidateBody,
 } from './lib/release-candidate-body.mjs';
@@ -60,7 +61,7 @@ function getIncludedCommits() {
     return [];
   }
 
-  return output.split(/\r?\n/).map(line => {
+  const commits = output.split(/\r?\n/).map(line => {
     const [sha, summary] = line.split('\u001f');
 
     return {
@@ -69,11 +70,13 @@ function getIncludedCommits() {
       summary,
     };
   });
+
+  return filterReleaseCandidateCommits(commits);
 }
 
-function renderBody() {
+function renderBody(includedCommits) {
   const template = readFileSync('.github/PULL_REQUEST_TEMPLATE/release-candidate.md', 'utf8');
-  const includedChanges = renderIncludedChanges(getIncludedCommits());
+  const includedChanges = renderIncludedChanges(includedCommits);
 
   return renderReleaseCandidateBody({
     includedChanges,
@@ -92,14 +95,36 @@ async function addRequiredLabels(prNumber) {
   });
 }
 
+async function closeStalePullRequest(pullRequest) {
+  await githubRequest(`/repos/${owner}/${repo}/pulls/${pullRequest.number}`, {
+    method: 'PATCH',
+    body: {
+      state: 'closed',
+    },
+  });
+  console.log(`closed release candidate PR #${pullRequest.number}; no releasable changes remain.`);
+}
+
 await ensureReleaseBranch();
 
-const body = renderBody();
 const title = 'chore(release): prepare release candidate';
 const existingPrs = await githubRequest(
   `/repos/${owner}/${repo}/pulls?state=open&base=release&head=${owner}:develop`,
 );
 const existingPr = existingPrs[0];
+const includedCommits = getIncludedCommits();
+
+if (includedCommits.length === 0) {
+  if (existingPr) {
+    await closeStalePullRequest(existingPr);
+  } else {
+    console.log('no releasable develop changes detected; release candidate PR was not created.');
+  }
+
+  process.exit(0);
+}
+
+const body = renderBody(includedCommits);
 
 if (existingPr) {
   await githubRequest(`/repos/${owner}/${repo}/pulls/${existingPr.number}`, {

@@ -1,7 +1,21 @@
+import { isReleaseTitle } from './semver.mjs';
+
+const SYNC_COMMIT_PATTERN = /^chore\(sync\): merge v\d+\.\d+\.\d+ into develop\b/;
+
 function getReferences(summary = '') {
   return [...summary.matchAll(/(?:#\d+|GH-\d+|[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+#\d+)/g)].map(
     match => match[0],
   );
+}
+
+export function isReleaseCandidateChange(commit = {}) {
+  const summary = commit.summary ?? '';
+
+  return !isReleaseTitle(summary) && !SYNC_COMMIT_PATTERN.test(summary);
+}
+
+export function filterReleaseCandidateCommits(commits = []) {
+  return commits.filter(isReleaseCandidateChange);
 }
 
 export function renderIncludedChanges(commits = []) {

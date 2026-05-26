@@ -36,6 +36,8 @@ The selected version label determines the next semantic version. The release can
 be merged after repository checks pass and known release blockers are resolved.
 
 The release candidate PR body must include a generated included-change list from `release..develop`.
+Production release commits and post-release sync commits are filtered out. If no releasable commits
+remain after filtering, the automation must not create a release candidate PR.
 
 ## Production Flow
 
