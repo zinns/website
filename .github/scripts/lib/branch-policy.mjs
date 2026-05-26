@@ -12,8 +12,8 @@ export function validatePullRequestBranchPolicy(pullRequest) {
     return [`PRs to develop must come from a work branch, not ${head}.`];
   }
 
-  if (base === 'release' && head !== 'develop' && !head.startsWith('release-candidate/')) {
-    return ['Release candidate PRs must come from develop or a release-candidate/* branch.'];
+  if (base === 'release' && !head.startsWith('release-candidate/')) {
+    return ['Release candidate PRs must come from a release-candidate/* branch.'];
   }
 
   if (base === 'main') {
