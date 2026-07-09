@@ -67,6 +67,7 @@ type SiteCopy = {
     eyebrow: string;
     title: string;
     description: string;
+    privacyLabel: string;
     items: Project[];
   };
   education: {
@@ -143,7 +144,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combines consulting, product thinking, education, and experimentation to turn practical ideas into useful software.',
       primaryCta: 'Start a conversation',
       secondaryCta: 'Explore the map',
-      note: 'This first version uses neutral placeholder content until real projects, reviews, and team information are added.',
+      note: 'This first version uses anonymous project summaries, with reviews and team information still labeled as placeholders until approved.',
       metrics: [
         { value: '01', label: 'Public website first' },
         { value: '02', label: 'Projects and education next' },
@@ -172,31 +173,46 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
     },
     projects: {
-      eyebrow: 'Project preview',
-      title: 'Current, past, and incoming work will live here.',
+      eyebrow: 'Active project map',
+      title: 'Anonymous in-progress work, grounded in real builds.',
       description:
-        'These cards are intentionally neutral placeholders. They show the content structure without implying real customer work yet.',
+        'These cards describe current work without publishing client or project names while they remain in progress.',
+      privacyLabel: 'Anonymous in-progress work',
       items: [
         {
-          status: 'Current',
-          title: 'Placeholder Project 01',
+          status: 'In progress',
+          title: 'Fitness progress tracker',
           summary:
-            'A private digital tool for organizing operational workflows, dashboards, and repeatable actions.',
-          tags: ['Web app', 'Dashboard', 'Automation'],
+            'Mobile app for planning gym routines, tracking training progress, and giving users a clearer view of consistency over time.',
+          tags: ['Mobile app', 'Fitness', 'Progress tracking'],
         },
         {
-          status: 'Past',
-          title: 'Placeholder Project 02',
+          status: 'In progress',
+          title: 'Interior materials website redesign',
           summary:
-            'A completed implementation example reserved for a real case study once project details are approved.',
-          tags: ['Consulting', 'Frontend', 'Delivery'],
+            'Website redesign for a home-interior materials business focused on wood flooring, sheets, carpets, and clearer product and service presentation.',
+          tags: ['Website redesign', 'Home interiors', 'Product catalog'],
         },
         {
-          status: 'Incoming',
-          title: 'Placeholder Project 03',
+          status: 'In progress',
+          title: 'Beginner creator analytics tool',
           summary:
-            'A future project slot for experiments around data, education, cybersecurity, or content systems.',
-          tags: ['Prototype', 'Research', 'Lab'],
+            'App concept for beginner content creators to track publishing activity, audience growth, and channel performance without heavyweight analytics tooling.',
+          tags: ['Analytics', 'Creator tools', 'Dashboard'],
+        },
+        {
+          status: 'In progress',
+          title: 'Science outreach page redesign',
+          summary:
+            'Social media and page redesign for a physics and astronomy education initiative, improving how educational posts and community identity are presented.',
+          tags: ['Redesign', 'Science education', 'Content system'],
+        },
+        {
+          status: 'In progress',
+          title: 'Supermarket purchase tracker',
+          summary:
+            'Tool for tracking supermarket purchases so people can understand what they buy, repeat common lists, and spot household spending patterns.',
+          tags: ['Mobile tool', 'Household tracking', 'Personal data'],
         },
       ],
     },
@@ -366,7 +382,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combina consultoría, pensamiento de producto, educación y experimentación para convertir ideas prácticas en software útil.',
       primaryCta: 'Iniciar conversación',
       secondaryCta: 'Explorar el mapa',
-      note: 'Esta primera versión usa contenido temporal neutral hasta agregar proyectos, reseñas e información real del equipo.',
+      note: 'Esta primera versión usa resúmenes anónimos de proyectos, con reseñas e información del equipo aún marcadas como contenido temporal hasta ser aprobadas.',
       metrics: [
         { value: '01', label: 'Primero el sitio público' },
         { value: '02', label: 'Después proyectos y educación' },
@@ -396,31 +412,46 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       ],
     },
     projects: {
-      eyebrow: 'Vista de proyectos',
-      title: 'Aquí vivirán trabajos actuales, pasados y futuros.',
+      eyebrow: 'Mapa de proyectos activos',
+      title: 'Trabajo real en progreso, publicado de forma anónima.',
       description:
-        'Estas tarjetas son placeholders neutrales. Muestran la estructura de contenido sin sugerir trabajo real de clientes todavía.',
+        'Estas tarjetas describen proyectos actuales sin publicar nombres de clientes ni nombres oficiales mientras siguen en progreso.',
+      privacyLabel: 'Trabajo anónimo en progreso',
       items: [
         {
-          status: 'Actual',
-          title: 'Placeholder Project 01',
+          status: 'En progreso',
+          title: 'Tracker de progreso fitness',
           summary:
-            'Una herramienta digital privada para organizar flujos operativos, tableros y acciones repetibles.',
-          tags: ['Web app', 'Dashboard', 'Automatización'],
+            'App móvil para planear rutinas de gimnasio, registrar avances de entrenamiento y dar una vista clara de la constancia en el tiempo.',
+          tags: ['App móvil', 'Fitness', 'Seguimiento de progreso'],
         },
         {
-          status: 'Pasado',
-          title: 'Placeholder Project 02',
+          status: 'En progreso',
+          title: 'Rediseño web para materiales de interiores',
           summary:
-            'Un ejemplo de implementación completada reservado para un caso real cuando los detalles estén aprobados.',
-          tags: ['Consultoría', 'Frontend', 'Entrega'],
+            'Rediseño de sitio para un negocio de materiales de interiores enfocado en pisos de madera, láminas, alfombras y presentación más clara de productos y servicios.',
+          tags: ['Rediseño web', 'Interiores', 'Catálogo de productos'],
         },
         {
-          status: 'Próximo',
-          title: 'Placeholder Project 03',
+          status: 'En progreso',
+          title: 'Herramienta de analítica para creadores principiantes',
           summary:
-            'Un espacio futuro para experimentos alrededor de datos, educación, ciberseguridad o sistemas de contenido.',
-          tags: ['Prototipo', 'Investigación', 'Lab'],
+            'Concepto de app para que creadores de contenido principiantes registren actividad de publicación, crecimiento de audiencia y rendimiento por canal sin herramientas pesadas.',
+          tags: ['Analítica', 'Herramientas para creadores', 'Dashboard'],
+        },
+        {
+          status: 'En progreso',
+          title: 'Rediseño para divulgación científica',
+          summary:
+            'Rediseño de página y red social para una iniciativa de física y astronomía, mejorando la presentación de publicaciones educativas e identidad de comunidad.',
+          tags: ['Rediseño', 'Educación científica', 'Sistema de contenido'],
+        },
+        {
+          status: 'En progreso',
+          title: 'Tracker de compras de supermercado',
+          summary:
+            'Herramienta para registrar compras de supermercado, repetir listas comunes y detectar patrones de consumo del hogar.',
+          tags: ['App móvil', 'Seguimiento del hogar', 'Datos personales'],
         },
       ],
     },
