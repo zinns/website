@@ -1,6 +1,6 @@
 # Project Overview
 
-Zinns is a company website for a founder-led creative technology lab.
+Zinns is a company website for a creative technology lab.
 
 The positioning for this version is:
 
