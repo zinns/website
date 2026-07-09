@@ -137,7 +137,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       email: 'help@zinns.io',
     },
     hero: {
-      eyebrow: 'Founder-led creative technology lab',
+      eyebrow: 'Creative technology lab',
       title: 'We build customized digital tools and help people increase their abilities.',
       description:
         'Zinns combines consulting, product thinking, education, and experimentation to turn practical ideas into useful software.',
@@ -256,7 +256,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     company: {
       eyebrow: 'Company brief',
-      title: 'A founder-led company with creative lab energy.',
+      title: 'A practical company with creative lab energy.',
       description:
         'Zinns is being rebuilt as a small but capable company site: clear enough for consulting, broad enough for creative technical work, and honest about what is still forming.',
       timeline: [
@@ -281,13 +281,12 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     team: {
       eyebrow: 'People',
       title: 'The real team content will replace these neutral placeholders.',
-      description:
-        'Use this area for founder context, collaborators, workers, teachers, or project partners.',
+      description: 'Use this area for collaborators, builders, teachers, or project partners.',
       items: [
         {
-          initials: 'ZF',
-          name: 'Placeholder Founder',
-          role: 'Founder / Builder',
+          initials: 'ZL',
+          name: 'Placeholder Lab Lead',
+          role: 'Strategy / Builder',
           note: 'Strategy, software, mentoring, and creative technical direction.',
         },
         {
@@ -373,9 +372,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       email: 'help@zinns.io',
     },
     hero: {
-      eyebrow: 'Laboratorio creativo de tecnología liderado por su fundador',
-      title:
-        'Construimos herramientas digitales personalizadas y ayudamos a las personas a aumentar sus habilidades.',
+      eyebrow: 'Laboratorio creativo de tecnología',
+      title: 'Creamos herramientas digitales para crecer.',
       description:
         'Zinns combina consultoría, pensamiento de producto, educación y experimentación para convertir ideas prácticas en software útil.',
       primaryCta: 'Iniciar conversación',
@@ -495,7 +493,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     company: {
       eyebrow: 'Resumen de compañía',
-      title: 'Una compañía liderada por su fundador con energía de laboratorio creativo.',
+      title: 'Una compañía práctica con energía de laboratorio creativo.',
       description:
         'Zinns se está reconstruyendo como un sitio pequeño pero capaz: claro para consultoría, amplio para trabajo técnico creativo y honesto sobre lo que sigue tomando forma.',
       timeline: [
@@ -521,13 +519,12 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     team: {
       eyebrow: 'Personas',
       title: 'El contenido real del equipo reemplazará estos placeholders neutrales.',
-      description:
-        'Usa esta área para contexto del fundador, colaboradores, trabajadores, profesores o partners de proyecto.',
+      description: 'Usa esta área para colaboradores, builders, profesores o partners de proyecto.',
       items: [
         {
-          initials: 'ZF',
-          name: 'Placeholder Founder',
-          role: 'Founder / Builder',
+          initials: 'ZL',
+          name: 'Placeholder Lab Lead',
+          role: 'Estrategia / Builder',
           note: 'Estrategia, software, mentoría y dirección técnica creativa.',
         },
         {
