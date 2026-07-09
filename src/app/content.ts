@@ -25,6 +25,7 @@ type TeamMember = {
   name: string;
   role: string;
   note: string;
+  avatar: 'signal' | 'orbit';
 };
 
 type Capability = {
@@ -143,7 +144,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combines consulting, product thinking, education, and experimentation to turn practical ideas into useful software.',
       primaryCta: 'Start a conversation',
       secondaryCta: 'Explore the map',
-      note: 'This first version includes active project summaries, with reviews and team information still labeled as placeholders until approved.',
+      note: 'Explore active builds, mentoring paths, and the technical direction behind the studio.',
       metrics: [
         { value: '01', label: 'Public website first' },
         { value: '02', label: 'Projects and education next' },
@@ -216,21 +217,43 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     education: {
       eyebrow: 'Education plans',
-      title: 'Mentoring for practical software growth.',
+      title: 'Private mentoring for web and mobile development.',
       description:
-        'The first education offer is focused 1:1 mentoring. Courses and workshops can be added once the learning catalog is defined.',
+        'Each plan starts from the same engineering root and adapts to the person. Baseline format is at least two private 1-hour sessions per week.',
       items: [
         {
-          title: '1:1 Web Development Mentoring',
-          format: 'Personal sessions',
-          outcome: 'Build stronger fundamentals and ship better web interfaces.',
-          focus: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Product delivery'],
+          title: 'Web Development Mentoring',
+          format: 'Private mentoring · 2 sessions/week baseline',
+          outcome:
+            'From terminal and Git to production web apps with React, Next.js, TypeScript, testing, deployments, GitHub, and SCRUM habits.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'Tailwind + Bootstrap',
+            'JavaScript',
+            'React + Next.js',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
         {
-          title: '1:1 Mobile Development Mentoring',
-          format: 'Personal sessions',
-          outcome: 'Improve mobile app structure, implementation habits, and delivery confidence.',
-          focus: ['React Native', 'Expo', 'Navigation', 'State', 'Release basics'],
+          title: 'Mobile Development Mentoring',
+          format: 'Private mentoring · configured per person',
+          outcome:
+            'The same root roadmap, then mobile implementation with React Native, Expo, TypeScript, testing, releases, GitHub, and SCRUM delivery.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'JavaScript',
+            'React Native',
+            'Expo',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
       ],
     },
@@ -280,26 +303,23 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     team: {
       eyebrow: 'People',
-      title: 'The real team content will replace these neutral placeholders.',
-      description: 'Use this area for collaborators, builders, teachers, or project partners.',
+      title: 'Roles behind the work.',
+      description:
+        'A small technical team shaping product direction, architecture, implementation, and learning paths.',
       items: [
         {
-          initials: 'ZL',
-          name: 'Placeholder Lab Lead',
-          role: 'Strategy / Builder',
-          note: 'Strategy, software, mentoring, and creative technical direction.',
+          initials: 'EZ',
+          name: 'Edgar Zea',
+          role: 'Co-Founder / Tech Lead',
+          note: 'Product direction, architecture, mentoring, and technical delivery across web and mobile projects.',
+          avatar: 'signal',
         },
         {
-          initials: 'P1',
-          name: 'Placeholder Worker 01',
-          role: 'Collaborator',
-          note: 'Reserved for a real profile, avatar, and specialty.',
-        },
-        {
-          initials: 'P2',
-          name: 'Placeholder Worker 02',
-          role: 'Collaborator',
-          note: 'Reserved for a real profile, avatar, and specialty.',
+          initials: 'AS',
+          name: 'Andrés Soto',
+          role: 'Co-Founder / Engineering Team',
+          note: 'Engineering execution, systems thinking, implementation support, and product iteration.',
+          avatar: 'orbit',
         },
       ],
     },
@@ -378,7 +398,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combina consultoría, pensamiento de producto, educación y experimentación para convertir ideas prácticas en software útil.',
       primaryCta: 'Iniciar conversación',
       secondaryCta: 'Explorar el mapa',
-      note: 'Esta primera versión incluye resúmenes de proyectos activos, con reseñas e información del equipo aún marcadas como contenido temporal hasta ser aprobadas.',
+      note: 'Explora proyectos activos, rutas de mentoría y la dirección técnica del estudio.',
       metrics: [
         { value: '01', label: 'Primero el sitio público' },
         { value: '02', label: 'Después proyectos y educación' },
@@ -452,22 +472,43 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     education: {
       eyebrow: 'Planes de educación',
-      title: 'Mentoría para crecimiento práctico en software.',
+      title: 'Mentoría privada para desarrollo web y mobile.',
       description:
-        'La primera oferta educativa es mentoría 1:1. Cursos y talleres pueden agregarse cuando el catálogo esté definido.',
+        'Cada plan comparte una base de ingeniería y se adapta a cada persona. El formato base es al menos dos sesiones privadas de 1 hora por semana.',
       items: [
         {
-          title: 'Mentoría 1:1 en Desarrollo Web',
-          format: 'Sesiones personales',
-          outcome: 'Fortalecer fundamentos y construir mejores interfaces web.',
-          focus: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Entrega de producto'],
+          title: 'Mentoría en Desarrollo Web',
+          format: 'Mentoría privada · 2 sesiones/semana como base',
+          outcome:
+            'Desde terminal y Git hasta apps web en producción con React, Next.js, TypeScript, testing, deployments, GitHub y hábitos SCRUM.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'Tailwind + Bootstrap',
+            'JavaScript',
+            'React + Next.js',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
         {
-          title: 'Mentoría 1:1 en Desarrollo Mobile',
-          format: 'Sesiones personales',
+          title: 'Mentoría en Desarrollo Mobile',
+          format: 'Mentoría privada · configurada por persona',
           outcome:
-            'Mejorar estructura de apps móviles, hábitos de implementación y confianza de entrega.',
-          focus: ['React Native', 'Expo', 'Navegación', 'Estado', 'Bases de release'],
+            'La misma ruta base, después implementación mobile con React Native, Expo, TypeScript, testing, releases, GitHub y entrega SCRUM.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'JavaScript',
+            'React Native',
+            'Expo',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
       ],
     },
@@ -518,26 +559,23 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     team: {
       eyebrow: 'Personas',
-      title: 'El contenido real del equipo reemplazará estos placeholders neutrales.',
-      description: 'Usa esta área para colaboradores, builders, profesores o partners de proyecto.',
+      title: 'Roles detrás del trabajo.',
+      description:
+        'Un equipo técnico pequeño que define producto, arquitectura, implementación y rutas de aprendizaje.',
       items: [
         {
-          initials: 'ZL',
-          name: 'Placeholder Lab Lead',
-          role: 'Estrategia / Builder',
-          note: 'Estrategia, software, mentoría y dirección técnica creativa.',
+          initials: 'EZ',
+          name: 'Edgar Zea',
+          role: 'Co-Founder / Tech Lead',
+          note: 'Dirección de producto, arquitectura, mentoría y entrega técnica en proyectos web y mobile.',
+          avatar: 'signal',
         },
         {
-          initials: 'P1',
-          name: 'Placeholder Worker 01',
-          role: 'Colaborador',
-          note: 'Reservado para un perfil real, avatar y especialidad.',
-        },
-        {
-          initials: 'P2',
-          name: 'Placeholder Worker 02',
-          role: 'Colaborador',
-          note: 'Reservado para un perfil real, avatar y especialidad.',
+          initials: 'AS',
+          name: 'Andrés Soto',
+          role: 'Co-Founder / Engineering Team',
+          note: 'Ejecución de ingeniería, pensamiento de sistemas, soporte de implementación e iteración de producto.',
+          avatar: 'orbit',
         },
       ],
     },

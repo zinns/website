@@ -16,16 +16,16 @@ The first version is intentionally small:
 - English and Spanish content
 - Company overview
 - Project preview with in-progress work
-- Education plans for 1:1 web and mobile development mentoring
+- Education plans for private web and mobile development mentoring
 - Placeholder reviews
 - Company brief
-- Placeholder people section
+- Company roles section
 - Common stack
 - Next capability areas
 - Contact form and direct email link
 
-The UI presents project work as active summaries and explicitly marks placeholder reviews and
-placeholder people so temporary content is not confused with customer testimonials or team profiles.
+The UI presents project work and company roles as active content, while placeholder reviews remain
+clearly marked so temporary content is not confused with customer testimonials.
 
 ## Future Site Map
 

@@ -4,8 +4,8 @@ The company website for Zinns, a creative technology lab that builds customized 
 helps people increase their technical abilities.
 
 The current implementation is a small bilingual landing site on `/` with in-progress project
-summaries and visible placeholder content for reviews and people until real company information is
-approved.
+summaries, company roles, education plans, and visible placeholder content for reviews until real
+customer feedback is approved.
 
 ## Quick Start
 
