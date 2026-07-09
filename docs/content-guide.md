@@ -23,7 +23,6 @@ and working titles should stay out of website copy until approved for publicatio
 Use neutral labels such as:
 
 - `Placeholder Customer 01`
-- `Placeholder Worker 01`
 - `Placeholder content`
 - `In progress`
 
@@ -47,7 +46,14 @@ Replace placeholders only when real information is approved.
 
 The current real offer is:
 
-- 1:1 Web Development Mentoring
-- 1:1 Mobile Development Mentoring
+- Web Development Mentoring
+- Mobile Development Mentoring
+
+Both plans share a root roadmap: terminal, Git, HTML, CSS, CSS frameworks, JavaScript, TypeScript,
+testing, deployments, GitHub, and SCRUM. Web continues into React and Next.js. Mobile continues into
+React Native and Expo.
+
+Default delivery is private mentoring with at least two 1-hour sessions per week, then adjusted per
+person.
 
 Courses, workshops, and learning paths should remain future content until the catalog is defined.

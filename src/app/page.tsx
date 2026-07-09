@@ -243,13 +243,10 @@ export default function Home() {
         title={copy.team.title}
         description={copy.team.description}
       >
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {copy.team.items.map(person => (
-            <article key={person.name} className="border border-border bg-white p-5">
-              <div className="flex h-14 w-14 items-center justify-center bg-gradient-brand text-sm font-bold text-white">
-                {person.initials}
-              </div>
-              <PlaceholderBadge label={copy.common.placeholder} className="mt-5" />
+            <article key={person.name} className="border border-border bg-white p-6">
+              <CompanyAvatar initials={person.initials} variant={person.avatar} />
               <h3 className="mt-4 text-xl font-semibold text-ink">{person.name}</h3>
               <p className="mt-1 text-sm font-semibold text-accent">{person.role}</p>
               <p className="mt-3 text-sm leading-6 text-secondary">{person.note}</p>
@@ -427,5 +424,25 @@ function PlaceholderBadge({ label, className = '' }: { label: string; className?
     >
       {label}
     </span>
+  );
+}
+
+function CompanyAvatar({ initials, variant }: { initials: string; variant: 'signal' | 'orbit' }) {
+  const accentClass = variant === 'signal' ? 'bg-cyan' : 'bg-accent';
+  const ringClass = variant === 'signal' ? 'border-cyan/70' : 'border-accent/70';
+
+  return (
+    <div className="relative h-20 w-20 overflow-hidden border border-border bg-ink text-white">
+      <div className="brand-grid absolute inset-0 opacity-25" aria-hidden="true" />
+      <div
+        className={`absolute -right-4 -top-4 h-14 w-14 rounded-full ${accentClass} opacity-80 blur-sm`}
+        aria-hidden="true"
+      />
+      <div className={`absolute bottom-3 left-3 h-9 w-9 rounded-full border ${ringClass}`} />
+      <div className="absolute bottom-5 left-7 h-6 w-6 border border-white/60" aria-hidden="true" />
+      <div className="relative flex h-full w-full items-center justify-center font-mono text-lg font-semibold tracking-wider">
+        {initials}
+      </div>
+    </div>
   );
 }
