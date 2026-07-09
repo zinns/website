@@ -151,7 +151,6 @@ export default function Home() {
                 <span className="text-xs font-semibold uppercase text-accent">
                   {project.status}
                 </span>
-                <PlaceholderBadge label={copy.common.placeholder} />
               </div>
               <h3 className="mt-5 text-xl font-semibold text-ink">{project.title}</h3>
               <p className="mt-3 text-sm leading-6 text-secondary">{project.summary}</p>
