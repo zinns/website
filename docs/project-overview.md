@@ -15,7 +15,7 @@ The first version is intentionally small:
 - One public route: `/`
 - English and Spanish content
 - Company overview
-- Project preview with anonymous in-progress work
+- Project preview with in-progress work
 - Education plans for 1:1 web and mobile development mentoring
 - Placeholder reviews
 - Company brief
@@ -24,9 +24,8 @@ The first version is intentionally small:
 - Next capability areas
 - Contact form and direct email link
 
-The UI explicitly marks anonymous project work, placeholder reviews, and placeholder people so
-temporary or private content is not confused with public case studies, customer testimonials, or team
-profiles.
+The UI presents project work as active summaries and explicitly marks placeholder reviews and
+placeholder people so temporary content is not confused with customer testimonials or team profiles.
 
 ## Future Site Map
 

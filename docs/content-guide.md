@@ -17,16 +17,15 @@ routes, route-based i18n can be introduced later.
 
 Temporary content must be clearly labeled.
 
-Project content can use anonymous real summaries when the work is approved for public mention but
-client or project names must stay private. Do not publish real names, official app names, or implied
-case studies until they are approved.
+Project content can use public-safe summaries when the work is approved for mention. Internal labels
+and working titles should stay out of website copy until approved for publication.
 
 Use neutral labels such as:
 
 - `Placeholder Customer 01`
 - `Placeholder Worker 01`
 - `Placeholder content`
-- `Anonymous in-progress work`
+- `In progress`
 
 Do not publish fake customer quotes, fake customer names, fake company names, or implied case studies.
 Replace placeholders only when real information is approved.

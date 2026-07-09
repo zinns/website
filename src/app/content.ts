@@ -67,7 +67,6 @@ type SiteCopy = {
     eyebrow: string;
     title: string;
     description: string;
-    privacyLabel: string;
     items: Project[];
   };
   education: {
@@ -144,7 +143,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combines consulting, product thinking, education, and experimentation to turn practical ideas into useful software.',
       primaryCta: 'Start a conversation',
       secondaryCta: 'Explore the map',
-      note: 'This first version uses anonymous project summaries, with reviews and team information still labeled as placeholders until approved.',
+      note: 'This first version includes active project summaries, with reviews and team information still labeled as placeholders until approved.',
       metrics: [
         { value: '01', label: 'Public website first' },
         { value: '02', label: 'Projects and education next' },
@@ -174,10 +173,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     projects: {
       eyebrow: 'Active project map',
-      title: 'Anonymous in-progress work, grounded in real builds.',
+      title: 'Current work grounded in real builds.',
       description:
-        'These cards describe current work without publishing client or project names while they remain in progress.',
-      privacyLabel: 'Anonymous in-progress work',
+        'A look at active products and redesigns across fitness, interiors, creator tools, science education, and household tracking.',
       items: [
         {
           status: 'In progress',
@@ -382,7 +380,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         'Zinns combina consultoría, pensamiento de producto, educación y experimentación para convertir ideas prácticas en software útil.',
       primaryCta: 'Iniciar conversación',
       secondaryCta: 'Explorar el mapa',
-      note: 'Esta primera versión usa resúmenes anónimos de proyectos, con reseñas e información del equipo aún marcadas como contenido temporal hasta ser aprobadas.',
+      note: 'Esta primera versión incluye resúmenes de proyectos activos, con reseñas e información del equipo aún marcadas como contenido temporal hasta ser aprobadas.',
       metrics: [
         { value: '01', label: 'Primero el sitio público' },
         { value: '02', label: 'Después proyectos y educación' },
@@ -413,10 +411,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     projects: {
       eyebrow: 'Mapa de proyectos activos',
-      title: 'Trabajo real en progreso, publicado de forma anónima.',
+      title: 'Trabajo actual basado en proyectos reales.',
       description:
-        'Estas tarjetas describen proyectos actuales sin publicar nombres de clientes ni nombres oficiales mientras siguen en progreso.',
-      privacyLabel: 'Trabajo anónimo en progreso',
+        'Una vista de productos y rediseños activos en fitness, interiores, herramientas para creadores, educación científica y seguimiento del hogar.',
       items: [
         {
           status: 'En progreso',
