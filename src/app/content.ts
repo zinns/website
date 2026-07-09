@@ -146,29 +146,30 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       secondaryCta: 'Explore the map',
       note: 'Explore active builds, mentoring paths, and the technical direction behind the studio.',
       metrics: [
-        { value: '01', label: 'Public website first' },
-        { value: '02', label: 'Projects and education next' },
-        { value: '03', label: 'Automations after the base is stable' },
+        { value: '05', label: 'Active product and redesign tracks' },
+        { value: '02', label: 'Private mentoring paths' },
+        { value: '01', label: 'Small technical team' },
       ],
     },
     intro: {
-      title: 'A small studio shape for a broad technical practice.',
+      title: 'Small studio. Broad technical reach.',
       description:
         'The company direction is intentionally flexible: build software, teach useful skills, connect systems, and create content that helps people move faster.',
       items: [
         {
           title: 'Digital tools',
-          description: 'Custom web and mobile products shaped around real business workflows.',
+          description:
+            'Custom web and mobile products shaped around real workflows, from internal trackers to public-facing sites and dashboards.',
         },
         {
           title: 'Education',
           description:
-            'Focused mentoring for people who want stronger web and mobile development skills.',
+            'Private mentoring that starts from fundamentals, then moves into modern web or mobile delivery with real tooling habits.',
         },
         {
           title: 'Integrations',
           description:
-            'Automation, APIs, data work, and technical systems that reduce manual effort.',
+            'APIs, automation paths, data views, and backend services that connect tools and reduce repeated manual work.',
         },
       ],
     },
@@ -219,11 +220,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: 'Education plans',
       title: 'Private mentoring for web and mobile development.',
       description:
-        'Each plan starts from the same engineering root and adapts to the person. Baseline format is at least two private 1-hour sessions per week.',
+        'Both plans share a common engineering base and then split by platform. Mentoring is private, usually at least two 1-hour sessions per week, and adjusted to each person.',
       items: [
         {
           title: 'Web Development Mentoring',
-          format: 'Private mentoring · 2 sessions/week baseline',
+          format: 'Web path',
           outcome:
             'From terminal and Git to production web apps with React, Next.js, TypeScript, testing, deployments, GitHub, and SCRUM habits.',
           focus: [
@@ -240,7 +241,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: 'Mobile Development Mentoring',
-          format: 'Private mentoring · configured per person',
+          format: 'Mobile path',
           outcome:
             'The same root roadmap, then mobile implementation with React Native, Expo, TypeScript, testing, releases, GitHub, and SCRUM delivery.',
           focus: [
@@ -279,25 +280,27 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     company: {
       eyebrow: 'Company brief',
-      title: 'A practical company with creative lab energy.',
+      title: 'A practical lab for useful digital work.',
       description:
-        'Zinns is being rebuilt as a small but capable company site: clear enough for consulting, broad enough for creative technical work, and honest about what is still forming.',
+        'Zinns works across custom software, mentoring, product thinking, and technical experimentation. The company stays small on purpose so each project can keep clear direction and careful delivery.',
       timeline: [
         {
-          year: 'Now',
-          title: 'Migration and foundation',
-          description: 'Modernizing the site, workflow, and release base before expanding content.',
-        },
-        {
-          year: 'Next',
-          title: 'Projects and education',
-          description: 'Adding real project case studies and mentoring paths.',
-        },
-        {
-          year: 'Later',
-          title: 'Automations and dashboard',
+          year: 'Build',
+          title: 'Digital products',
           description:
-            'Bringing back webhooks, authenticated areas, and internal automation tools.',
+            'Designing and shipping focused web and mobile tools for real workflows, public sites, and operational tracking.',
+        },
+        {
+          year: 'Teach',
+          title: 'Private mentoring',
+          description:
+            'Helping people strengthen fundamentals, learn modern frameworks, and practice delivery habits with guided sessions.',
+        },
+        {
+          year: 'Extend',
+          title: 'Systems and automation',
+          description:
+            'Connecting APIs, dashboards, data views, and backend services when projects need more than a static website.',
         },
       ],
     },
@@ -400,30 +403,30 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       secondaryCta: 'Explorar el mapa',
       note: 'Explora proyectos activos, rutas de mentoría y la dirección técnica del estudio.',
       metrics: [
-        { value: '01', label: 'Primero el sitio público' },
-        { value: '02', label: 'Después proyectos y educación' },
-        { value: '03', label: 'Automatizaciones cuando la base sea estable' },
+        { value: '05', label: 'Líneas activas de producto y rediseño' },
+        { value: '02', label: 'Rutas de mentoría privada' },
+        { value: '01', label: 'Equipo técnico pequeño' },
       ],
     },
     intro: {
-      title: 'Una estructura pequeña para una práctica técnica amplia.',
+      title: 'Estudio pequeño. Alcance técnico amplio.',
       description:
         'La dirección de la compañía es flexible a propósito: construir software, enseñar habilidades útiles, conectar sistemas y crear contenido que ayude a avanzar más rápido.',
       items: [
         {
           title: 'Herramientas digitales',
           description:
-            'Productos web y móviles personalizados alrededor de flujos reales de negocio.',
+            'Productos web y móviles personalizados alrededor de flujos reales: trackers internos, sitios públicos y dashboards.',
         },
         {
           title: 'Educación',
           description:
-            'Mentoría enfocada para personas que quieren fortalecer sus habilidades en desarrollo web y móvil.',
+            'Mentoría privada que empieza con fundamentos y avanza hacia entrega web o mobile con herramientas reales.',
         },
         {
           title: 'Integraciones',
           description:
-            'Automatización, APIs, datos y sistemas técnicos que reducen trabajo manual.',
+            'APIs, automatización, vistas de datos y servicios backend para conectar herramientas y reducir trabajo repetido.',
         },
       ],
     },
@@ -474,11 +477,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: 'Planes de educación',
       title: 'Mentoría privada para desarrollo web y mobile.',
       description:
-        'Cada plan comparte una base de ingeniería y se adapta a cada persona. El formato base es al menos dos sesiones privadas de 1 hora por semana.',
+        'Ambos planes comparten una base de ingeniería y luego se separan por plataforma. La mentoría es privada, normalmente al menos dos sesiones de 1 hora por semana, y se ajusta a cada persona.',
       items: [
         {
           title: 'Mentoría en Desarrollo Web',
-          format: 'Mentoría privada · 2 sesiones/semana como base',
+          format: 'Ruta web',
           outcome:
             'Desde terminal y Git hasta apps web en producción con React, Next.js, TypeScript, testing, deployments, GitHub y hábitos SCRUM.',
           focus: [
@@ -495,7 +498,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         },
         {
           title: 'Mentoría en Desarrollo Mobile',
-          format: 'Mentoría privada · configurada por persona',
+          format: 'Ruta mobile',
           outcome:
             'La misma ruta base, después implementación mobile con React Native, Expo, TypeScript, testing, releases, GitHub y entrega SCRUM.',
           focus: [
@@ -534,26 +537,27 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     company: {
       eyebrow: 'Resumen de compañía',
-      title: 'Una compañía práctica con energía de laboratorio creativo.',
+      title: 'Un laboratorio práctico para trabajo digital útil.',
       description:
-        'Zinns se está reconstruyendo como un sitio pequeño pero capaz: claro para consultoría, amplio para trabajo técnico creativo y honesto sobre lo que sigue tomando forma.',
+        'Zinns trabaja entre software personalizado, mentoría, pensamiento de producto y experimentación técnica. La compañía se mantiene pequeña para conservar dirección clara y entrega cuidadosa.',
       timeline: [
         {
-          year: 'Ahora',
-          title: 'Migración y base',
+          year: 'Construir',
+          title: 'Productos digitales',
           description:
-            'Modernizar el sitio, el flujo de trabajo y la base de releases antes de crecer.',
+            'Diseñar y entregar herramientas web y mobile para flujos reales, sitios públicos y seguimiento operativo.',
         },
         {
-          year: 'Después',
-          title: 'Proyectos y educación',
-          description: 'Agregar casos reales de proyectos y rutas de mentoría.',
+          year: 'Enseñar',
+          title: 'Mentoría privada',
+          description:
+            'Ayudar a fortalecer fundamentos, aprender frameworks modernos y practicar hábitos de entrega con sesiones guiadas.',
         },
         {
-          year: 'Más tarde',
-          title: 'Automatizaciones y dashboard',
+          year: 'Extender',
+          title: 'Sistemas y automatización',
           description:
-            'Traer de vuelta webhooks, áreas autenticadas y herramientas internas de automatización.',
+            'Conectar APIs, dashboards, vistas de datos y servicios backend cuando un proyecto necesita más que un sitio estático.',
         },
       ],
     },

@@ -18,7 +18,7 @@ The first version is intentionally small:
 - Project preview with in-progress work
 - Education plans for private web and mobile development mentoring
 - Placeholder reviews
-- Company brief
+- Current company brief
 - Company roles section
 - Common stack
 - Next capability areas

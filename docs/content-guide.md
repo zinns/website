@@ -53,7 +53,8 @@ Both plans share a root roadmap: terminal, Git, HTML, CSS, CSS frameworks, JavaS
 testing, deployments, GitHub, and SCRUM. Web continues into React and Next.js. Mobile continues into
 React Native and Expo.
 
-Default delivery is private mentoring with at least two 1-hour sessions per week, then adjusted per
-person.
+Delivery is described at the education section level: private mentoring, usually at least two 1-hour
+sessions per week, adjusted to each person. Individual plan labels should stay platform-focused, such
+as `Web path` and `Mobile path`.
 
 Courses, workshops, and learning paths should remain future content until the catalog is defined.
