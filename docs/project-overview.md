@@ -17,15 +17,15 @@ The first version is intentionally small:
 - Company overview
 - Project preview with in-progress work
 - Education plans for private web and mobile development mentoring
-- Placeholder reviews
+- Student reviews from approved feedback
 - Current company brief
 - Company roles section
 - Common stack
 - Next capability areas
 - Contact form and direct email link
 
-The UI presents project work and company roles as active content, while placeholder reviews remain
-clearly marked so temporary content is not confused with customer testimonials.
+The UI presents project work, company roles, and approved student feedback as active content.
+Review cards use short summaries with expandable full quotes so the section stays compact.
 
 ## Future Site Map
 
@@ -46,4 +46,4 @@ The larger map is useful for planning, but these routes are not implemented yet:
 - No dashboard
 - No CMS
 - No automation backend
-- No real customer testimonials until approved
+- No unapproved customer or student testimonials
