@@ -29,6 +29,18 @@ Use neutral labels such as:
 Do not publish fake customer quotes, fake customer names, fake company names, or implied case studies.
 Replace placeholders only when real information is approved.
 
+## Review Content
+
+Reviews can use student or customer feedback only when the source explicitly authorizes testimonial
+use.
+
+Use the authorized display name when the response allows name use. Use a neutral label such as
+`Student response` when the response only allows anonymous use. Do not publish emails, referral
+contacts, private notes, or payment details from forms.
+
+Review cards should show a short public-safe summary first, then let the visitor expand the full
+approved quote.
+
 ## Current Content Sections
 
 - Hero

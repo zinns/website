@@ -15,9 +15,12 @@ type EducationPlan = {
 };
 
 type Review = {
+  summary: string;
   quote: string;
   author: string;
   context: string;
+  source: string;
+  expandLabel: string;
 };
 
 type TeamMember = {
@@ -47,7 +50,6 @@ type SiteCopy = {
     language: string;
   };
   common: {
-    placeholder: string;
     email: string;
   };
   hero: {
@@ -80,6 +82,7 @@ type SiteCopy = {
     eyebrow: string;
     title: string;
     description: string;
+    closeLabel: string;
     items: Review[];
   };
   company: {
@@ -134,7 +137,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       language: 'Language',
     },
     common: {
-      placeholder: 'Placeholder content',
       email: 'help@zinns.io',
     },
     hero: {
@@ -260,21 +262,37 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     reviews: {
       eyebrow: 'Reviews',
-      title: 'Customer trust will be added from real feedback.',
+      title: 'What people say after working with us.',
       description:
-        'These reviews are placeholders so the layout is clear while avoiding fake testimonials.',
+        'Real feedback from people who trusted us with mentoring, learning, and technical guidance.',
+      closeLabel: 'Close review',
       items: [
         {
+          summary: 'Personal rhythm, flexible schedules, and accessible learning.',
           quote:
-            'Placeholder review. Replace this with real customer feedback before publishing testimonial claims.',
-          author: 'Placeholder Customer 01',
-          context: 'Placeholder company or role',
+            'Me gustaron mucho los cursos mientras estuve como alumna activa, me parecieron bastante completos, muy accesibles para personas que buscan aprender, cambiar de área o profundizar en conocimientos técnicos. Lo recomendaría para aquellos que no han encontrado una opción que sea flexible en sus horarios o en temas de costos ya que también me parece muy accesible esta oportunidad.',
+          author: 'Abril Muñoz',
+          context: 'Web Development mentoring student',
+          source: 'Student review, name use authorized',
+          expandLabel: 'Read full review',
         },
         {
+          summary: 'Complex topics became easier to break down and practice.',
           quote:
-            'Placeholder review. This area is reserved for specific outcomes, context, and permission-approved quotes.',
-          author: 'Placeholder Customer 02',
-          context: 'Placeholder company or role',
+            'Me gusta mucho la capacidad de poder desarticular problemas complejos y hacerlos en partes más fáciles.',
+          author: 'Student response',
+          context: 'Web and Mobile Development mentoring student',
+          source: 'Student review, anonymous use authorized',
+          expandLabel: 'Read full review',
+        },
+        {
+          summary: 'Patient support helped a beginner start understanding programming.',
+          quote:
+            'Las clases, el acompañamiento, el trato, la ayuda fue muy buena no me puedo quejar yo no sabía nada de esto y aprendí un poco por cuestiones ajenas al curso decidí pausarlas pero estoy satisfecho con lo aprendido y lo acordado.',
+          author: 'Brandon',
+          context: 'Web Development mentoring student',
+          source: 'Student review, name use authorized',
+          expandLabel: 'Read full review',
         },
       ],
     },
@@ -391,7 +409,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       language: 'Idioma',
     },
     common: {
-      placeholder: 'Contenido temporal',
       email: 'help@zinns.io',
     },
     hero: {
@@ -517,21 +534,37 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     reviews: {
       eyebrow: 'Reseñas',
-      title: 'La confianza de clientes se agregará con feedback real.',
+      title: 'Lo que dicen quienes trabajan con nosotros.',
       description:
-        'Estas reseñas son temporales para mostrar el layout sin publicar testimonios falsos.',
+        'Feedback real de personas que confiaron en nosotros para mentoría, aprendizaje y guía técnica.',
+      closeLabel: 'Cerrar reseña',
       items: [
         {
+          summary: 'Ritmo personal, horarios flexibles y aprendizaje accesible.',
           quote:
-            'Reseña temporal. Reemplazar con feedback real de clientes antes de publicar afirmaciones testimoniales.',
-          author: 'Placeholder Customer 01',
-          context: 'Compañía o rol temporal',
+            'Me gustaron mucho los cursos mientras estuve como alumna activa, me parecieron bastante completos, muy accesibles para personas que buscan aprender, cambiar de área o profundizar en conocimientos técnicos. Lo recomendaría para aquellos que no han encontrado una opción que sea flexible en sus horarios o en temas de costos ya que también me parece muy accesible esta oportunidad.',
+          author: 'Abril Muñoz',
+          context: 'Estudiante de mentoría en Desarrollo Web',
+          source: 'Reseña de estudiante, uso de nombre autorizado',
+          expandLabel: 'Leer reseña completa',
         },
         {
+          summary: 'Los temas complejos se volvieron más fáciles de dividir y practicar.',
           quote:
-            'Reseña temporal. Este espacio queda reservado para resultados específicos, contexto y citas aprobadas.',
-          author: 'Placeholder Customer 02',
-          context: 'Compañía o rol temporal',
+            'Me gusta mucho la capacidad de poder desarticular problemas complejos y hacerlos en partes más fáciles.',
+          author: 'Respuesta de estudiante',
+          context: 'Estudiante de mentoría en Desarrollo Web y Mobile',
+          source: 'Reseña de estudiante, uso anónimo autorizado',
+          expandLabel: 'Leer reseña completa',
+        },
+        {
+          summary: 'Acompañamiento paciente para empezar a entender programación.',
+          quote:
+            'Las clases, el acompañamiento, el trato, la ayuda fue muy buena no me puedo quejar yo no sabía nada de esto y aprendí un poco por cuestiones ajenas al curso decidí pausarlas pero estoy satisfecho con lo aprendido y lo acordado.',
+          author: 'Brandon',
+          context: 'Estudiante de mentoría en Desarrollo Web',
+          source: 'Reseña de estudiante, uso de nombre autorizado',
+          expandLabel: 'Leer reseña completa',
         },
       ],
     },
