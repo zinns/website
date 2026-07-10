@@ -17,15 +17,29 @@ routes, route-based i18n can be introduced later.
 
 Temporary content must be clearly labeled.
 
+Project content can use public-safe summaries when the work is approved for mention. Internal labels
+and working titles should stay out of website copy until approved for publication.
+
 Use neutral labels such as:
 
-- `Placeholder Project 01`
 - `Placeholder Customer 01`
-- `Placeholder Worker 01`
 - `Placeholder content`
+- `In progress`
 
 Do not publish fake customer quotes, fake customer names, fake company names, or implied case studies.
 Replace placeholders only when real information is approved.
+
+## Review Content
+
+Reviews can use student or customer feedback only when the source explicitly authorizes testimonial
+use.
+
+Use the authorized display name when the response allows name use. Use a neutral label such as
+`Student response` when the response only allows anonymous use. Do not publish emails, referral
+contacts, private notes, or payment details from forms.
+
+Review cards should show a short public-safe summary first, then let the visitor expand the full
+approved quote.
 
 ## Current Content Sections
 
@@ -44,7 +58,15 @@ Replace placeholders only when real information is approved.
 
 The current real offer is:
 
-- 1:1 Web Development Mentoring
-- 1:1 Mobile Development Mentoring
+- Web Development Mentoring
+- Mobile Development Mentoring
+
+Both plans share a root roadmap: terminal, Git, HTML, CSS, CSS frameworks, JavaScript, TypeScript,
+testing, deployments, GitHub, and SCRUM. Web continues into React and Next.js. Mobile continues into
+React Native and Expo.
+
+Delivery is described at the education section level: private mentoring, usually at least two 1-hour
+sessions per week, adjusted to each person. Individual plan labels should stay platform-focused, such
+as `Web path` and `Mobile path`.
 
 Courses, workshops, and learning paths should remain future content until the catalog is defined.
