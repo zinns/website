@@ -65,5 +65,18 @@ git commit -m "feat(site): add homepage content (#123)"
 - `src/app/page.tsx`: single public homepage
 - `src/app/content.ts`: bilingual page content
 - `src/app/api/contact/route.ts`: contact form API
+- `src/app/api/contact/contact.utils.ts`: contact API parsing, validation, configuration, and email
+  request helpers
 - `src/app/globals.css`: Tailwind import and brand tokens
 - `public/brand/isologo.png`: brand isologo used by the homepage
+
+## Code Organization
+
+Keep Next.js route files focused on HTTP behavior: read the request, choose response status, and call
+route-specific logic. Do not leave validation, normalization, environment mapping, provider payload
+builders, or other helper code inside `route.ts`.
+
+Use a colocated `*.utils.ts` file next to the route when the helper code is only used by that route
+folder. Avoid generic `utils` or `helpers` folders for single-use code because they become unclear
+dumping grounds. If the logic gets a second real consumer, promote it to a domain module under
+`src/lib/<domain>/`.

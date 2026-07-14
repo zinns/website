@@ -12,6 +12,12 @@ The API route is implemented in:
 src/app/api/contact/route.ts
 ```
 
+Contact-specific parsing, validation, configuration, and Resend request building live in:
+
+```text
+src/app/api/contact/contact.utils.ts
+```
+
 ## Delivery Provider
 
 The route uses the Resend HTTP API directly. No SDK dependency is installed.
