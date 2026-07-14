@@ -11,11 +11,29 @@ type FormState = 'idle' | 'sending' | 'success' | 'error';
 export default function Home() {
   const [locale, setLocale] = useState<Locale>('en');
   const [formState, setFormState] = useState<FormState>('idle');
+  const [selectedReviewIndex, setSelectedReviewIndex] = useState<number | null>(null);
   const copy = siteCopy[locale];
+  const selectedReview =
+    selectedReviewIndex === null ? null : copy.reviews.items[selectedReviewIndex];
 
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+
+  useEffect(() => {
+    if (selectedReviewIndex === null) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setSelectedReviewIndex(null);
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedReviewIndex]);
 
   async function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -151,7 +169,6 @@ export default function Home() {
                 <span className="text-xs font-semibold uppercase text-accent">
                   {project.status}
                 </span>
-                <PlaceholderBadge label={copy.common.placeholder} />
               </div>
               <h3 className="mt-5 text-xl font-semibold text-ink">{project.title}</h3>
               <p className="mt-3 text-sm leading-6 text-secondary">{project.summary}</p>
@@ -203,23 +220,71 @@ export default function Home() {
         title={copy.reviews.title}
         description={copy.reviews.description}
       >
-        <div className="grid gap-4 md:grid-cols-2">
-          {copy.reviews.items.map(review => (
-            <figure key={review.author} className="border border-border bg-white p-6">
-              <PlaceholderBadge label={copy.common.placeholder} />
-              <blockquote className="mt-5 text-lg leading-8 text-ink">
-                <span aria-hidden="true">&ldquo;</span>
-                {review.quote}
-                <span aria-hidden="true">&rdquo;</span>
-              </blockquote>
-              <figcaption className="mt-6 text-sm text-secondary">
-                <strong className="block text-primary">{review.author}</strong>
-                {review.context}
-              </figcaption>
-            </figure>
+        <div className="grid items-stretch gap-4 lg:grid-cols-3">
+          {copy.reviews.items.map((review, index) => (
+            <button
+              key={`${review.author}-${review.context}`}
+              type="button"
+              onClick={() => setSelectedReviewIndex(index)}
+              className="group flex min-h-80 flex-col border border-border bg-white p-6 text-left transition hover:-translate-y-1 hover:border-primary hover:shadow-sm focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-cyan"
+            >
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft font-mono text-lg text-accent">
+                {review.author.slice(0, 1)}
+              </span>
+              <strong className="mt-5 min-h-24 text-2xl font-semibold leading-tight text-ink">
+                {review.summary}
+              </strong>
+              <span className="mt-5 text-sm leading-6 text-secondary">{review.context}</span>
+              <span className="mt-auto pt-6 text-xs font-semibold uppercase text-accent">
+                {review.author}
+              </span>
+              <span className="mt-4 inline-flex w-fit border border-accent/30 bg-white px-3 py-1.5 text-xs font-semibold text-accent transition group-hover:bg-accent group-hover:text-white">
+                {review.expandLabel}
+              </span>
+            </button>
           ))}
         </div>
       </Section>
+
+      {selectedReview && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-ink/70 px-5 py-8 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="review-dialog-title"
+          onClick={() => setSelectedReviewIndex(null)}
+        >
+          <figure
+            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto border border-border bg-white p-6 shadow-xl sm:p-8"
+            onClick={event => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedReviewIndex(null)}
+              className="absolute right-4 top-4 border border-border bg-soft px-3 py-1.5 text-xs font-semibold uppercase text-secondary transition hover:border-primary hover:text-primary"
+            >
+              {copy.reviews.closeLabel}
+            </button>
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft font-mono text-lg text-accent">
+              {selectedReview.author.slice(0, 1)}
+            </span>
+            <figcaption className="mt-5 pr-20">
+              <h3 id="review-dialog-title" className="text-2xl font-semibold text-ink">
+                {selectedReview.author}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-secondary">{selectedReview.context}</p>
+            </figcaption>
+            <blockquote className="mt-8 text-lg leading-8 text-ink">
+              <span aria-hidden="true">&ldquo;</span>
+              {selectedReview.quote}
+              <span aria-hidden="true">&rdquo;</span>
+            </blockquote>
+            <p className="mt-6 border-t border-border pt-4 text-xs leading-5 text-muted">
+              {selectedReview.source}
+            </p>
+          </figure>
+        </div>
+      )}
 
       <Section
         id="company"
@@ -244,13 +309,10 @@ export default function Home() {
         title={copy.team.title}
         description={copy.team.description}
       >
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {copy.team.items.map(person => (
-            <article key={person.name} className="border border-border bg-white p-5">
-              <div className="flex h-14 w-14 items-center justify-center bg-gradient-brand text-sm font-bold text-white">
-                {person.initials}
-              </div>
-              <PlaceholderBadge label={copy.common.placeholder} className="mt-5" />
+            <article key={person.name} className="border border-border bg-white p-6">
+              <CompanyAvatar initials={person.initials} variant={person.avatar} />
               <h3 className="mt-4 text-xl font-semibold text-ink">{person.name}</h3>
               <p className="mt-1 text-sm font-semibold text-accent">{person.role}</p>
               <p className="mt-3 text-sm leading-6 text-secondary">{person.note}</p>
@@ -421,12 +483,22 @@ function Section({
   );
 }
 
-function PlaceholderBadge({ label, className = '' }: { label: string; className?: string }) {
+function CompanyAvatar({ initials, variant }: { initials: string; variant: 'signal' | 'orbit' }) {
+  const accentClass = variant === 'signal' ? 'bg-cyan' : 'bg-accent';
+  const ringClass = variant === 'signal' ? 'border-cyan/70' : 'border-accent/70';
+
   return (
-    <span
-      className={`inline-flex border border-accent/30 bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent ${className}`}
-    >
-      {label}
-    </span>
+    <div className="relative h-20 w-20 overflow-hidden border border-border bg-ink text-white">
+      <div className="brand-grid absolute inset-0 opacity-25" aria-hidden="true" />
+      <div
+        className={`absolute -right-4 -top-4 h-14 w-14 rounded-full ${accentClass} opacity-80 blur-sm`}
+        aria-hidden="true"
+      />
+      <div className={`absolute bottom-3 left-3 h-9 w-9 rounded-full border ${ringClass}`} />
+      <div className="absolute bottom-5 left-7 h-6 w-6 border border-white/60" aria-hidden="true" />
+      <div className="relative flex h-full w-full items-center justify-center font-mono text-lg font-semibold tracking-wider">
+        {initials}
+      </div>
+    </div>
   );
 }

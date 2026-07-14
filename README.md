@@ -1,10 +1,11 @@
 # Zinns Website
 
-The company website for Zinns, a founder-led creative technology lab that builds customized digital
-tools and helps people increase their technical abilities.
+The company website for Zinns, a creative technology lab that builds customized digital tools and
+helps people increase their technical abilities.
 
-The current implementation is a small bilingual landing site on `/` with visible placeholder content
-for projects, reviews, and people until real company information is approved.
+The current implementation is a small bilingual landing site on `/` with in-progress project
+summaries, company roles, education plans, and visible placeholder content for reviews until real
+customer feedback is approved.
 
 ## Quick Start
 
