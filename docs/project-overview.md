@@ -1,6 +1,6 @@
 # Project Overview
 
-Zinns is a company website for a founder-led creative technology lab.
+Zinns is a company website for a creative technology lab.
 
 The positioning for this version is:
 
@@ -15,17 +15,17 @@ The first version is intentionally small:
 - One public route: `/`
 - English and Spanish content
 - Company overview
-- Project preview with neutral placeholders
-- Education plans for 1:1 web and mobile development mentoring
-- Placeholder reviews
-- Company brief
-- Placeholder people section
+- Project preview with in-progress work
+- Education plans for private web and mobile development mentoring
+- Student reviews from approved feedback
+- Current company brief
+- Company roles section
 - Common stack
 - Next capability areas
 - Contact form and direct email link
 
-The UI explicitly marks placeholder projects, reviews, and people so temporary content is not confused
-with real customer or team information.
+The UI presents project work, company roles, and approved student feedback as active content.
+Review cards use short summaries with expandable full quotes so the section stays compact.
 
 ## Future Site Map
 
@@ -46,4 +46,4 @@ The larger map is useful for planning, but these routes are not implemented yet:
 - No dashboard
 - No CMS
 - No automation backend
-- No real customer testimonials until approved
+- No unapproved customer or student testimonials

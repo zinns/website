@@ -15,9 +15,12 @@ type EducationPlan = {
 };
 
 type Review = {
+  summary: string;
   quote: string;
   author: string;
   context: string;
+  source: string;
+  expandLabel: string;
 };
 
 type TeamMember = {
@@ -25,6 +28,7 @@ type TeamMember = {
   name: string;
   role: string;
   note: string;
+  avatar: 'signal' | 'orbit';
 };
 
 type Capability = {
@@ -46,7 +50,6 @@ type SiteCopy = {
     language: string;
   };
   common: {
-    placeholder: string;
     email: string;
   };
   hero: {
@@ -79,6 +82,7 @@ type SiteCopy = {
     eyebrow: string;
     title: string;
     description: string;
+    closeLabel: string;
     items: Review[];
   };
   company: {
@@ -133,160 +137,210 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       language: 'Language',
     },
     common: {
-      placeholder: 'Placeholder content',
       email: 'help@zinns.io',
     },
     hero: {
-      eyebrow: 'Founder-led creative technology lab',
+      eyebrow: 'Creative technology lab',
       title: 'We build customized digital tools and help people increase their abilities.',
       description:
         'Zinns combines consulting, product thinking, education, and experimentation to turn practical ideas into useful software.',
       primaryCta: 'Start a conversation',
       secondaryCta: 'Explore the map',
-      note: 'This first version uses neutral placeholder content until real projects, reviews, and team information are added.',
+      note: 'Explore active builds, mentoring paths, and the technical direction behind the studio.',
       metrics: [
-        { value: '01', label: 'Public website first' },
-        { value: '02', label: 'Projects and education next' },
-        { value: '03', label: 'Automations after the base is stable' },
+        { value: '05', label: 'Active product and redesign tracks' },
+        { value: '02', label: 'Private mentoring paths' },
+        { value: '01', label: 'Small technical team' },
       ],
     },
     intro: {
-      title: 'A small studio shape for a broad technical practice.',
+      title: 'Small studio. Broad technical reach.',
       description:
         'The company direction is intentionally flexible: build software, teach useful skills, connect systems, and create content that helps people move faster.',
       items: [
         {
           title: 'Digital tools',
-          description: 'Custom web and mobile products shaped around real business workflows.',
+          description:
+            'Custom web and mobile products shaped around real workflows, from internal trackers to public-facing sites and dashboards.',
         },
         {
           title: 'Education',
           description:
-            'Focused mentoring for people who want stronger web and mobile development skills.',
+            'Private mentoring that starts from fundamentals, then moves into modern web or mobile delivery with real tooling habits.',
         },
         {
           title: 'Integrations',
           description:
-            'Automation, APIs, data work, and technical systems that reduce manual effort.',
+            'APIs, automation paths, data views, and backend services that connect tools and reduce repeated manual work.',
         },
       ],
     },
     projects: {
-      eyebrow: 'Project preview',
-      title: 'Current, past, and incoming work will live here.',
+      eyebrow: 'Active project map',
+      title: 'Current work grounded in real builds.',
       description:
-        'These cards are intentionally neutral placeholders. They show the content structure without implying real customer work yet.',
+        'A look at active products and redesigns across fitness, interiors, creator tools, science education, and household tracking.',
       items: [
         {
-          status: 'Current',
-          title: 'Placeholder Project 01',
+          status: 'In progress',
+          title: 'Fitness progress tracker',
           summary:
-            'A private digital tool for organizing operational workflows, dashboards, and repeatable actions.',
-          tags: ['Web app', 'Dashboard', 'Automation'],
+            'Mobile app for planning gym routines, tracking training progress, and giving users a clearer view of consistency over time.',
+          tags: ['Mobile app', 'Fitness', 'Progress tracking'],
         },
         {
-          status: 'Past',
-          title: 'Placeholder Project 02',
+          status: 'In progress',
+          title: 'Interior materials website redesign',
           summary:
-            'A completed implementation example reserved for a real case study once project details are approved.',
-          tags: ['Consulting', 'Frontend', 'Delivery'],
+            'Website redesign for a home-interior materials business focused on wood flooring, sheets, carpets, and clearer product and service presentation.',
+          tags: ['Website redesign', 'Home interiors', 'Product catalog'],
         },
         {
-          status: 'Incoming',
-          title: 'Placeholder Project 03',
+          status: 'In progress',
+          title: 'Beginner creator analytics tool',
           summary:
-            'A future project slot for experiments around data, education, cybersecurity, or content systems.',
-          tags: ['Prototype', 'Research', 'Lab'],
+            'App concept for beginner content creators to track publishing activity, audience growth, and channel performance without heavyweight analytics tooling.',
+          tags: ['Analytics', 'Creator tools', 'Dashboard'],
+        },
+        {
+          status: 'In progress',
+          title: 'Science outreach page redesign',
+          summary:
+            'Social media and page redesign for a physics and astronomy education initiative, improving how educational posts and community identity are presented.',
+          tags: ['Redesign', 'Science education', 'Content system'],
+        },
+        {
+          status: 'In progress',
+          title: 'Supermarket purchase tracker',
+          summary:
+            'Tool for tracking supermarket purchases so people can understand what they buy, repeat common lists, and spot household spending patterns.',
+          tags: ['Mobile tool', 'Household tracking', 'Personal data'],
         },
       ],
     },
     education: {
       eyebrow: 'Education plans',
-      title: 'Mentoring for practical software growth.',
+      title: 'Private mentoring for web and mobile development.',
       description:
-        'The first education offer is focused 1:1 mentoring. Courses and workshops can be added once the learning catalog is defined.',
+        'Both plans share a common engineering base and then split by platform. Mentoring is private, usually at least two 1-hour sessions per week, and adjusted to each person.',
       items: [
         {
-          title: '1:1 Web Development Mentoring',
-          format: 'Personal sessions',
-          outcome: 'Build stronger fundamentals and ship better web interfaces.',
-          focus: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Product delivery'],
+          title: 'Web Development Mentoring',
+          format: 'Web path',
+          outcome:
+            'From terminal and Git to production web apps with React, Next.js, TypeScript, testing, deployments, GitHub, and SCRUM habits.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'Tailwind + Bootstrap',
+            'JavaScript',
+            'React + Next.js',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
         {
-          title: '1:1 Mobile Development Mentoring',
-          format: 'Personal sessions',
-          outcome: 'Improve mobile app structure, implementation habits, and delivery confidence.',
-          focus: ['React Native', 'Expo', 'Navigation', 'State', 'Release basics'],
+          title: 'Mobile Development Mentoring',
+          format: 'Mobile path',
+          outcome:
+            'The same root roadmap, then mobile implementation with React Native, Expo, TypeScript, testing, releases, GitHub, and SCRUM delivery.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'JavaScript',
+            'React Native',
+            'Expo',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
       ],
     },
     reviews: {
       eyebrow: 'Reviews',
-      title: 'Customer trust will be added from real feedback.',
+      title: 'What people say after working with us.',
       description:
-        'These reviews are placeholders so the layout is clear while avoiding fake testimonials.',
+        'Real feedback from people who trusted us with mentoring, learning, and technical guidance.',
+      closeLabel: 'Close review',
       items: [
         {
+          summary: 'Personal rhythm, flexible schedules, and accessible learning.',
           quote:
-            'Placeholder review. Replace this with real customer feedback before publishing testimonial claims.',
-          author: 'Placeholder Customer 01',
-          context: 'Placeholder company or role',
+            'Me gustaron mucho los cursos mientras estuve como alumna activa, me parecieron bastante completos, muy accesibles para personas que buscan aprender, cambiar de área o profundizar en conocimientos técnicos. Lo recomendaría para aquellos que no han encontrado una opción que sea flexible en sus horarios o en temas de costos ya que también me parece muy accesible esta oportunidad.',
+          author: 'Abril Muñoz',
+          context: 'Web Development mentoring student',
+          source: 'Student review, name use authorized',
+          expandLabel: 'Read full review',
         },
         {
+          summary: 'Complex topics became easier to break down and practice.',
           quote:
-            'Placeholder review. This area is reserved for specific outcomes, context, and permission-approved quotes.',
-          author: 'Placeholder Customer 02',
-          context: 'Placeholder company or role',
+            'Me gusta mucho la capacidad de poder desarticular problemas complejos y hacerlos en partes más fáciles.',
+          author: 'Student response',
+          context: 'Web and Mobile Development mentoring student',
+          source: 'Student review, anonymous use authorized',
+          expandLabel: 'Read full review',
+        },
+        {
+          summary: 'Patient support helped a beginner start understanding programming.',
+          quote:
+            'Las clases, el acompañamiento, el trato, la ayuda fue muy buena no me puedo quejar yo no sabía nada de esto y aprendí un poco por cuestiones ajenas al curso decidí pausarlas pero estoy satisfecho con lo aprendido y lo acordado.',
+          author: 'Brandon',
+          context: 'Web Development mentoring student',
+          source: 'Student review, name use authorized',
+          expandLabel: 'Read full review',
         },
       ],
     },
     company: {
       eyebrow: 'Company brief',
-      title: 'A founder-led company with creative lab energy.',
+      title: 'A practical lab for useful digital work.',
       description:
-        'Zinns is being rebuilt as a small but capable company site: clear enough for consulting, broad enough for creative technical work, and honest about what is still forming.',
+        'Zinns works across custom software, mentoring, product thinking, and technical experimentation. The company stays small on purpose so each project can keep clear direction and careful delivery.',
       timeline: [
         {
-          year: 'Now',
-          title: 'Migration and foundation',
-          description: 'Modernizing the site, workflow, and release base before expanding content.',
-        },
-        {
-          year: 'Next',
-          title: 'Projects and education',
-          description: 'Adding real project case studies and mentoring paths.',
-        },
-        {
-          year: 'Later',
-          title: 'Automations and dashboard',
+          year: 'Build',
+          title: 'Digital products',
           description:
-            'Bringing back webhooks, authenticated areas, and internal automation tools.',
+            'Designing and shipping focused web and mobile tools for real workflows, public sites, and operational tracking.',
+        },
+        {
+          year: 'Teach',
+          title: 'Private mentoring',
+          description:
+            'Helping people strengthen fundamentals, learn modern frameworks, and practice delivery habits with guided sessions.',
+        },
+        {
+          year: 'Extend',
+          title: 'Systems and automation',
+          description:
+            'Connecting APIs, dashboards, data views, and backend services when projects need more than a static website.',
         },
       ],
     },
     team: {
       eyebrow: 'People',
-      title: 'The real team content will replace these neutral placeholders.',
+      title: 'Roles behind the work.',
       description:
-        'Use this area for founder context, collaborators, workers, teachers, or project partners.',
+        'A small technical team shaping product direction, architecture, implementation, and learning paths.',
       items: [
         {
-          initials: 'ZF',
-          name: 'Placeholder Founder',
-          role: 'Founder / Builder',
-          note: 'Strategy, software, mentoring, and creative technical direction.',
+          initials: 'EZ',
+          name: 'Edgar Zea',
+          role: 'Co-Founder / Tech Lead',
+          note: 'Product direction, architecture, mentoring, and technical delivery across web and mobile projects.',
+          avatar: 'signal',
         },
         {
-          initials: 'P1',
-          name: 'Placeholder Worker 01',
-          role: 'Collaborator',
-          note: 'Reserved for a real profile, avatar, and specialty.',
-        },
-        {
-          initials: 'P2',
-          name: 'Placeholder Worker 02',
-          role: 'Collaborator',
-          note: 'Reserved for a real profile, avatar, and specialty.',
+          initials: 'AS',
+          name: 'Andrés Soto',
+          role: 'Co-Founder / Engineering Team',
+          note: 'Engineering execution, systems thinking, implementation support, and product iteration.',
+          avatar: 'orbit',
         },
       ],
     },
@@ -355,164 +409,210 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       language: 'Idioma',
     },
     common: {
-      placeholder: 'Contenido temporal',
       email: 'help@zinns.io',
     },
     hero: {
-      eyebrow: 'Laboratorio creativo de tecnología liderado por su fundador',
-      title:
-        'Construimos herramientas digitales personalizadas y ayudamos a las personas a aumentar sus habilidades.',
+      eyebrow: 'Laboratorio creativo de tecnología',
+      title: 'Creamos herramientas digitales para crecer.',
       description:
         'Zinns combina consultoría, pensamiento de producto, educación y experimentación para convertir ideas prácticas en software útil.',
       primaryCta: 'Iniciar conversación',
       secondaryCta: 'Explorar el mapa',
-      note: 'Esta primera versión usa contenido temporal neutral hasta agregar proyectos, reseñas e información real del equipo.',
+      note: 'Explora proyectos activos, rutas de mentoría y la dirección técnica del estudio.',
       metrics: [
-        { value: '01', label: 'Primero el sitio público' },
-        { value: '02', label: 'Después proyectos y educación' },
-        { value: '03', label: 'Automatizaciones cuando la base sea estable' },
+        { value: '05', label: 'Líneas activas de producto y rediseño' },
+        { value: '02', label: 'Rutas de mentoría privada' },
+        { value: '01', label: 'Equipo técnico pequeño' },
       ],
     },
     intro: {
-      title: 'Una estructura pequeña para una práctica técnica amplia.',
+      title: 'Estudio pequeño. Alcance técnico amplio.',
       description:
         'La dirección de la compañía es flexible a propósito: construir software, enseñar habilidades útiles, conectar sistemas y crear contenido que ayude a avanzar más rápido.',
       items: [
         {
           title: 'Herramientas digitales',
           description:
-            'Productos web y móviles personalizados alrededor de flujos reales de negocio.',
+            'Productos web y móviles personalizados alrededor de flujos reales: trackers internos, sitios públicos y dashboards.',
         },
         {
           title: 'Educación',
           description:
-            'Mentoría enfocada para personas que quieren fortalecer sus habilidades en desarrollo web y móvil.',
+            'Mentoría privada que empieza con fundamentos y avanza hacia entrega web o mobile con herramientas reales.',
         },
         {
           title: 'Integraciones',
           description:
-            'Automatización, APIs, datos y sistemas técnicos que reducen trabajo manual.',
+            'APIs, automatización, vistas de datos y servicios backend para conectar herramientas y reducir trabajo repetido.',
         },
       ],
     },
     projects: {
-      eyebrow: 'Vista de proyectos',
-      title: 'Aquí vivirán trabajos actuales, pasados y futuros.',
+      eyebrow: 'Mapa de proyectos activos',
+      title: 'Trabajo actual basado en proyectos reales.',
       description:
-        'Estas tarjetas son placeholders neutrales. Muestran la estructura de contenido sin sugerir trabajo real de clientes todavía.',
+        'Una vista de productos y rediseños activos en fitness, interiores, herramientas para creadores, educación científica y seguimiento del hogar.',
       items: [
         {
-          status: 'Actual',
-          title: 'Placeholder Project 01',
+          status: 'En progreso',
+          title: 'Tracker de progreso fitness',
           summary:
-            'Una herramienta digital privada para organizar flujos operativos, tableros y acciones repetibles.',
-          tags: ['Web app', 'Dashboard', 'Automatización'],
+            'App móvil para planear rutinas de gimnasio, registrar avances de entrenamiento y dar una vista clara de la constancia en el tiempo.',
+          tags: ['App móvil', 'Fitness', 'Seguimiento de progreso'],
         },
         {
-          status: 'Pasado',
-          title: 'Placeholder Project 02',
+          status: 'En progreso',
+          title: 'Rediseño web para materiales de interiores',
           summary:
-            'Un ejemplo de implementación completada reservado para un caso real cuando los detalles estén aprobados.',
-          tags: ['Consultoría', 'Frontend', 'Entrega'],
+            'Rediseño de sitio para un negocio de materiales de interiores enfocado en pisos de madera, láminas, alfombras y presentación más clara de productos y servicios.',
+          tags: ['Rediseño web', 'Interiores', 'Catálogo de productos'],
         },
         {
-          status: 'Próximo',
-          title: 'Placeholder Project 03',
+          status: 'En progreso',
+          title: 'Herramienta de analítica para creadores principiantes',
           summary:
-            'Un espacio futuro para experimentos alrededor de datos, educación, ciberseguridad o sistemas de contenido.',
-          tags: ['Prototipo', 'Investigación', 'Lab'],
+            'Concepto de app para que creadores de contenido principiantes registren actividad de publicación, crecimiento de audiencia y rendimiento por canal sin herramientas pesadas.',
+          tags: ['Analítica', 'Herramientas para creadores', 'Dashboard'],
+        },
+        {
+          status: 'En progreso',
+          title: 'Rediseño para divulgación científica',
+          summary:
+            'Rediseño de página y red social para una iniciativa de física y astronomía, mejorando la presentación de publicaciones educativas e identidad de comunidad.',
+          tags: ['Rediseño', 'Educación científica', 'Sistema de contenido'],
+        },
+        {
+          status: 'En progreso',
+          title: 'Tracker de compras de supermercado',
+          summary:
+            'Herramienta para registrar compras de supermercado, repetir listas comunes y detectar patrones de consumo del hogar.',
+          tags: ['App móvil', 'Seguimiento del hogar', 'Datos personales'],
         },
       ],
     },
     education: {
       eyebrow: 'Planes de educación',
-      title: 'Mentoría para crecimiento práctico en software.',
+      title: 'Mentoría privada para desarrollo web y mobile.',
       description:
-        'La primera oferta educativa es mentoría 1:1. Cursos y talleres pueden agregarse cuando el catálogo esté definido.',
+        'Ambos planes comparten una base de ingeniería y luego se separan por plataforma. La mentoría es privada, normalmente al menos dos sesiones de 1 hora por semana, y se ajusta a cada persona.',
       items: [
         {
-          title: 'Mentoría 1:1 en Desarrollo Web',
-          format: 'Sesiones personales',
-          outcome: 'Fortalecer fundamentos y construir mejores interfaces web.',
-          focus: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Entrega de producto'],
+          title: 'Mentoría en Desarrollo Web',
+          format: 'Ruta web',
+          outcome:
+            'Desde terminal y Git hasta apps web en producción con React, Next.js, TypeScript, testing, deployments, GitHub y hábitos SCRUM.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'Tailwind + Bootstrap',
+            'JavaScript',
+            'React + Next.js',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
         {
-          title: 'Mentoría 1:1 en Desarrollo Mobile',
-          format: 'Sesiones personales',
+          title: 'Mentoría en Desarrollo Mobile',
+          format: 'Ruta mobile',
           outcome:
-            'Mejorar estructura de apps móviles, hábitos de implementación y confianza de entrega.',
-          focus: ['React Native', 'Expo', 'Navegación', 'Estado', 'Bases de release'],
+            'La misma ruta base, después implementación mobile con React Native, Expo, TypeScript, testing, releases, GitHub y entrega SCRUM.',
+          focus: [
+            'Terminal',
+            'Git + GitHub',
+            'HTML/CSS',
+            'JavaScript',
+            'React Native',
+            'Expo',
+            'TypeScript',
+            'Testing + deployments',
+            'SCRUM',
+          ],
         },
       ],
     },
     reviews: {
       eyebrow: 'Reseñas',
-      title: 'La confianza de clientes se agregará con feedback real.',
+      title: 'Lo que dicen quienes trabajan con nosotros.',
       description:
-        'Estas reseñas son temporales para mostrar el layout sin publicar testimonios falsos.',
+        'Feedback real de personas que confiaron en nosotros para mentoría, aprendizaje y guía técnica.',
+      closeLabel: 'Cerrar reseña',
       items: [
         {
+          summary: 'Ritmo personal, horarios flexibles y aprendizaje accesible.',
           quote:
-            'Reseña temporal. Reemplazar con feedback real de clientes antes de publicar afirmaciones testimoniales.',
-          author: 'Placeholder Customer 01',
-          context: 'Compañía o rol temporal',
+            'Me gustaron mucho los cursos mientras estuve como alumna activa, me parecieron bastante completos, muy accesibles para personas que buscan aprender, cambiar de área o profundizar en conocimientos técnicos. Lo recomendaría para aquellos que no han encontrado una opción que sea flexible en sus horarios o en temas de costos ya que también me parece muy accesible esta oportunidad.',
+          author: 'Abril Muñoz',
+          context: 'Estudiante de mentoría en Desarrollo Web',
+          source: 'Reseña de estudiante, uso de nombre autorizado',
+          expandLabel: 'Leer reseña completa',
         },
         {
+          summary: 'Los temas complejos se volvieron más fáciles de dividir y practicar.',
           quote:
-            'Reseña temporal. Este espacio queda reservado para resultados específicos, contexto y citas aprobadas.',
-          author: 'Placeholder Customer 02',
-          context: 'Compañía o rol temporal',
+            'Me gusta mucho la capacidad de poder desarticular problemas complejos y hacerlos en partes más fáciles.',
+          author: 'Respuesta de estudiante',
+          context: 'Estudiante de mentoría en Desarrollo Web y Mobile',
+          source: 'Reseña de estudiante, uso anónimo autorizado',
+          expandLabel: 'Leer reseña completa',
+        },
+        {
+          summary: 'Acompañamiento paciente para empezar a entender programación.',
+          quote:
+            'Las clases, el acompañamiento, el trato, la ayuda fue muy buena no me puedo quejar yo no sabía nada de esto y aprendí un poco por cuestiones ajenas al curso decidí pausarlas pero estoy satisfecho con lo aprendido y lo acordado.',
+          author: 'Brandon',
+          context: 'Estudiante de mentoría en Desarrollo Web',
+          source: 'Reseña de estudiante, uso de nombre autorizado',
+          expandLabel: 'Leer reseña completa',
         },
       ],
     },
     company: {
       eyebrow: 'Resumen de compañía',
-      title: 'Una compañía liderada por su fundador con energía de laboratorio creativo.',
+      title: 'Un laboratorio práctico para trabajo digital útil.',
       description:
-        'Zinns se está reconstruyendo como un sitio pequeño pero capaz: claro para consultoría, amplio para trabajo técnico creativo y honesto sobre lo que sigue tomando forma.',
+        'Zinns trabaja entre software personalizado, mentoría, pensamiento de producto y experimentación técnica. La compañía se mantiene pequeña para conservar dirección clara y entrega cuidadosa.',
       timeline: [
         {
-          year: 'Ahora',
-          title: 'Migración y base',
+          year: 'Construir',
+          title: 'Productos digitales',
           description:
-            'Modernizar el sitio, el flujo de trabajo y la base de releases antes de crecer.',
+            'Diseñar y entregar herramientas web y mobile para flujos reales, sitios públicos y seguimiento operativo.',
         },
         {
-          year: 'Después',
-          title: 'Proyectos y educación',
-          description: 'Agregar casos reales de proyectos y rutas de mentoría.',
+          year: 'Enseñar',
+          title: 'Mentoría privada',
+          description:
+            'Ayudar a fortalecer fundamentos, aprender frameworks modernos y practicar hábitos de entrega con sesiones guiadas.',
         },
         {
-          year: 'Más tarde',
-          title: 'Automatizaciones y dashboard',
+          year: 'Extender',
+          title: 'Sistemas y automatización',
           description:
-            'Traer de vuelta webhooks, áreas autenticadas y herramientas internas de automatización.',
+            'Conectar APIs, dashboards, vistas de datos y servicios backend cuando un proyecto necesita más que un sitio estático.',
         },
       ],
     },
     team: {
       eyebrow: 'Personas',
-      title: 'El contenido real del equipo reemplazará estos placeholders neutrales.',
+      title: 'Roles detrás del trabajo.',
       description:
-        'Usa esta área para contexto del fundador, colaboradores, trabajadores, profesores o partners de proyecto.',
+        'Un equipo técnico pequeño que define producto, arquitectura, implementación y rutas de aprendizaje.',
       items: [
         {
-          initials: 'ZF',
-          name: 'Placeholder Founder',
-          role: 'Founder / Builder',
-          note: 'Estrategia, software, mentoría y dirección técnica creativa.',
+          initials: 'EZ',
+          name: 'Edgar Zea',
+          role: 'Co-Founder / Tech Lead',
+          note: 'Dirección de producto, arquitectura, mentoría y entrega técnica en proyectos web y mobile.',
+          avatar: 'signal',
         },
         {
-          initials: 'P1',
-          name: 'Placeholder Worker 01',
-          role: 'Colaborador',
-          note: 'Reservado para un perfil real, avatar y especialidad.',
-        },
-        {
-          initials: 'P2',
-          name: 'Placeholder Worker 02',
-          role: 'Colaborador',
-          note: 'Reservado para un perfil real, avatar y especialidad.',
+          initials: 'AS',
+          name: 'Andrés Soto',
+          role: 'Co-Founder / Engineering Team',
+          note: 'Ejecución de ingeniería, pensamiento de sistemas, soporte de implementación e iteración de producto.',
+          avatar: 'orbit',
         },
       ],
     },
