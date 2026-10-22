@@ -1,6 +1,9 @@
 packages:
   - '.'
 
+# Apply the same one-day dependency quarantine in every environment.
+minimumReleaseAge: 1440
+
 allowBuilds:
   sharp: true
   unrs-resolver: true
