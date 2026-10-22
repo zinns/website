@@ -1,5 +1,9 @@
 # GitHub Workflow
 
+Dependency Review runs on pull requests into `develop`, where dependency changes enter the
+project. Release and production promotion PRs skip this duplicate scan; they retain the
+quality gate. Vulnerability findings on development PRs must be fixed before promotion.
+
 This document defines the repository workflow and release automation contract.
 
 ## Branches
