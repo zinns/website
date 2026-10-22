@@ -12,6 +12,7 @@ This folder describes how the current project works and where future work should
 ## Engineering
 
 - [Development](development.md): local setup, scripts, quality checks, and hooks.
+- [Deployment Troubleshooting](deployment-troubleshooting.md): dependency quarantine failures and retry steps.
 - [Contact Email](contact-email.md): contact form behavior and required email environment variables.
 - [GitHub Workflow](github-workflow.md): branch strategy, PR flow, release automation, and labels.
 - [GitHub Governance](github-governance.md): issue lifecycle, branch naming, labels, milestones,
