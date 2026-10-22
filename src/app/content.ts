@@ -359,7 +359,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: 'Next integrations',
       title: 'The lab side has room to grow.',
       description:
-        'Future capabilities can expand around technical depth without making the first site too large.',
+        'Exploring automation, data science, and security to help people build smarter digital tools.',
       items: [
         {
           title: 'Python automations',
@@ -631,7 +631,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: 'Próximas integraciones',
       title: 'El lado laboratorio tiene espacio para crecer.',
       description:
-        'Las capacidades futuras pueden expandirse con profundidad técnica sin hacer demasiado grande la primera versión.',
+        'Exploramos automatización, ciencia de datos y seguridad para crear herramientas digitales más útiles.',
       items: [
         {
           title: 'Automatizaciones en Python',
